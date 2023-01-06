@@ -34,6 +34,24 @@ int main()
       int rem1=a%10;
       cout<<dev1;
       cout<<rem1<<endl;
+      
+      if(rem1)
+      {
+        if(rem1==2)
+        cout<<"twenty";
+         if(rem1==3)
+         cout<<"thirty";
+          if(rem1==4)
+         cout<<"fouty";
+          if(rem1==5)
+        cout<<"sixty";
+         if(rem1==7)
+        cout<<"seventy";
+         if(rem1==8)
+        cout<<"eighty";
+         if(rem1==9)
+        cout<<"ninty";
+      }
       if(dev1)
       {
         // cout<<dev1;
@@ -41,11 +59,16 @@ int main()
         cout<<"one";
         if(dev1==2)
         cout<<"two";
-      }
-      if(rem1)
-      {
-        if(rem1==2)
-        cout<<"Two";
+        if(dev1==3)
+        cout<<"thirty";
+        if(dev1==2)
+        cout<<"two";
+        if(dev1==2)
+        cout<<"two";
+        if(dev1==2)
+        cout<<"two";if(dev1==2)
+        cout<<"two";
+
       }
       
     }
