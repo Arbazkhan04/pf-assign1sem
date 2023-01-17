@@ -2,7 +2,10 @@
 #include<windows.h>
 using namespace std;
 void packManDesign();
-void gotoxy(int , int );
+void gotoxy(int x , int y);
+void erase(int x,int y);
+void prinpackman(int x,int y);
+char getCharAtxy(short int x ,short int y);
 int main()
 {
 
