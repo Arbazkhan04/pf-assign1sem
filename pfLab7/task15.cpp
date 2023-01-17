@@ -3,7 +3,8 @@ using namespace std;
 void calculatePrice(int money,int year);
 int main()
 {
- int money,year;
+ int money;
+ int year;
  cout<<"Enter money";
  cin>>money;
  cout<<"Enter year";
