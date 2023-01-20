@@ -12,23 +12,16 @@ int main()
 
 void leftAstrick(int rightAstrick)
 {
-   for(int i=rightAstrick;i>0;i--)
+    int totalNoOfSpace=1;
+
+   for(int i=rightAstrick; i>0;i++)
    {
-    for(int j=i;j>0;j--)
-    {
-        cout<<"@";
-    }
-    cout<<endl;
+     
    }
-for(int i=0;i<rightAstrick;i++)
-  {
-    for(int j=0;j<=i; j++)
-    {
-        cout<<"*";
-    }
-    cout<<endl;
-    
-   }
+   
+   
+ 
+
 
 
 }
