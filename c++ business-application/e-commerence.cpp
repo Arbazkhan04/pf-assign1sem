@@ -45,7 +45,7 @@ string adminAuthArray[1];
 int main()
 {
     system("cls");
-    eCommerenceTitle();
+    // eCommerenceTitle();
     eCommerenceMenu();
 }
 
@@ -63,7 +63,8 @@ void eCommerenceMenu()
     int number = 0;
     while (number != 3)
     {
-
+        system("cls");
+        eCommerenceTitle();
         cout << "#########################################################" << endl;
         cout << "#  Select component you have to see                     #" << endl;
         cout << "#  1 User                                               #" << endl;
@@ -944,6 +945,9 @@ void userRegister()
      userAuthArray[1]=password;
      cout<<"Successfully Register...";
      Sleep(700);
+     string x;
+     cout<<"Press any key to continue..";
+     cin>>x;
 }
 
 void userLogin()
@@ -961,6 +965,12 @@ void userLogin()
      cout<<"Loign successfully...";
      Sleep(700);
      user();
+   }
+   else{
+     cout<<"Enter correct username of Passowrd..."<<endl;
+     string x;
+     cout<<"Press any key to try again..";
+     cin>>x;
    }
 }
 
@@ -993,6 +1003,12 @@ void adminLogin()
      cout<<"Loign successfully...";
      Sleep(700);
      admin();
+   }
+    else{
+     cout<<"Enter correct username of Passowrd..."<<endl;
+     string x;
+     cout<<"Press any key to try again..";
+     cin>>x;
    }
 }
 void adminRegister()
