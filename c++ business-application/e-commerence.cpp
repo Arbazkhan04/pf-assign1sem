@@ -963,11 +963,14 @@ void userLogin()
    if(userAuthArray[0]==name && userAuthArray[1]==password)
    {
      cout<<"Loign successfully...";
-     Sleep(700);
+     string s;
+     cout<<"Press any key to continue...";
+     cin>>s;
+    //  Sleep(700);
      user();
    }
    else{
-     cout<<"Enter correct username of Passowrd..."<<endl;
+     cout<<"Enter correct username or Passowrd..."<<endl;
      string x;
      cout<<"Press any key to try again..";
      cin>>x;
@@ -1002,6 +1005,9 @@ void adminLogin()
    {
      cout<<"Loign successfully...";
      Sleep(700);
+     string s;
+     cout<<"Press any key to continue...";
+     cin>>s;
      admin();
    }
     else{
@@ -1024,6 +1030,9 @@ void adminRegister()
      adminAuthArray[1]=password;
      cout<<"Successfully Register...";
      Sleep(700);
+      string x;
+     cout<<"Press any key to continue..";
+     cin>>x;
 }
 
 void userChangeProfileSetting()
@@ -1093,7 +1102,7 @@ void userLogout()
 {
     userAuthArray[0]=" ";
     userAuthArray[1]=" ";
-    cout<<"Account logout successfully...";
+    cout<<"Account logout successfully..."<<endl;
     Sleep(700);
 
 }
@@ -1101,7 +1110,7 @@ void adminLogout()
 {
    adminAuthArray[0]=" ";
     adminAuthArray[1]=" ";
-    cout<<"Account logout successfully...";
+    cout<<"Account logout successfully..."<<endl;
     Sleep(700); 
 }
 
