@@ -4,9 +4,11 @@
 #include <windows.h>
 using namespace std;
 string buyProductStatus = "UnPaid";
-int deleteIteration = 0;
+int defaultItemsSize = 3;
 int globalAddToCartLoop = 0;
+int totalNumberOfUser = 0;
 void clearScreen();
+int loginAndSingUpMenu();
 void eCommerenceTitle();
 void eCommerenceMenu();
 void adminAuth();
@@ -19,12 +21,12 @@ void userChangeProfileSetting();
 void adminChangeProfileSetting();
 void userLogout();
 void adminLogout();
-void viewProdcut(); // admin-view
-// void uerViewProduct();
+void CreateProduct(); // admin-view
+void listOfLoginUsers();
 void adminUpDateProduct(); // add this functionality later on ....
 void updatedProductArray(int);
-void admin();
-void user();
+void admin(string);
+void user(string);
 void deleteProduct();
 void viewAllProduct();
 void userViewProduct();
@@ -33,16 +35,23 @@ void filterProduct();
 void addToCart();
 void viewCart();
 void userPurchasedProductList();
-string updatedProductName[100];
-int updatedAailabeQuantity[100];
-int updatedProductPrice[100];
-string userBuyProductName[100];
-int userBuySelectedProductQuantity[100];
-int userBuyProductProce[100];
-string productName[] = {"Shirt", "Pant", "Bat"};
-int Availabelquantity[] = {32, 54, 23};
-int productPrice[] = {25, 30, 60};
-string userAuthArray[1];
+
+// string updatedProductName[100];
+// int updatedAailabeQuantity[100];
+// int updatedProductPrice[100];
+
+int userBuyProductquantity = 0;
+const int userBuyProductArrSize = 100;
+string userBuyProductName[userBuyProductArrSize];
+int userBuySelectedProductQuantity[userBuyProductArrSize];
+int userBuyProductProce[userBuyProductArrSize];
+
+const int totalSizeOfitems = 100;
+string productName[totalSizeOfitems] = {"Shirt", "Pant", "Bat"};
+int Availabelquantity[totalSizeOfitems] = {32, 54, 23};
+int productPrice[totalSizeOfitems] = {25, 30, 60};
+string userAuthArrayName[100];
+string userAuthArrayPassWord[100];
 string adminAuthArray[1];
 int main()
 {
@@ -95,27 +104,8 @@ void eCommerenceMenu()
     }
 }
 
-// void authenciation(int adminOrUser)
-// {
-//     while (adminOrUser != 3)
-//     {
-//         if (adminOrUser == 1)
-//         {
-//             user();
-//         }
-//         else if (adminOrUser == 2)
-//         {
-//             admin();
-//             // viewProdcut();
-//         }
-//         else if (adminOrUser == 3)
-//         {
-//             break;
-//         }
-//     }
-// }
 // admin-module
-void admin()
+void admin(string name)
 {
     system("cls");
     int number = 0;
@@ -123,23 +113,28 @@ void admin()
     {
 
         cout << "#########################################################" << endl;
-        cout << "#                WELCOME TO THE ADMIN PANEL             #" << endl;
+        cout << "#        Welcome To The Admin Panel " << name << "      #" << endl;
         cout << "#  1 Create Product                                     #" << endl;
         cout << "#  2 Update Product                                     #" << endl;
         cout << "#  3 Delete Product                                     #" << endl;
         cout << "#  4 View All Product                                   #" << endl;
-        cout << "#  5 Total Purchased Product List                       #" << endl;
-        cout << "#  6 Change Profile Setting                             #" << endl;
-        cout << "#  7 Logout                                             #" << endl;
-        cout << "#  8 Exit                                             #" << endl;
+        cout << "#  5 Total Sold Product                                 #" << endl;
+        cout << "#  6 Total User List                                    #" << endl;
+        cout << "#  7 Change Profile Setting                             #" << endl;
+        cout << "#  8 Logout                                             #" << endl;
+        cout << "#  9 Exit                                               #" << endl;
         cout << "#########################################################" << endl;
 
         cout << "Enter the code For the product......";
         cin >> number;
 
-        if (number == 8)
+        if (number == 9)
         {
             break;
+        }
+        else if (number == 2)
+        {
+            adminUpDateProduct();
         }
         else if (number == 3)
         {
@@ -152,37 +147,25 @@ void admin()
         else if (number == 1)
         {
             system("cls");
-            viewProdcut();
+            CreateProduct();
         }
         else if (number == 6)
         {
-            adminChangeProfileSetting();
+            listOfLoginUsers();
         }
         else if (number == 7)
+        {
+            adminChangeProfileSetting();
+        }
+        else if (number == 8)
         {
             adminLogout();
         }
     }
-    // cout << "Enter the code For the product......";
-    // cin >> number;
-
-    // if (number == 1)
-    // {
-    //     system("cls");
-    //     viewProdcut();
-    // }
-    // else if (number == 2)
-    // {
-    //     deleteProduct();
-    // }
-    // else if (number == 3)
-    // {
-    //     viewAllProduct();
-    // }
 }
 // admin-module
 
-void user()
+void user(string name)
 {
     system("cls");
     int number = 0;
@@ -190,7 +173,7 @@ void user()
     {
 
         cout << "#########################################################" << endl;
-        cout << "#                WELCOME TO THE USER PANEL              #" << endl;
+        cout << "#                Welcome " << name << "                 #" << endl;
         cout << "#  1 View Product                                       #" << endl;
         cout << "#  2 Buy product                                        #" << endl;
         cout << "#  3 filtter  product                                   #" << endl;
@@ -242,362 +225,39 @@ void user()
     }
 }
 // admin-components
-void viewProdcut()
+void CreateProduct()
 {
     system("cls");
     userViewProduct();
-    char yesOrNo;
+    char yesOrNo = 'y';
     while (yesOrNo != 'n')
     {
-
-        cout << "Do you want to add more product Yes or No(y/n)...";
+        cout << "Do you want to add more product(y/n)..";
         cin >> yesOrNo;
         if (yesOrNo == 'y')
         {
-            int n;
-            cout << "How much product do you want to add...";
-            cin >> n;
-            deleteIteration = (deleteIteration + n + 3);
-            cout << deleteIteration;
-
-            // string updatedProductName[n];
-            // int updatedAailabeQuantity[n];
-            // int updatedProductPrice[n];
-            // int arrSize = sizeof(productName) / sizeof(productName[0]);
-            // int totalUpdatedArraySize=arrSize+n;
-            for (int i = 0; i < 3; i++)
-            {
-                updatedProductName[i] = productName[i];
-                updatedProductPrice[i] = productPrice[i];
-                updatedAailabeQuantity[i] = Availabelquantity[i];
-            }
-            int index = 3;
-            for (int j = 0; j < n; j++)
-            {
-                cout << "Enter the name of product...";
-                cin >> updatedProductName[index];
-                cout << "Enter the price of product...";
-                cin >> updatedProductPrice[index];
-                cout << "enter the quantity for the product...";
-                cin >> updatedAailabeQuantity[index];
-                index++;
-            }
-            // for (int i = 0; i < totalUpdatedArraySize; i++)
-            // {
-
-            //     cout << "Enter name of product...";
-            //     cin >> productName[3];
-            //     cout << "Enter product price...";
-            //     cin >> productPrice[arrSize];
-            //     cout << "Enter quantity....";
-            //     cin >> Availabelquantity[arrSize];
-            //     arrSize++;
-            // }
-
-            cout << "No."
-                 << "\t"
-                 << "Product Name"
-                 << "\t"
-                 << "productPrice"
-                 << "\t"
-                 << "Availabelquantity" << endl;
-            int updatedSizeArr = 3 + n;
-            int index2 = 1;
-            for (int i = 0; i < updatedSizeArr; i++)
+            int totalProductAdminWantToAdd;
+            cout << "Enter number of product you want to add..";
+            cin >> totalProductAdminWantToAdd;
+            for (int i = 0; i < totalProductAdminWantToAdd; i++)
             {
 
-                cout << index2 << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-                index2++;
-                Sleep(1000);
+                cout << "Enter name of product ";
+                cin >> productName[defaultItemsSize];
+                cout << "Enter price for the product ";
+                cin >> productPrice[defaultItemsSize];
+                cout << "Enter Quantity ";
+                cin >> Availabelquantity[defaultItemsSize];
+                defaultItemsSize++;
             }
-            cout << "added successfully..." << endl;
-            Sleep(5000);
-            yesOrNo = 'n';
         }
+
         else if (yesOrNo == 'n')
         {
+            yesOrNo = 'n';
             break;
         }
     }
-
-    //  char yesOrNo;
-    // cout << "Do you want to want more product Yes or No(y/n)...";
-    // cin >> yesOrNo;
-    // if (yesOrNo == 'y')
-    // {
-    //   int n;
-    //   cout<<"How much product do you want to add...";
-    //   cin>>n;
-    // string updatedProductName[n];
-    // int updatedAailabeQuantity[n];
-    // int updatedProductPrice[n];
-    // int arrSize = sizeof(productName) / sizeof(productName[0]);
-    // int totalUpdatedArraySize=arrSize+n;
-    //     for(int i=0;i<3;i++)
-    //     {
-    //         updatedProductName[i]=productName[i];
-    //         updatedProductPrice[i]=productPrice[i];
-    //         updatedAailabeQuantity[i]=Availabelquantity[i];
-    //     }
-    //     int index=3;
-    //     for(int j=0;j<n;j++)
-    //     {
-    //       cout<<"Enter the name of product...";
-    //       cin>>updatedProductName[index];
-    //       cout<<"Enter the price of product...";
-    //       cin>>updatedProductPrice[index];
-    //       cout<<"enter the quantity for the product...";
-    //       cin>>updatedAailabeQuantity[index];
-    //       index++;
-    //     }
-    //     // for (int i = 0; i < totalUpdatedArraySize; i++)
-    //     // {
-
-    //     //     cout << "Enter name of product...";
-    //     //     cin >> productName[3];
-    //     //     cout << "Enter product price...";
-    //     //     cin >> productPrice[arrSize];
-    //     //     cout << "Enter quantity....";
-    //     //     cin >> Availabelquantity[arrSize];
-    //     //     arrSize++;
-    //     // }
-
-    //     cout << "No."
-    //          << "\t"
-    //          << "Product Name"
-    //          << "\t"
-    //          << "productPrice"
-    //          << "\t"
-    //          << "Availabelquantity" << endl;
-    //        int updatedSizeArr=3+n;
-    //        int index2=1;
-    //     for (int i = 0; i < updatedSizeArr; i++)
-    //     {
-
-    //         cout << index2 << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-    //         index2++;
-    //         Sleep(5000);
-    //     }
-    //       cout<<"added successfully...";
-    //      Sleep(5000);
-
-    // }
-}
-
-void deleteProduct()
-{
-    if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
-    {
-
-        int index = 1;
-        int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
-        // cout<<sizeOFArray;
-        //  cout<<deleteIteration;
-        cout << "No."
-             << "\t"
-             << "Product Name"
-             << "\t"
-             << "productPrice"
-             << "\t"
-             << "Availabelquantity" << endl;
-
-        for (int i = 0; i < deleteIteration; i++)
-        {
-            if (updatedProductPrice[i] != 0)
-            {
-                int j = 1;
-                cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-                index++;
-            }
-        }
-        string name;
-        int price, quantity;
-        cout << "Enter the Product Name you want to delete .... ";
-        cin >> name;
-
-        cout << "Enter the price of prodcut...";
-        cin >> price;
-
-        cout << "Enter the quantity of product...";
-        cin >> quantity;
-        // int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-        for (int i = 0; i < deleteIteration; i++)
-        {
-            if (name == updatedProductName[i] && price == updatedProductPrice[i] && quantity == updatedAailabeQuantity[i])
-            {
-                updatedProductName[i] = ' ';
-                updatedProductPrice[i] = ' ';
-                updatedAailabeQuantity[i] = ' ';
-            }
-        }
-        cout << "No."
-             << "\t"
-             << "Product Name"
-             << "\t"
-             << "productPrice"
-             << "\t"
-             << "Availabelquantity" << endl;
-        int j = 1;
-        for (int i = 0; i < deleteIteration; i++)
-        {
-            if (name != updatedProductName[i])
-            {
-                // continue; //add price and quantiy as well so it will easily delete
-                cout << j << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-                j++;
-            }
-        }
-    }
-    else
-    {
-        userViewProduct();
-        string name;
-        cout << "Enter the Product Name you want to delete .... ";
-        cin >> name;
-        int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-        for (int i = 0; i < sizeOFArray; i++)
-        {
-            if (name == productName[i])
-            {
-                productName[i] = ' ';
-                productPrice[i] = ' ';
-                Availabelquantity[i] = ' ';
-            }
-        }
-        system("cls");
-    }
-    // userViewProduct();
-    // string name;
-    // cout << "Enter the Product Name you want to delete .... ";
-    // cin >> name;
-    // int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-    // for (int i = 0; i < sizeOFArray; i++)
-    // {
-    //     if (name == productName[i])
-    //     {
-    //         productName[i] = ' ';
-    //         productPrice[i] = ' ';
-    //         Availabelquantity[i] = ' ';
-    //     }
-    // }
-    // system("cls");
-    // viewProdcut();
-}
-void viewAllProduct()
-{
-    // viewProdcut();
-    if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
-    {
-
-        int index = 1;
-        int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
-        // cout<<sizeOFArray;
-        cout << deleteIteration;
-        cout << "No."
-             << "\t"
-             << "Product Name"
-             << "\t"
-             << "productPrice"
-             << "\t"
-             << "Availabelquantity" << endl;
-        for (int i = 0; i < deleteIteration; i++)
-        {
-            if (updatedProductPrice[i] != 0)
-            {
-                int j = 1;
-                cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-                index++;
-            }
-        }
-        int x;
-        cout << "Press any key to exit.....";
-        cin >> x;
-        /* string name;
-         int price,quantity;
-            cout << "Enter the Product Name you want to delete .... ";
-         cin >> name;
-
-         cout<<"Enter the price of prodcut...";
-         cin>>price;
-
-          cout<<"Enter the quantity of product...";
-          cin>>quantity;
-         // int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-         for (int i = 0; i < deleteIteration; i++)
-         {
-             if (name == updatedProductName[i] && price==updatedProductPrice[i] && quantity==updatedAailabeQuantity[i])
-             {
-                 updatedProductName[i] = ' ';
-                 updatedProductPrice[i] = ' ';
-                 updatedAailabeQuantity[i] = ' ';
-             }
-         }
-         cout << "No."
-              << "\t"
-              << "Product Name"
-              << "\t"
-              << "productPrice"
-              << "\t"
-              << "Availabelquantity" << endl;
-         int j = 1;
-         for (int i = 0; i < deleteIteration; i++)
-         {
-             if (name!= updatedProductName[i])
-             {
-                 // continue; //add price and quantiy as well so it will easily delete
-                 cout << j << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-                 j++;
-             }
-
-         }*/
-    }
-    else
-    {
-        userViewProduct();
-        string x;
-        cout << "Press any key to exit...";
-        cin >> x;
-        system("cls");
-    }
-}
-
-void updatedProductArray(int i) // no need
-{
-    int n = 0;
-    n += i;
-    // string updatedProductName[n];
-    // int updatedAailabeQuantity[n];
-    // int updatedProductPrice[n];
-    // int arrSize = sizeof(productName) / sizeof(productName[0]);
-    // int totalUpdatedArraySize=arrSize+n;
-    for (int i = 0; i < 3; i++)
-    {
-        updatedProductName[i] = productName[i];
-        updatedProductPrice[i] = productPrice[i];
-        updatedAailabeQuantity[i] = Availabelquantity[i];
-    }
-    int index = 3;
-    for (int j = 0; j < i; j++)
-    {
-        cout << "Enter the name of product...";
-        cin >> updatedProductName[index];
-        cout << "Enter the price of product...";
-        cin >> updatedProductPrice[index];
-        cout << "enter the quantity for the product...";
-        cin >> updatedAailabeQuantity[index];
-        index++;
-    }
-    // for (int i = 0; i < totalUpdatedArraySize; i++)
-    // {
-
-    //     cout << "Enter name of product...";
-    //     cin >> productName[3];
-    //     cout << "Enter product price...";
-    //     cin >> productPrice[arrSize];
-    //     cout << "Enter quantity....";
-    //     cin >> Availabelquantity[arrSize];
-    //     arrSize++;
-    // }
     cout << "No."
          << "\t"
          << "Product Name"
@@ -605,14 +265,138 @@ void updatedProductArray(int i) // no need
          << "productPrice"
          << "\t"
          << "Availabelquantity" << endl;
-    int updatedSizeArr = 3 + n;
-    for (int i = 0; i < updatedSizeArr; i++)
+    for (int i = 0; i < defaultItemsSize; i++)
     {
 
-        cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-        index++;
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+    }
+    clearScreen();
+}
+
+void adminUpDateProduct()
+{
+    userViewProduct();
+    int idex, updatedPrice, updatedQuantity;
+    char yesOrNo = 'y';
+    while (yesOrNo != 'n')
+    {
+        cout << "Do you want to updated the product(y/n)..";
+        cin >> yesOrNo;
+        if (yesOrNo == 'y')
+        {
+            cout << "Enter the index of product you want to update.. ";
+            cin >> idex;
+            string updatedName;
+            cout << "Enter the name of product.. ";
+            cin >> updatedName;
+            productName[idex] = updatedName;
+            cout << "updated product price ";
+            cin >> updatedPrice;
+            productPrice[idex] = updatedPrice;
+            cout << "updated product quantity ";
+            cin >> updatedQuantity;
+            Availabelquantity[idex] = updatedQuantity;
+        }
+        else if (yesOrNo == 'n')
+        {
+            yesOrNo = 'n';
+            break;
+        }
+    }
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Availabelquantity" << endl;
+    for (int i = 0; i < defaultItemsSize; i++)
+    {
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
 }
+
+void deleteProduct()
+{
+    userViewProduct();
+    int idex;
+    char yesOrNo = 'y';
+    while (yesOrNo != 'n')
+    {
+        cout << "Do you want to delete the product(y/n) ";
+        cin >> yesOrNo;
+        if (yesOrNo == 'y')
+        {
+            cout << "Enter the index for deletion of product..";
+            cin >> idex;
+            for (int i = idex; i < defaultItemsSize; i++)
+            {
+                productName[i] = productName[i + 1];
+                productPrice[i] = productPrice[i + 1];
+                Availabelquantity[i] = Availabelquantity[i + 1];
+            }
+            defaultItemsSize--;
+        }
+        else if (yesOrNo == 'n')
+        {
+            yesOrNo = 'n';
+            break;
+        }
+    }
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Availabelquantity" << endl;
+    for (int i = 0; i < defaultItemsSize; i++)
+    {
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+    }
+}
+
+// void viewAllProduct()
+// {
+//     // viewProdcut();
+//     if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
+//     {
+
+//         int index = 1;
+//         int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
+//         // cout<<sizeOFArray;
+//         cout << deleteIteration;
+//         cout << "No."
+//              << "\t"
+//              << "Product Name"
+//              << "\t"
+//              << "productPrice"
+//              << "\t"
+//              << "Availabelquantity" << endl;
+//         for (int i = 0; i < deleteIteration; i++)
+//         {
+//             if (updatedProductPrice[i] != 0)
+//             {
+//                 int j = 1;
+//                 cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
+//                 index++;
+//             }
+//         }
+//         int x;
+//         cout << "Press any key to exit.....";
+//         cin >> x;
+//     }
+//     else
+//     {
+//         userViewProduct();
+//         string x;
+//         cout << "Press any key to exit...";
+//         cin >> x;
+//         system("cls");
+//     }
+// }
+
+
 // addmin-components
 
 // user-component
@@ -620,10 +404,6 @@ void userViewProduct()
 {
 
     system("cls");
-
-    int index = 1;
-    int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-    // cout<<sizeOFArray;
     cout << "No."
          << "\t"
          << "Product Name"
@@ -631,90 +411,56 @@ void userViewProduct()
          << "productPrice"
          << "\t"
          << "Availabelquantity" << endl;
-    for (int i = 0; i < sizeOFArray; i++)
+    for (int i = 0; i < defaultItemsSize; i++)
     {
-        int j = 1;
-        cout << index << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
-        index++;
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
-    string s;
-    cout << "Press any key to conntinue....";
-    cin >> s;
+    // clearScreen();
 }
 
 void userbBuyProduct()
 {
-
-    int userProductArrayIndex = 0;
-    int viewIndex = 1;
-    // viewProdcut();
     userViewProduct();
-    char x;
-    cout << "Do you want to buy any product Yes or No (y/n) ";
-    cin >> x;
-    if (x == 'y')
+    char x = 'y';
+    while (x != 'n')
     {
-        int productUserWantToBuy;
-        cout << "Enter no. of product you want to buy...";
-        cin >> productUserWantToBuy;
-        globalAddToCartLoop = productUserWantToBuy;
-
-        string userProductName[productUserWantToBuy];
-        int userProductPrice[productUserWantToBuy];
-        int userQuantity[productUserWantToBuy];
-        int userSelectedQuantity2[productUserWantToBuy];
-        for (int j = 0; j < productUserWantToBuy; j++)
+        cout << "Do you want to buy product(y/n)..";
+        cin >> x;
+        if (x == 'y')
         {
-            int userSelectedQuantity;
-            string name;
-            cout << "Enter the name of product.....";
-            cin >> name;
-            cout << "Enter No of quantity You want to buy ";
-            cin >> userSelectedQuantity;
-            int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-            for (int i = 0; i < sizeOFArray; i++)
+            int n;
+            cout << "How much product you want to buy.. ";
+            cin >> n;
+            int idex;
+            int selectedQuantity;
+            for (int i = 0; i < n; i++)
             {
-                if (userSelectedQuantity > Availabelquantity[i])
-                {
-                    cout << userSelectedQuantity << " Selected Quantity more than the available quantity please select less quantity " << Availabelquantity[i] << endl;
-                    return;
-                }
-                else if (name == productName[i] && userSelectedQuantity < userQuantity[i])
-                {
-                    userProductName[userProductArrayIndex] = productName[i];
-                    userProductPrice[userProductArrayIndex] = productPrice[i];
-                    userQuantity[userProductArrayIndex] = Availabelquantity[i];
-                    userSelectedQuantity2[userProductArrayIndex] = userSelectedQuantity;
-                    userProductArrayIndex++;
-                    break;
-                }
+                cout << "Enter the index of the product ";
+                cin >> idex;
+                cout << "Enter No. of quantity you want to buy ";
+                cin >> selectedQuantity;
+
+                userBuyProductName[userBuyProductquantity] = productName[idex];
+                userBuyProductProce[userBuyProductquantity] = productPrice[idex];
+                userBuySelectedProductQuantity[userBuyProductquantity] = selectedQuantity;
+                userBuyProductquantity++;
             }
         }
-        cout << "No."
-             << "\t"
-             << "Product Name"
-             << "\t"
-             << "productPrice"
-             << "\t"
-             << "Availabelquantity"
-             << "\t \t"
-             << "Selected Quantity" << endl;
-        for (int i = 0; i < productUserWantToBuy; i++)
+        else if (x == 'n')
         {
-            cout << viewIndex << "\t" << userProductName[i] << "\t \t" << userProductPrice[i] << "\t \t" << userQuantity[i] << "\t \t \t \t" << userSelectedQuantity2[i] << endl;
-            viewIndex++;
-        }
-        // push these code into the userbuyProductarray
-        for (int i = 0; i < productUserWantToBuy; i++)
-        {
-            userBuyProductName[i] = userProductName[i];
-            userBuyProductProce[i] = userProductPrice[i];
-            userBuySelectedProductQuantity[i] = userQuantity[i];
+            break;
         }
     }
-    else if (x == 'n')
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t \t"
+         << "Selected Quantity" << endl;
+    for (int i = 0; i < userBuyProductquantity; i++)
     {
-        // give a dicoutn special offer;
+        cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << endl;
     }
 }
 
@@ -722,105 +468,145 @@ void filterProduct()
 {
     system("cls");
 
-    //   userViewProduct();
-    string name;
-    cout << "Enter the name of Product you are looking....";
-    cin >> name;
-    if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
+    userViewProduct();
+    string filterProductNameArr[100];
+    int filterProductPriceArr[100];
+    int filterProductQuantityArr[100];
+    int totalFindProduct = 0;
+    char x = 'y';
+    while (x != 'n')
+    {
+        cout << "Do you want to search(y/n) ";
+        cin >> x;
+        if (x == 'y')
+        {
+            string name;
+            cout << "Enter the name of Product you are looking....";
+            cin >> name;
+
+            for (int j = 0; j < totalSizeOfitems; j++)
+            {
+                if (name == productName[j])
+                {
+                    filterProductNameArr[totalFindProduct] = productName[j];
+                    filterProductPriceArr[totalFindProduct] = productPrice[j];
+                    filterProductQuantityArr[totalFindProduct] = Availabelquantity[j];
+                    totalFindProduct++;
+                    break;
+                }
+            }
+        }
+        else if (x == 'n')
+        {
+            break;
+        }
+    }
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Availabelquantity" << endl;
+    for (int i = 0; i < totalFindProduct; i++)
     {
 
-        int index = 1;
-        int count = 0;
-        int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
-        // cout<<sizeOFArray;
-        // cout<<deleteIteration;
-        cout << "No."
-             << "\t"
-             << "Product Name"
-             << "\t"
-             << "productPrice"
-             << "\t"
-             << "Availabelquantity" << endl;
-        for (int i = 0; i < deleteIteration; i++)
-        {
-            if (name == updatedProductName[i])
-            {
-                int j = 1;
-                cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-                index++;
-            }
-            else
-            {
-                count++;
-            }
-        }
-        if (count == deleteIteration)
-        {
-            cout << "No result found...." << endl;
-        }
-        else
-        {
-            cout << "Result found....." << endl;
-        }
-        string x;
-        cout << "Press any key to exist...";
-        cin >> x;
+        cout<< i <<"\t"<< filterProductNameArr[i] << "\t \t" << filterProductPriceArr[i] << "\t \t" << filterProductQuantityArr[i] << endl;
+    }
+    if (totalFindProduct > 0)
+    {
+        cout << "Product found.."<<endl;
+        clearScreen();
     }
     else
     {
-        int index = 1;
-        // int sizeOFArray = sizeof(productName) / sizeof(productName[0]);
-        // // cout<<sizeOFArray;
-        // cout << "No."
-        //      << "\t"
-        //      << "Product Name"
-        //      << "\t"
-        //      << "productPrice"
-        //      << "\t"
-        //      << "Availabelquantity" << endl;
-        // for (int i = 0; i < sizeOFArray; i++)
-        // {
-        //     int j = 1;
-        //     cout << index << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
-        //     index++;
-        // }
-        string name;
-        int count = 0;
-        cout << "Enter the name of product You want to search....";
-        cin >> name;
-        int size = sizeof(productName) / sizeof(productName[0]);
-        cout << "No."
-             << "\t"
-             << "Product Name"
-             << "\t"
-             << "productPrice"
-             << "\t"
-             << "Availabelquantity" << endl;
-        for (int i = 0; i < size; i++)
-        {
-            if (name == productName[i])
-            {
-                int j = 1;
-                cout << index << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
-                index++;
-            }
-            else
-            {
-                count++;
-            }
-        }
-        if (count == size)
-        {
-            cout << "No result found....." << endl;
-        }
-
-        // userViewProduct();
-        string x;
-        cout << "Press any key to exit...";
-        cin >> x;
-        system("cls");
+        cout << "Product Not found..";
+        clearScreen();
     }
 }
+//     string name;
+//     cout << "Enter the name of Product you are looking....";
+//     cin >> name;
+//     if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
+//     {
+
+//         int index = 1;
+//         int count = 0;
+//         int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
+//         // cout<<sizeOFArray;
+//         // cout<<deleteIteration;
+//         cout << "No."
+//              << "\t"
+//              << "Product Name"
+//              << "\t"
+//              << "productPrice"
+//              << "\t"
+//              << "Availabelquantity" << endl;
+//         for (int i = 0; i < deleteIteration; i++)
+//         {
+//             if (name == updatedProductName[i])
+//             {
+//                 int j = 1;
+//                 cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
+//                 index++;
+//             }
+//             else
+//             {
+//                 count++;
+//             }
+//         }
+//         if (count == deleteIteration)
+//         {
+//             cout << "No result found...." << endl;
+//         }
+//         else
+//         {
+//             cout << "Result found....." << endl;
+//         }
+//         string x;
+//         cout << "Press any key to exist...";
+//         cin >> x;
+//     }
+//     else
+//     {
+//         int index = 1;
+//         string name;
+//         int count = 0;
+//         cout << "Enter the name of product You want to search....";
+//         cin >> name;
+//         int size = sizeof(productName) / sizeof(productName[0]);
+//         cout << "No."
+//              << "\t"
+//              << "Product Name"
+//              << "\t"
+//              << "productPrice"
+//              << "\t"
+//              << "Availabelquantity" << endl;
+//         for (int i = 0; i < size; i++)
+//         {
+//             if (name == productName[i])
+//             {
+//                 int j = 1;
+//                 cout << index << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+//                 index++;
+//             }
+//             else
+//             {
+//                 count++;
+//             }
+//         }
+//         if (count == size)
+//         {
+//             cout << "No result found....." << endl;
+//         }
+
+//         // userViewProduct();
+//         string x;
+//         cout << "Press any key to exit...";
+//         cin >> x;
+//         system("cls");
+//     }
+// }
 
 void addToCart()
 {
@@ -890,7 +676,7 @@ void viewCart()
         cin >> x;
         if (x == 'y')
         {
-            buyProductStatus="Paid";
+            buyProductStatus = "Paid";
             cout << "Your have the following quantity..." << endl;
             cout << "No."
                  << "\t"
@@ -921,55 +707,57 @@ void viewCart()
 
 void userAuth()
 {
-    int size = userAuthArray->length();
-    if (size != 0)
+    int n;
+    loginAndSingUpMenu();
+    cout << "Enter a option...";
+    cin >> n;
+    if (n == 1)
     {
-        // user();
+        userRegister();
+    }
+    else if (n == 2)
+    {
         userLogin();
     }
     else
     {
-
-        userRegister();
+        cout << "Please Enter a correct number";
     }
-    //   else{
-    //     cout<<"Pleasse Register first...."<<endl;
-    //     string name;
-    //     cout<<"Enter your name....";
-    //     getline(cin,name);
-    //      string password;
-    //      cout<<"Enter password in lower case only...";
-    //      cin>>password;
-    //      userAuthArray[0]=name;
-    //      userAuthArray[1]=password;
-    //      cout<<"Successfully Register...";
-    //      if(size!=0)
-    //      {
-    //         user();
-    //      }
-    //   }
+}
+
+int loginAndSingUpMenu()
+{
+    cout << "************************************************************************" << endl;
+    cout << "****************************** WELCOME *********************************" << endl;
+    cout << "************************************************************************" << endl;
+    cout << "1 SingUp" << endl;
+    cout << "2 SingIn" << endl;
 }
 
 void userRegister()
 {
-    cout << "Pleasse Register first...." << endl;
+    cout << "Pleasse Register" << endl;
     string name;
     cout << "Enter your name....";
     cin >> name;
     string password;
-    cout << "Enter password in lower case only...";
+    cout << "Enter password ...";
     cin >> password;
-    userAuthArray[0] = name;
-    userAuthArray[1] = password;
+    userAuthArrayName[totalNumberOfUser] = name;
+    userAuthArrayPassWord[totalNumberOfUser] = password;
     cout << "Successfully Register...";
+    totalNumberOfUser++;
     Sleep(700);
-    string x;
-    cout << "Press any key to continue..";
-    cin >> x;
+    clearScreen();
 }
 
 void userLogin()
 {
+    for (int i = 0; i < totalNumberOfUser; i++)
+    {
+        cout << userAuthArrayName[i] << "\t";
+        cout << userAuthArrayPassWord[i];
+    }
 
     cout << "Please login first..." << endl;
     string name;
@@ -978,42 +766,51 @@ void userLogin()
     string password;
     cout << "Enter your password...";
     cin >> password;
-    if (userAuthArray[0] == name && userAuthArray[1] == password)
+    cout << totalNumberOfUser << endl;
+    bool isUserExist = false;
+    for (int i = 0; i < totalNumberOfUser; i++)
     {
-        cout << "Loign successfully...";
-        string s;
-        cout << "Press any key to continue...";
-        cin >> s;
-        //  Sleep(700);
-        user();
+        if (userAuthArrayName[i] == name && userAuthArrayPassWord[i] == password)
+        {
+            isUserExist = true;
+        }
     }
-    else
+    if (isUserExist == true)
     {
-        cout << "Enter correct username or Passowrd..." << endl;
-        string x;
-        cout << "Press any key to try again..";
-        cin >> x;
+        clearScreen();
+        user(name);
+    }
+    else if (isUserExist == false)
+    {
+        cout << "Plaese Enter corrrect userName Or Password.." << endl;
+        clearScreen();
     }
 }
 
 void adminAuth()
 {
-    int size = adminAuthArray->length();
-    if (size != 0)
+    int n;
+    loginAndSingUpMenu();
+    cout << "Enter option....";
+    cin >> n;
+    if (n == 1)
     {
-        // user();
+        adminRegister();
+    }
+    else if (n == 2)
+    {
         adminLogin();
     }
     else
     {
-
-        adminRegister();
+        cout << "Enter correct number....";
     }
 }
 
 void adminLogin()
 {
-    cout << "Please login first..." << endl;
+
+    cout << "Please login " << endl;
     string name;
     cout << "Enter Your Name...";
     cin >> name;
@@ -1024,39 +821,75 @@ void adminLogin()
     {
         cout << "Loign successfully...";
         Sleep(700);
-        string s;
-        cout << "Press any key to continue...";
-        cin >> s;
-        admin();
+        clearScreen();
+        admin(name);
     }
     else
     {
         cout << "Enter correct username of Passowrd..." << endl;
-        string x;
-        cout << "Press any key to try again..";
-        cin >> x;
+        clearScreen();
     }
 }
 void adminRegister()
 {
-    cout << "Pleasse Register first...." << endl;
+    cout << "Pleasse Register...." << endl;
     string name;
     cout << "Enter your name....";
     cin >> name;
     string password;
-    cout << "Enter password in lower case only...";
+    cout << "Enter password ...";
     cin >> password;
+    // totalNumberOfAdmin++;
+    // if (totalNumberOfAdmin == 1)
+    // {
     adminAuthArray[0] = name;
     adminAuthArray[1] = password;
-    cout << "Successfully Register...";
+
+    cout << "Successfully Register..." << endl;
     Sleep(700);
-    string x;
-    cout << "Press any key to continue..";
-    cin >> x;
+    clearScreen();
+    // }
+    // else if (totalNumberOfAdmin > 1)
+    // {
+    //     cout << "Admin is already registered..." << endl;
+    //     clearScreen();
+    // }
+}
+
+void listOfLoginUsers()
+{
+    system("cls");
+    cout << "      *********************************************************" << endl;
+    cout << "      *     Total Numnber Of User : " << totalNumberOfUser << "   *" << endl;
+    cout << "      *********************************************************" << endl;
+    if (totalNumberOfUser > 0)
+    {
+        cout << "No."
+             << "\t"
+             << "UserName Name"
+             << "\t"
+             << "User Password" << endl;
+        for (int i = 0; i < totalNumberOfUser; i++)
+        {
+            cout << i + 1
+                 << "\t"
+                 << userAuthArrayName[i]
+                 << "\t"
+                 << userAuthArrayPassWord[i] << endl;
+        }
+        clearScreen();
+    }
+    else
+    {
+        cout << "You don't have any user right now..." << endl;
+        clearScreen();
+    }
 }
 
 void userChangeProfileSetting()
 {
+    bool isUSerAuthenciate = false;
+    int userIndex;
     cout << "Enter Your Credentials...";
     string name;
     cout << "Enter your name....";
@@ -1064,7 +897,21 @@ void userChangeProfileSetting()
     string password;
     cout << "Enter your Password...";
     cin >> password;
-    if (userAuthArray[0] == name && userAuthArray[1] == password)
+    for (int i = 0; i < totalNumberOfUser; i++)
+    {
+        if (userAuthArrayName[i] == name && userAuthArrayPassWord[i] == password)
+        {
+            userIndex = i;
+            isUSerAuthenciate = true;
+        }
+        // else
+        // {
+        //     cout << "Please Enter correct password Or name...";
+        //     Sleep(700);
+        //     clearScreen();
+        // }
+    }
+    if (isUSerAuthenciate == true)
     {
         cout << "Please updated your credentials.." << endl;
         string name2, password2;
@@ -1072,15 +919,17 @@ void userChangeProfileSetting()
         cin >> name2;
         cout << "Enter your password...";
         cin >> password2;
-        userAuthArray[0] = name2;
-        userAuthArray[1] = password2;
+        userAuthArrayName[userIndex] = name2;
+        userAuthArrayPassWord[userIndex] = password2;
         cout << "Your Credentials updated successfully...";
         Sleep(700);
+        clearScreen();
     }
-    else
+    else if (isUSerAuthenciate == false)
     {
         cout << "Please Enter correct password Or name...";
         Sleep(700);
+        clearScreen();
     }
 }
 
@@ -1115,8 +964,8 @@ void adminChangeProfileSetting()
 
 void userLogout()
 {
-    userAuthArray[0] = " ";
-    userAuthArray[1] = " ";
+    userAuthArrayName[0] = " ";
+    userAuthArrayPassWord[1] = " ";
     cout << "Account logout successfully..." << endl;
     Sleep(700);
 }
@@ -1126,6 +975,7 @@ void adminLogout()
     adminAuthArray[1] = " ";
     cout << "Account logout successfully..." << endl;
     Sleep(700);
+    clearScreen();
 }
 
 void userPurchasedProductList()
