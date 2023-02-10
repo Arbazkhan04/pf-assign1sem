@@ -1,9 +1,12 @@
 #include <iostream>
+#include <conio.h>
 #include <string>
 #include <windows.h>
 using namespace std;
+string buyProductStatus = "UnPaid";
 int deleteIteration = 0;
 int globalAddToCartLoop = 0;
+void clearScreen();
 void eCommerenceTitle();
 void eCommerenceMenu();
 void adminAuth();
@@ -18,7 +21,7 @@ void userLogout();
 void adminLogout();
 void viewProdcut(); // admin-view
 // void uerViewProduct();
-void adminUpDateProduct();//add this functionality later on ....
+void adminUpDateProduct(); // add this functionality later on ....
 void updatedProductArray(int);
 void admin();
 void user();
@@ -41,7 +44,6 @@ int Availabelquantity[] = {32, 54, 23};
 int productPrice[] = {25, 30, 60};
 string userAuthArray[1];
 string adminAuthArray[1];
-
 int main()
 {
     system("cls");
@@ -77,7 +79,7 @@ void eCommerenceMenu()
 
         if (number == 1)
         {
-            
+
             userAuth();
             // user();
         }
@@ -152,11 +154,11 @@ void admin()
             system("cls");
             viewProdcut();
         }
-        else if(number==6)
+        else if (number == 6)
         {
             adminChangeProfileSetting();
         }
-        else if(number==7)
+        else if (number == 7)
         {
             adminLogout();
         }
@@ -217,19 +219,19 @@ void user()
         {
             addToCart();
         }
-        else if(number==5)
+        else if (number == 5)
         {
             viewCart();
         }
-        else if(number==6)
+        else if (number == 6)
         {
             userPurchasedProductList();
         }
-        else if(number==7)
+        else if (number == 7)
         {
             userChangeProfileSetting();
         }
-        else if(number==8)
+        else if (number == 8)
         {
             userLogout();
         }
@@ -636,8 +638,8 @@ void userViewProduct()
         index++;
     }
     string s;
-    cout<<"Press any key to conntinue....";
-    cin>>s;
+    cout << "Press any key to conntinue....";
+    cin >> s;
 }
 
 void userbBuyProduct()
@@ -822,8 +824,8 @@ void filterProduct()
 
 void addToCart()
 {
-  
-     cout << "No."
+
+    cout << "No."
          << "\t"
          << "Product Name"
          << "\t"
@@ -831,32 +833,31 @@ void addToCart()
          << "\t"
          << "Availabelquantity" << endl;
     int index = 1;
-    if(globalAddToCartLoop>0)
+    if (globalAddToCartLoop > 0)
     {
-      for (int i = 0; i < globalAddToCartLoop; i++)
-    {
+        for (int i = 0; i < globalAddToCartLoop; i++)
+        {
 
-        cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
-        index++;
-    }
-    char x;
-    cout << "You have buy " << globalAddToCartLoop << " product do you want to add these product into the cart(y/n)..." << endl;
-    cin >> x;
-    if (x == 'y')
-    {
-        cout << "Successfully add to the cart..."; // later on i will implement the logic
-    }
-    else if (x == 'n')
-    {
-        cout << "Successfully remove from your card...." << endl;
-    }
+            cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
+            index++;
+        }
+        char x;
+        cout << "You have buy " << globalAddToCartLoop << " product do you want to add these product into the cart(y/n)..." << endl;
+        cin >> x;
+        if (x == 'y')
+        {
+            cout << "Successfully add to the cart..."; // later on i will implement the logic
+        }
+        else if (x == 'n')
+        {
+            cout << "Successfully remove from your card...." << endl;
+        }
     }
     else
     {
-        cout<<"First Buy Product.."<<endl;
+        cout << "First Buy Product.." << endl;
     }
-   
-   
+
     string s;
     cout << "Press any key to exit....";
     cin >> s;
@@ -864,258 +865,280 @@ void addToCart()
 
 void viewCart()
 {
-    int lenght=userBuyProductName->length();
+    int lenght = userBuyProductName->length();
     // cout<<lenght;
-    if(lenght!=0)
+    if (lenght != 0)
     {
-      cout<<"Your have the following quantity..."<<endl;
-          cout << "No."
-         << "\t"
-         << "Product Name"
-         << "\t"
-         << "productPrice"
-         << "\t"
-         << "Availabelquantity" << endl;
-         int index=1;
-      for(int i=0;i<globalAddToCartLoop;i++)
-      {
-          cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
-          index++;
-      }
-      char x;
-      cout<<"Do You want to Pay now...";
-      cin>>x;
-      if(x=='y')
-      {
-        cout<<"Successfully paid..."<<endl;
-      }
-      else
-      {
-         cout<<"Pending....."<<endl;
-      }
-     
+        cout << "Your have the following quantity..." << endl;
+        cout << "No."
+             << "\t"
+             << "Product Name"
+             << "\t"
+             << "productPrice"
+             << "\t"
+             << "Availabelquantity"
+             << "\t"
+             << "Status" << endl;
+        int index = 1;
+        for (int i = 0; i < globalAddToCartLoop; i++)
+        {
+            cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << buyProductStatus << endl;
+            index++;
+        }
+        char x;
+        cout << "Do You want to Pay now(y/n)...";
+        cin >> x;
+        if (x == 'y')
+        {
+            buyProductStatus="Paid";
+            cout << "Your have the following quantity..." << endl;
+            cout << "No."
+                 << "\t"
+                 << "Product Name"
+                 << "\t"
+                 << "productPrice"
+                 << "\t"
+                 << "Availabelquantity"
+                 << "\t"
+                 << "Status" << endl;
+            for (int i = 0; i < globalAddToCartLoop; i++)
+            {
+                cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << buyProductStatus << endl;
+                index++;
+            }
+            cout << "Successfully paid..." << endl;
+        }
+        else
+        {
+            cout << "Pending....." << endl;
+        }
     }
-    else 
+    else
     {
-        cout<<"Your cart is empty..."<<endl;
+        cout << "Your cart is empty..." << endl;
     }
 }
 
 void userAuth()
 {
-  int size=userAuthArray->length();
-  if(size!=0)
-  {
-    // user();
-    userLogin();
-  }
-  else{
+    int size = userAuthArray->length();
+    if (size != 0)
+    {
+        // user();
+        userLogin();
+    }
+    else
+    {
 
-    userRegister();
-
-  }
-//   else{
-//     cout<<"Pleasse Register first...."<<endl;
-//     string name;
-//     cout<<"Enter your name....";
-//     getline(cin,name);
-//      string password;
-//      cout<<"Enter password in lower case only...";
-//      cin>>password;
-//      userAuthArray[0]=name;
-//      userAuthArray[1]=password;
-//      cout<<"Successfully Register...";
-//      if(size!=0)
-//      {
-//         user();
-//      }
-//   }
+        userRegister();
+    }
+    //   else{
+    //     cout<<"Pleasse Register first...."<<endl;
+    //     string name;
+    //     cout<<"Enter your name....";
+    //     getline(cin,name);
+    //      string password;
+    //      cout<<"Enter password in lower case only...";
+    //      cin>>password;
+    //      userAuthArray[0]=name;
+    //      userAuthArray[1]=password;
+    //      cout<<"Successfully Register...";
+    //      if(size!=0)
+    //      {
+    //         user();
+    //      }
+    //   }
 }
 
 void userRegister()
 {
-    cout<<"Pleasse Register first...."<<endl;
+    cout << "Pleasse Register first...." << endl;
     string name;
-    cout<<"Enter your name....";
-    cin>>name;
-     string password;
-     cout<<"Enter password in lower case only...";
-     cin>>password;
-     userAuthArray[0]=name;
-     userAuthArray[1]=password;
-     cout<<"Successfully Register...";
-     Sleep(700);
-     string x;
-     cout<<"Press any key to continue..";
-     cin>>x;
+    cout << "Enter your name....";
+    cin >> name;
+    string password;
+    cout << "Enter password in lower case only...";
+    cin >> password;
+    userAuthArray[0] = name;
+    userAuthArray[1] = password;
+    cout << "Successfully Register...";
+    Sleep(700);
+    string x;
+    cout << "Press any key to continue..";
+    cin >> x;
 }
 
 void userLogin()
 {
 
-    cout<<"Please login first..."<<endl;
+    cout << "Please login first..." << endl;
     string name;
-    cout<<"Enter Your Name...";
-    cin>>name;
+    cout << "Enter Your Name...";
+    cin >> name;
     string password;
-    cout<<"Enter your password...";
-    cin>>password;
-   if(userAuthArray[0]==name && userAuthArray[1]==password)
-   {
-     cout<<"Loign successfully...";
-     string s;
-     cout<<"Press any key to continue...";
-     cin>>s;
-    //  Sleep(700);
-     user();
-   }
-   else{
-     cout<<"Enter correct username or Passowrd..."<<endl;
-     string x;
-     cout<<"Press any key to try again..";
-     cin>>x;
-   }
+    cout << "Enter your password...";
+    cin >> password;
+    if (userAuthArray[0] == name && userAuthArray[1] == password)
+    {
+        cout << "Loign successfully...";
+        string s;
+        cout << "Press any key to continue...";
+        cin >> s;
+        //  Sleep(700);
+        user();
+    }
+    else
+    {
+        cout << "Enter correct username or Passowrd..." << endl;
+        string x;
+        cout << "Press any key to try again..";
+        cin >> x;
+    }
 }
 
 void adminAuth()
 {
-    int size=adminAuthArray->length();
-  if(size!=0)
-  {
-    // user();
-    adminLogin();
-  }
-  else{
+    int size = adminAuthArray->length();
+    if (size != 0)
+    {
+        // user();
+        adminLogin();
+    }
+    else
+    {
 
-    adminRegister();
-
-  } 
+        adminRegister();
+    }
 }
 
 void adminLogin()
 {
-     cout<<"Please login first..."<<endl;
+    cout << "Please login first..." << endl;
     string name;
-    cout<<"Enter Your Name...";
-    cin>>name;
+    cout << "Enter Your Name...";
+    cin >> name;
     string password;
-    cout<<"Enter your password...";
-    cin>>password;
-   if(adminAuthArray[0]==name && adminAuthArray[1]==password)
-   {
-     cout<<"Loign successfully...";
-     Sleep(700);
-     string s;
-     cout<<"Press any key to continue...";
-     cin>>s;
-     admin();
-   }
-    else{
-     cout<<"Enter correct username of Passowrd..."<<endl;
-     string x;
-     cout<<"Press any key to try again..";
-     cin>>x;
-   }
+    cout << "Enter your password...";
+    cin >> password;
+    if (adminAuthArray[0] == name && adminAuthArray[1] == password)
+    {
+        cout << "Loign successfully...";
+        Sleep(700);
+        string s;
+        cout << "Press any key to continue...";
+        cin >> s;
+        admin();
+    }
+    else
+    {
+        cout << "Enter correct username of Passowrd..." << endl;
+        string x;
+        cout << "Press any key to try again..";
+        cin >> x;
+    }
 }
 void adminRegister()
 {
-     cout<<"Pleasse Register first...."<<endl;
-     string name;
-    cout<<"Enter your name....";
-    cin>>name;
-     string password;
-     cout<<"Enter password in lower case only...";
-     cin>>password;
-     adminAuthArray[0]=name;
-     adminAuthArray[1]=password;
-     cout<<"Successfully Register...";
-     Sleep(700);
-      string x;
-     cout<<"Press any key to continue..";
-     cin>>x;
+    cout << "Pleasse Register first...." << endl;
+    string name;
+    cout << "Enter your name....";
+    cin >> name;
+    string password;
+    cout << "Enter password in lower case only...";
+    cin >> password;
+    adminAuthArray[0] = name;
+    adminAuthArray[1] = password;
+    cout << "Successfully Register...";
+    Sleep(700);
+    string x;
+    cout << "Press any key to continue..";
+    cin >> x;
 }
 
 void userChangeProfileSetting()
 {
-    cout<<"Enter Your Credentials...";
+    cout << "Enter Your Credentials...";
     string name;
-    cout<<"Enter your name....";
-    cin>>name;
+    cout << "Enter your name....";
+    cin >> name;
     string password;
-    cout<<"Enter your Password...";
-    cin>>password;
-    if(userAuthArray[0]==name &&  userAuthArray[1]==password)
+    cout << "Enter your Password...";
+    cin >> password;
+    if (userAuthArray[0] == name && userAuthArray[1] == password)
     {
-      cout<<"Please updated your credentials.."<<endl;
-      string name2,password2;
-      cout<<"Enter your name...";
-      cin>>name2;
-      cout<<"Enter your password...";
-      cin>>password2;
-      userAuthArray[0]=name2;
-      userAuthArray[1]=password2;
-      cout<<"Your Credentials updated successfully...";
-      Sleep(700);
-
-
-    }
-    else 
-    {
-        cout<<"Please Enter correct password Or name...";
+        cout << "Please updated your credentials.." << endl;
+        string name2, password2;
+        cout << "Enter your name...";
+        cin >> name2;
+        cout << "Enter your password...";
+        cin >> password2;
+        userAuthArray[0] = name2;
+        userAuthArray[1] = password2;
+        cout << "Your Credentials updated successfully...";
         Sleep(700);
     }
-
+    else
+    {
+        cout << "Please Enter correct password Or name...";
+        Sleep(700);
+    }
 }
 
 void adminChangeProfileSetting()
 {
-     cout<<"Enter Your Credentials...";
+    cout << "Enter Your Credentials...";
     string name;
-    cout<<"Enter your name....";
-    cin>>name;
+    cout << "Enter your name....";
+    cin >> name;
     string password;
-    cout<<"Enter your Password...";
-    cin>>password;
-    if(adminAuthArray[0]==name &&  adminAuthArray[1]==password)
+    cout << "Enter your Password...";
+    cin >> password;
+    if (adminAuthArray[0] == name && adminAuthArray[1] == password)
     {
-      cout<<"Please updated your credentials.."<<endl;
-      string name2,password2;
-      cout<<"Enter your name...";
-      cin>>name2;
-      cout<<"Enter your password...";
-      cin>>password2;
-      adminAuthArray[0]=name2;
-      adminAuthArray[1]=password2;
-      cout<<"Your Credentials updated successfully...";
-      Sleep(700);
-
-
+        cout << "Please updated your credentials.." << endl;
+        string name2, password2;
+        cout << "Enter your name...";
+        cin >> name2;
+        cout << "Enter your password...";
+        cin >> password2;
+        adminAuthArray[0] = name2;
+        adminAuthArray[1] = password2;
+        cout << "Your Credentials updated successfully...";
+        Sleep(700);
     }
-    else 
+    else
     {
-        cout<<"Please Enter correct password Or name...";
+        cout << "Please Enter correct password Or name...";
         Sleep(700);
     }
 }
 
 void userLogout()
 {
-    userAuthArray[0]=" ";
-    userAuthArray[1]=" ";
-    cout<<"Account logout successfully..."<<endl;
+    userAuthArray[0] = " ";
+    userAuthArray[1] = " ";
+    cout << "Account logout successfully..." << endl;
     Sleep(700);
-
 }
 void adminLogout()
 {
-   adminAuthArray[0]=" ";
-    adminAuthArray[1]=" ";
-    cout<<"Account logout successfully..."<<endl;
-    Sleep(700); 
+    adminAuthArray[0] = " ";
+    adminAuthArray[1] = " ";
+    cout << "Account logout successfully..." << endl;
+    Sleep(700);
 }
 
 void userPurchasedProductList()
 {
     viewCart();
 }
+
+// clear screen
+void clearScreen()
+{
+    cout << "Press any key to continue...";
+    getch();
+    system("cls");
+}
+// clear screen
 // user-component
