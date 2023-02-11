@@ -83,18 +83,53 @@
 using namespace std;
 int main()
 {
-  string arr[3]={"abc","adc","amc"};
-  int arr2[3]={1,2,3};
-  int del=1;
-  for(int i=del;i<3;i++)
-  {
-     arr[i]=arr[i+1];
-     arr2[i]=arr2[i+1];
-  }
-  for(int i=0;i<2;i++)
-  {
-    cout<<arr[i]<<" "<<endl;
-    cout<<arr2[i]<<" "<<endl;
+  string proName[3]={"abc","adc","amc"};
+  int proQuantity[3]={1,2,3};
+  int price[3]={23,43,53};
+  int rapperQ;
+  int rapperP;
+  string Name=" ";
+  
+  
 
+  for(int i=0;i<3;i++)
+  {
+    
+    for(int j=i+1;j<3;j++)
+    {
+      if(proQuantity[i]<proQuantity[j])
+      {
+        rapperQ=proQuantity[i];
+        proQuantity[i]=proQuantity[j];
+        proQuantity[j]=rapperQ;
+        cout<<"yes";
+
+        Name=proName[i];
+        proName[i]=proName[j];
+        proName[j]=Name;
+        rapperP=price[i];
+        price[i]=price[j];
+        price[j]=rapperP;
+
+
+      }
+    }
   }
+  for(int i=0;i<3;i++)
+  {
+    cout<<proQuantity[i]<<" "<<proName[i]<<" "<<price[i];
+  }
+
+  // int del=1;
+  // for(int i=del;i<3;i++)
+  // {
+  //    arr[i]=arr[i+1];
+  //    arr2[i]=arr2[i+1];
+  // }
+  // for(int i=0;i<2;i++)
+  // {
+  //   cout<<arr[i]<<" "<<endl;
+  //   cout<<arr2[i]<<" "<<endl;
+
+  // }
 }

@@ -3,9 +3,7 @@
 #include <string>
 #include <windows.h>
 using namespace std;
-string buyProductStatus = "UnPaid";
 int defaultItemsSize = 3;
-int globalAddToCartLoop = 0;
 int totalNumberOfUser = 0;
 void clearScreen();
 int loginAndSingUpMenu();
@@ -23,29 +21,28 @@ void userLogout();
 void adminLogout();
 void CreateProduct(); // admin-view
 void listOfLoginUsers();
-void adminUpDateProduct(); // add this functionality later on ....
-void updatedProductArray(int);
+void adminUpDateProduct();
+void productAnalystics();
 void admin(string);
 void user(string);
 void deleteProduct();
-void viewAllProduct();
 void userViewProduct();
 void userbBuyProduct();
 void filterProduct();
 void addToCart();
 void viewCart();
+void viewCartOption();
 void userPurchasedProductList();
-
-// string updatedProductName[100];
-// int updatedAailabeQuantity[100];
-// int updatedProductPrice[100];
+void totalSoldProduct();
+int purchasedProductBill(int, int);
+void trendingProducts();
 
 int userBuyProductquantity = 0;
 const int userBuyProductArrSize = 100;
+string userBuyProductStatus[userBuyProductArrSize];
 string userBuyProductName[userBuyProductArrSize];
 int userBuySelectedProductQuantity[userBuyProductArrSize];
 int userBuyProductProce[userBuyProductArrSize];
-
 const int totalSizeOfitems = 100;
 string productName[totalSizeOfitems] = {"Shirt", "Pant", "Bat"};
 int Availabelquantity[totalSizeOfitems] = {32, 54, 23};
@@ -53,10 +50,10 @@ int productPrice[totalSizeOfitems] = {25, 30, 60};
 string userAuthArrayName[100];
 string userAuthArrayPassWord[100];
 string adminAuthArray[1];
+
 int main()
 {
     system("cls");
-    // eCommerenceTitle();
     eCommerenceMenu();
 }
 
@@ -120,15 +117,16 @@ void admin(string name)
         cout << "#  4 View All Product                                   #" << endl;
         cout << "#  5 Total Sold Product                                 #" << endl;
         cout << "#  6 Total User List                                    #" << endl;
-        cout << "#  7 Change Profile Setting                             #" << endl;
-        cout << "#  8 Logout                                             #" << endl;
-        cout << "#  9 Exit                                               #" << endl;
+        cout << "#  7 Product Analystics                                 #" << endl;
+        cout << "#  8 Change Profile Setting                             #" << endl;
+        cout << "#  9 Logout                                             #" << endl;
+        cout << "#  10 Exit                                              #" << endl;
         cout << "#########################################################" << endl;
 
         cout << "Enter the code For the product......";
         cin >> number;
 
-        if (number == 9)
+        if (number == 10)
         {
             break;
         }
@@ -142,7 +140,11 @@ void admin(string name)
         }
         else if (number == 4)
         {
-            viewAllProduct();
+            userViewProduct();
+        }
+        else if (number == 5)
+        {
+            totalSoldProduct();
         }
         else if (number == 1)
         {
@@ -155,9 +157,13 @@ void admin(string name)
         }
         else if (number == 7)
         {
-            adminChangeProfileSetting();
+            productAnalystics();
         }
         else if (number == 8)
+        {
+            adminChangeProfileSetting();
+        }
+        else if (number == 9)
         {
             adminLogout();
         }
@@ -177,12 +183,13 @@ void user(string name)
         cout << "#  1 View Product                                       #" << endl;
         cout << "#  2 Buy product                                        #" << endl;
         cout << "#  3 filtter  product                                   #" << endl;
-        cout << "#  4 Add To Cart                                        #" << endl;
-        cout << "#  5 View Cart                                          #" << endl;
+        cout << "#  4 View Cart                                          #" << endl;
+        cout << "#  5 Add to Cart                                        #" << endl;
         cout << "#  6 Purchased Product List                             #" << endl;
-        cout << "#  7 Change Profile Setting                             #" << endl;
-        cout << "#  8 Logout                                             #" << endl;
-        cout << "#  9 Exit                                               #" << endl;
+        cout << "#  7 Treding Product List                               #" << endl;
+        cout << "#  8 Change Profile Setting                             #" << endl;
+        cout << "#  9 Logout                                             #" << endl;
+        cout << "#  10 Exit                                               #" << endl;
         cout << "#########################################################" << endl;
         cout << "Enter The code For the commpoonet...";
         cin >> number;
@@ -200,11 +207,11 @@ void user(string name)
         }
         else if (number == 4)
         {
-            addToCart();
+            viewCart();
         }
         else if (number == 5)
         {
-            viewCart();
+            addToCart();
         }
         else if (number == 6)
         {
@@ -212,13 +219,17 @@ void user(string name)
         }
         else if (number == 7)
         {
-            userChangeProfileSetting();
+            trendingProducts();
         }
         else if (number == 8)
         {
-            userLogout();
+            userChangeProfileSetting();
         }
         else if (number == 9)
+        {
+            userLogout();
+        }
+        else if (number == 10)
         {
             break;
         }
@@ -356,47 +367,6 @@ void deleteProduct()
     }
 }
 
-// void viewAllProduct()
-// {
-//     // viewProdcut();
-//     if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
-//     {
-
-//         int index = 1;
-//         int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
-//         // cout<<sizeOFArray;
-//         cout << deleteIteration;
-//         cout << "No."
-//              << "\t"
-//              << "Product Name"
-//              << "\t"
-//              << "productPrice"
-//              << "\t"
-//              << "Availabelquantity" << endl;
-//         for (int i = 0; i < deleteIteration; i++)
-//         {
-//             if (updatedProductPrice[i] != 0)
-//             {
-//                 int j = 1;
-//                 cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-//                 index++;
-//             }
-//         }
-//         int x;
-//         cout << "Press any key to exit.....";
-//         cin >> x;
-//     }
-//     else
-//     {
-//         userViewProduct();
-//         string x;
-//         cout << "Press any key to exit...";
-//         cin >> x;
-//         system("cls");
-//     }
-// }
-
-
 // addmin-components
 
 // user-component
@@ -443,12 +413,74 @@ void userbBuyProduct()
                 userBuyProductName[userBuyProductquantity] = productName[idex];
                 userBuyProductProce[userBuyProductquantity] = productPrice[idex];
                 userBuySelectedProductQuantity[userBuyProductquantity] = selectedQuantity;
+                userBuyProductStatus[userBuyProductquantity] = "UnPaid";
                 userBuyProductquantity++;
             }
         }
         else if (x == 'n')
         {
-            break;
+            // Trending Algorithm
+            if (userBuyProductquantity > 4)
+            {
+                cout << "You might be interested in these products..";
+                int prodQuantity, proPrice;
+                string prName;
+                for (int i = 0; i < userBuyProductquantity; i++)
+                {
+                    for (int j = i + 1; j < userBuyProductquantity; j++)
+                    {
+                        if (userBuySelectedProductQuantity[i] < userBuySelectedProductQuantity[j])
+                        {
+                            prName = userBuyProductName[i];
+                            userBuyProductName[i] = userBuyProductName[j];
+                            userBuyProductName[j] = prName;
+
+                            proPrice = userBuyProductProce[i];
+                            userBuyProductProce[i] = userBuyProductProce[j];
+                            userBuyProductProce[j] = proPrice;
+
+                            prodQuantity = userBuySelectedProductQuantity[i];
+                            userBuySelectedProductQuantity[i] = userBuySelectedProductQuantity[j];
+                            userBuySelectedProductQuantity[j] = prodQuantity;
+                        }
+                    }
+                }
+                cout << "Trending Products..." << endl;
+                cout << "No."
+                     << "\t"
+                     << "Product Name"
+                     << "\t"
+                     << "productPrice"
+                     << "\t"
+                     << "Sold Quantity"
+                     << "\t" << endl;
+                for (int i = 0; i < 2; i++)
+                {
+                    cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+                }
+                cout << "Demanded Product! Do you want to buy?(y/n) ";
+                cin >> x;
+                int index, quantity2;
+                if (x == 'y')
+                {
+                    cout << "Enter the index of the product..";
+                    cin >> index;
+                    userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
+                    userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
+                    cout << "Enter Quantity..";
+                    cin >> quantity2;
+                    userBuySelectedProductQuantity[index - 1] = quantity2;
+                    userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
+                    userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+
+                    userBuyProductquantity++;
+                }
+                else
+                {
+                    clearScreen();
+                    break;
+                }
+            }
         }
     }
     cout << "No."
@@ -457,10 +489,12 @@ void userbBuyProduct()
          << "\t"
          << "productPrice"
          << "\t \t"
-         << "Selected Quantity" << endl;
+         << "Selected Quantity"
+         << "\t"
+         << "Status" << endl;
     for (int i = 0; i < userBuyProductquantity; i++)
     {
-        cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << endl;
+        cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << userBuyProductStatus[i] << endl;
     }
 }
 
@@ -511,11 +545,11 @@ void filterProduct()
     for (int i = 0; i < totalFindProduct; i++)
     {
 
-        cout<< i <<"\t"<< filterProductNameArr[i] << "\t \t" << filterProductPriceArr[i] << "\t \t" << filterProductQuantityArr[i] << endl;
+        cout << i << "\t" << filterProductNameArr[i] << "\t \t" << filterProductPriceArr[i] << "\t \t" << filterProductQuantityArr[i] << endl;
     }
     if (totalFindProduct > 0)
     {
-        cout << "Product found.."<<endl;
+        cout << "Product found.." << endl;
         clearScreen();
     }
     else
@@ -524,89 +558,6 @@ void filterProduct()
         clearScreen();
     }
 }
-//     string name;
-//     cout << "Enter the name of Product you are looking....";
-//     cin >> name;
-//     if (productName[0] == updatedProductName[0] || productName[1] == updatedProductName[1])
-//     {
-
-//         int index = 1;
-//         int count = 0;
-//         int sizeOFArray = sizeof(updatedProductName) / sizeof(updatedProductPrice[0]);
-//         // cout<<sizeOFArray;
-//         // cout<<deleteIteration;
-//         cout << "No."
-//              << "\t"
-//              << "Product Name"
-//              << "\t"
-//              << "productPrice"
-//              << "\t"
-//              << "Availabelquantity" << endl;
-//         for (int i = 0; i < deleteIteration; i++)
-//         {
-//             if (name == updatedProductName[i])
-//             {
-//                 int j = 1;
-//                 cout << index << "\t" << updatedProductName[i] << "\t \t" << updatedProductPrice[i] << "\t \t" << updatedAailabeQuantity[i] << endl;
-//                 index++;
-//             }
-//             else
-//             {
-//                 count++;
-//             }
-//         }
-//         if (count == deleteIteration)
-//         {
-//             cout << "No result found...." << endl;
-//         }
-//         else
-//         {
-//             cout << "Result found....." << endl;
-//         }
-//         string x;
-//         cout << "Press any key to exist...";
-//         cin >> x;
-//     }
-//     else
-//     {
-//         int index = 1;
-//         string name;
-//         int count = 0;
-//         cout << "Enter the name of product You want to search....";
-//         cin >> name;
-//         int size = sizeof(productName) / sizeof(productName[0]);
-//         cout << "No."
-//              << "\t"
-//              << "Product Name"
-//              << "\t"
-//              << "productPrice"
-//              << "\t"
-//              << "Availabelquantity" << endl;
-//         for (int i = 0; i < size; i++)
-//         {
-//             if (name == productName[i])
-//             {
-//                 int j = 1;
-//                 cout << index << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
-//                 index++;
-//             }
-//             else
-//             {
-//                 count++;
-//             }
-//         }
-//         if (count == size)
-//         {
-//             cout << "No result found....." << endl;
-//         }
-
-//         // userViewProduct();
-//         string x;
-//         cout << "Press any key to exit...";
-//         cin >> x;
-//         system("cls");
-//     }
-// }
 
 void addToCart()
 {
@@ -617,26 +568,57 @@ void addToCart()
          << "\t"
          << "productPrice"
          << "\t"
-         << "Availabelquantity" << endl;
+         << "Selected Quantity" << endl;
     int index = 1;
-    if (globalAddToCartLoop > 0)
+    if (userBuyProductquantity > 0)
     {
-        for (int i = 0; i < globalAddToCartLoop; i++)
+        for (int i = 0; i < userBuyProductquantity; i++)
         {
-
-            cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
-            index++;
+            if (userBuyProductStatus[i] == "Paid")
+            {
+                continue;
+            }
+            else
+            {
+                cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
+                index++;
+            }
         }
+
         char x;
-        cout << "You have buy " << globalAddToCartLoop << " product do you want to add these product into the cart(y/n)..." << endl;
+        cout << "You have Selected " << userBuyProductquantity << " product do you want to Buy these product(y/n) " << endl;
         cin >> x;
         if (x == 'y')
         {
-            cout << "Successfully add to the cart..."; // later on i will implement the logic
+            char y;
+            cout << "Do You want to Pay now(y/n)...";
+            cin >> y;
+            if (y == 'y')
+            {
+                string buyProductStatus = "Paid";
+                // cout<<"Enter the index of the product you want to pay..";
+                cout << "Your have the Buy the quantity..." << endl;
+                cout << "No."
+                     << "\t"
+                     << "Product Name"
+                     << "\t"
+                     << "productPrice"
+                     << "\t"
+                     << "Selected Quantity"
+                     << "\t"
+                     << "Status" << endl;
+                for (int i = 0; i < userBuyProductquantity; i++)
+                {
+                    userBuyProductStatus[i] = buyProductStatus;
+                    cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
+                }
+                cout << "Successfully paid..." << endl;
+            }
+            // cout << "Successfully add to the cart..." << endl; // later on i will implement the logic
         }
         else if (x == 'n')
         {
-            cout << "Successfully remove from your card...." << endl;
+            cout << "Pending...." << endl;
         }
     }
     else
@@ -644,18 +626,25 @@ void addToCart()
         cout << "First Buy Product.." << endl;
     }
 
-    string s;
-    cout << "Press any key to exit....";
-    cin >> s;
+    clearScreen();
 }
-
+void viewCartOption()
+{
+    cout << "What Do You Want To Do?" << endl;
+    cout << "--> 1 Delete Product" << endl;
+    cout << "--> 2 Update Quantity" << endl;
+    cout << "--> 3 Exit " << endl;
+}
 void viewCart()
 {
-    int lenght = userBuyProductName->length();
-    // cout<<lenght;
-    if (lenght != 0)
+    cout << "***************************************************************************" << endl;
+    cout << "***************************** ...Total Product.. **************************" << endl;
+    cout << "***************************************************************************" << endl
+         << endl;
+    if (userBuyProductquantity != 0)
     {
-        cout << "Your have the following quantity..." << endl;
+        cout << "****************************************************************************************" << endl;
+        cout << " Your have the following quantity..." << endl;
         cout << "No."
              << "\t"
              << "Product Name"
@@ -664,39 +653,56 @@ void viewCart()
              << "\t"
              << "Availabelquantity"
              << "\t"
-             << "Status" << endl;
-        int index = 1;
-        for (int i = 0; i < globalAddToCartLoop; i++)
+             << "Status " << endl;
+
+        for (int i = 0; i < userBuyProductquantity; i++)
         {
-            cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << buyProductStatus << endl;
-            index++;
-        }
-        char x;
-        cout << "Do You want to Pay now(y/n)...";
-        cin >> x;
-        if (x == 'y')
-        {
-            buyProductStatus = "Paid";
-            cout << "Your have the following quantity..." << endl;
-            cout << "No."
-                 << "\t"
-                 << "Product Name"
-                 << "\t"
-                 << "productPrice"
-                 << "\t"
-                 << "Availabelquantity"
-                 << "\t"
-                 << "Status" << endl;
-            for (int i = 0; i < globalAddToCartLoop; i++)
+            if (userBuyProductStatus[i] == "Paid")
             {
-                cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << buyProductStatus << endl;
-                index++;
+                continue;
             }
-            cout << "Successfully paid..." << endl;
+            else
+            {
+                cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
+            }
         }
-        else
+        cout << "****************************************************************************************" << endl;
+        // update product quantityes
+        int opt;
+        bool y = true;
+        while (y != false)
         {
-            cout << "Pending....." << endl;
+            viewCartOption();
+            cout << "enter option ";
+            cin >> opt;
+            if (opt == 1)
+            {
+                int index;
+                cout << "Enter the index of the product you want to delete ";
+                cin >> index;
+                for (int i = index; i < userBuyProductquantity; i++)
+                {
+                    userBuyProductName[i] = userBuyProductName[i + 1];
+                    userBuyProductProce[i] = userBuyProductProce[i + 1];
+                    userBuySelectedProductQuantity[i] = userBuySelectedProductQuantity[i + 1];
+                    userBuyProductStatus[i] = userBuyProductStatus[i + 1];
+                }
+                userBuyProductquantity--;
+            }
+            else if (opt == 2)
+            {
+                int index, updatedquan;
+                cout << "Enter the index of the quantity you want to update ";
+                cin >> index;
+                cout << "Enter The Quantity ";
+                cin >> updatedquan;
+                userBuySelectedProductQuantity[index] = updatedquan;
+            }
+            else if (opt == 3)
+            {
+                y = false;
+                break;
+            }
         }
     }
     else
@@ -980,7 +986,272 @@ void adminLogout()
 
 void userPurchasedProductList()
 {
-    viewCart();
+    int totalPaid = 0;
+    int idnex = 1;
+
+    cout << "*****************************************************************************************************" << endl;
+    cout << "***********************************List of the Purchased Product*************************************" << endl;
+    cout << "****************************************************************************************************" << endl
+         << endl;
+    cout << " Your have the following quantity..." << endl;
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Selected Quantity"
+         << "\t"
+         << "Total Price " << endl;
+    for (int i = 0; i < userBuyProductquantity; i++)
+    {
+        if (userBuyProductStatus[i] == "UnPaid")
+        {
+            continue;
+        }
+        else
+        {
+            totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+
+            int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+            cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
+            idnex++;
+        }
+    }
+
+    cout << " *******************************************************" << endl;
+    cout << " *          Total Product Price: " << totalPaid << "       *" << endl;
+    cout << " *******************************************************" << endl;
+
+    clearScreen();
+}
+
+int purchasedProductBill(int quantity, int price)
+{
+    return quantity * price;
+}
+
+void totalSoldProduct()
+{
+    int opt;
+    cout << "Choose Catagory " << endl;
+    cout << "|--> 1 The Product that has been Paid " << endl;
+    cout << "|--> 2 The Product that is not Paid " << endl;
+    cout << "Enter your option ";
+    cin >> opt;
+    if (opt == 1)
+    {
+        int totalPaid = 0;
+        int idnex = 1;
+
+        cout << "*****************************************************************************************************" << endl;
+        cout << "***********************************     Total Sold Product      *************************************" << endl;
+        cout << "****************************************************************************************************" << endl
+             << endl;
+        cout << " Your have the following quantity..." << endl;
+        cout << "No."
+             << "\t"
+             << "Product Name"
+             << "\t"
+             << "productPrice"
+             << "\t"
+             << "Selected Quantity"
+             << "\t"
+             << "Total Price " << endl;
+        for (int i = 0; i < userBuyProductquantity; i++)
+        {
+            if (userBuyProductStatus[i] == "UnPaid")
+            {
+                continue;
+            }
+            else
+            {
+                totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+
+                int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
+                idnex++;
+            }
+        }
+
+        cout << " *******************************************************" << endl;
+        cout << " *          Total Revenue : " << totalPaid << "          *" << endl;
+        cout << " *******************************************************" << endl;
+        clearScreen();
+    }
+    else if (opt == 2)
+    {
+        int totalUnPaid = 0;
+        int idnex = 1;
+
+        cout << "*****************************************************************************************************" << endl;
+        cout << "***********************************     Total Unpaid Product      *************************************" << endl;
+        cout << "****************************************************************************************************" << endl
+             << endl;
+        cout << " Your have the following quantity..." << endl;
+        cout << "No."
+             << "\t"
+             << "Product Name"
+             << "\t"
+             << "productPrice"
+             << "\t"
+             << "Selected Quantity"
+             << "\t"
+             << "Total Price " << endl;
+        for (int i = 0; i < userBuyProductquantity; i++)
+        {
+            if (userBuyProductStatus[i] == "Paid")
+            {
+                continue;
+            }
+            else
+            {
+                totalUnPaid = totalUnPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+
+                int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
+                idnex++;
+            }
+        }
+
+        cout << " *******************************************************" << endl;
+        cout << " *          Total Revenue : " << totalUnPaid << "      *" << endl;
+        cout << " *******************************************************" << endl;
+    }
+
+    clearScreen();
+}
+
+void productAnalystics()
+{
+    cout << "***********************************************************************************" << endl;
+    cout << "******************************  Welcome to the Product Anaystics  ****************" << endl;
+    cout << "**********************************************************************************" << endl;
+
+    int prodQuantity, proPrice;
+    string prName;
+    if (userBuyProductquantity > 0)
+    {
+        for (int i = 0; i < userBuyProductquantity; i++)
+        {
+            for (int j = i + 1; j < userBuyProductquantity; j++)
+            {
+                if (userBuySelectedProductQuantity[i] < userBuySelectedProductQuantity[j])
+                {
+                    prName = userBuyProductName[i];
+                    userBuyProductName[i] = userBuyProductName[j];
+                    userBuyProductName[j] = prName;
+
+                    proPrice = userBuyProductProce[i];
+                    userBuyProductProce[i] = userBuyProductProce[j];
+                    userBuyProductProce[j] = proPrice;
+
+                    prodQuantity = userBuySelectedProductQuantity[i];
+                    userBuySelectedProductQuantity[i] = userBuySelectedProductQuantity[j];
+                    userBuySelectedProductQuantity[j] = prodQuantity;
+                }
+            }
+        }
+        if (userBuyProductquantity > 0)
+        {
+            cout << "To Sold Products..." << endl;
+            cout << "No."
+                 << "\t"
+                 << "Product Name"
+                 << "\t"
+                 << "productPrice"
+                 << "\t"
+                 << "Sold Quantity"
+                 << "\t" << endl;
+            for (int i = 0; i < 2; i++)
+            {
+                cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+            }
+        }
+    }
+    else{
+        cout<<"Nothing is sold..";
+    }
+}
+
+void trendingProducts()
+{
+    int prodQuantity, proPrice;
+    string prName;
+    if (userBuyProductquantity > 0)
+    {
+        for (int i = 0; i < userBuyProductquantity; i++)
+        {
+            for (int j = i + 1; j < userBuyProductquantity; j++)
+            {
+                if (userBuySelectedProductQuantity[i] < userBuySelectedProductQuantity[j])
+                {
+                    prName = userBuyProductName[i];
+                    userBuyProductName[i] = userBuyProductName[j];
+                    userBuyProductName[j] = prName;
+
+                    proPrice = userBuyProductProce[i];
+                    userBuyProductProce[i] = userBuyProductProce[j];
+                    userBuyProductProce[j] = proPrice;
+
+                    prodQuantity = userBuySelectedProductQuantity[i];
+                    userBuySelectedProductQuantity[i] = userBuySelectedProductQuantity[j];
+                    userBuySelectedProductQuantity[j] = prodQuantity;
+                }
+            }
+        }
+        if (userBuyProductquantity > 0)
+        {
+            if (userBuyProductquantity == 1)
+            {
+                cout << "No thing in trends...";
+            }
+            cout << "Trending Products..." << endl;
+            cout << "No."
+                 << "\t"
+                 << "Product Name"
+                 << "\t"
+                 << "productPrice"
+                 << "\t"
+                 << "Sold Quantity"
+                 << "\t" << endl;
+            for (int i = 0; i < 2; i++)
+            {
+                cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+            }
+            char x;
+            cout << "Demanded Product! Do you want to buy?(y/n) ";
+            cin >> x;
+            int index, quantity2;
+            if (x == 'y')
+            {
+                cout << "Enter the index of the product..";
+                cin >> index;
+                userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
+                userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
+                cout << "Enter Quantity..";
+                cin >> quantity2;
+                userBuySelectedProductQuantity[index - 1] = quantity2;
+                userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
+                userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+
+                userBuyProductquantity++;
+            }
+            else if (x == 'n')
+            {
+                return;
+            }
+        }
+        else
+        {
+            cout << "No Product in trend....";
+            clearScreen();
+        }
+    }
+    else{
+        cout<<"No product in trend..";
+        clearScreen();
+    }
 }
 
 // clear screen
