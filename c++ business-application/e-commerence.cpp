@@ -228,12 +228,12 @@ void user(string name)
         }
         else if (number == 8)
         {
-             system("cls");
+            system("cls");
             userChangeProfileSetting();
         }
         else if (number == 9)
         {
-             system("cls");
+            system("cls");
             userLogout();
         }
         else if (number == 10)
@@ -245,7 +245,7 @@ void user(string name)
 // admin-components
 void CreateProduct()
 {
-     system("cls");
+    system("cls");
     userViewRepeateCode();
     char yesOrNo = 'y';
     while (yesOrNo != 'n')
@@ -568,12 +568,10 @@ void filterProduct()
             if (totalFindProduct > 0)
             {
                 cout << "Product found.." << endl;
-               
             }
             else
             {
-                cout << "Product Not found.."<<endl;
-                
+                cout << "Product Not found.." << endl;
             }
         }
         else if (x == 'n')
@@ -769,28 +767,73 @@ int loginAndSingUpMenu()
 
 void userRegister()
 {
+    int isValide = false;
     cout << "Pleasse Register" << endl;
     string name;
-    cout << "Enter your name....";
+    cout << "Enter  Username....";
     cin >> name;
     string password;
-    cout << "Enter password ...";
+    cout << "Enter Password ...";
     cin >> password;
-    userAuthArrayName[totalNumberOfUser] = name;
-    userAuthArrayPassWord[totalNumberOfUser] = password;
-    cout << "Successfully Register...";
-    totalNumberOfUser++;
-    Sleep(700);
-    clearScreen();
+    int idx = 0;
+    while (name[idx] != '\0')
+    {
+        if (name[idx] == '@')
+        {
+            isValide = true;
+            break;
+        }
+        idx++;
+    }
+    if (totalNumberOfUser > 0)
+    {
+        bool isExist = true;
+        for (int i = 0; i < totalNumberOfUser; i++)
+        {
+            if (isValide == true && userAuthArrayName[i] != name)
+            {
+                isExist = false;
+            }
+        }
+        if (isExist == false)
+        {
+            userAuthArrayName[totalNumberOfUser] = name;
+            userAuthArrayPassWord[totalNumberOfUser] = password;
+            cout << "Successfully Register..." << endl;
+            totalNumberOfUser++;
+            Sleep(700);
+            clearScreen();
+        }
+        else if (isExist == true)
+        {
+            cout << "Username already Exist..." << endl;
+            clearScreen();
+        }
+    }
+    else if (totalNumberOfUser == 0 && isValide == true)
+    {
+        userAuthArrayName[totalNumberOfUser] = name;
+        userAuthArrayPassWord[totalNumberOfUser] = password;
+        cout << "Successfully Register...";
+        totalNumberOfUser++;
+        Sleep(700);
+        clearScreen();
+    }
+
+    else
+    {
+        cout << "User must contain'@'symbol" << endl;
+        clearScreen();
+    }
 }
 
 void userLogin()
 {
-    for (int i = 0; i < totalNumberOfUser; i++)
-    {
-        cout << userAuthArrayName[i] << "\t";
-        cout << userAuthArrayPassWord[i];
-    }
+    // for (int i = 0; i < totalNumberOfUser; i++)
+    // {
+    //     cout << userAuthArrayName[i] << "\t";
+    //     cout << userAuthArrayPassWord[i];
+    // }
 
     cout << "Please login first..." << endl;
     string name;
@@ -799,7 +842,7 @@ void userLogin()
     string password;
     cout << "Enter your password...";
     cin >> password;
-    cout << totalNumberOfUser << endl;
+    // cout << totalNumberOfUser << endl;
     bool isUserExist = false;
     for (int i = 0; i < totalNumberOfUser; i++)
     {
@@ -867,10 +910,10 @@ void adminRegister()
 {
     cout << "Pleasse Register...." << endl;
     string name;
-    cout << "Enter your name....";
+    cout << "Enter Username....";
     cin >> name;
     string password;
-    cout << "Enter password ...";
+    cout << "Enter Password ...";
     cin >> password;
     // totalNumberOfAdmin++;
     // if (totalNumberOfAdmin == 1)
@@ -937,12 +980,6 @@ void userChangeProfileSetting()
             userIndex = i;
             isUSerAuthenciate = true;
         }
-        // else
-        // {
-        //     cout << "Please Enter correct password Or name...";
-        //     Sleep(700);
-        //     clearScreen();
-        // }
     }
     if (isUSerAuthenciate == true)
     {
@@ -952,15 +989,37 @@ void userChangeProfileSetting()
         cin >> name2;
         cout << "Enter your password...";
         cin >> password2;
-        userAuthArrayName[userIndex] = name2;
-        userAuthArrayPassWord[userIndex] = password2;
-        cout << "Your Credentials updated successfully...";
-        Sleep(700);
-        clearScreen();
+        int idx = 0;
+        bool isVilade = false;
+        while (name2[idx] != '\0')
+        {
+            if (name2[idx] == '@')
+            {
+                isVilade = true;
+                break;
+            }
+            idx++;
+        }
+        for (int i = 0; i < totalNumberOfUser; i++)
+        {
+            if (isVilade == true && userAuthArrayName[i] != name2)
+            {
+                userAuthArrayName[userIndex] = name2;
+                userAuthArrayPassWord[userIndex] = password2;
+                cout << "Your Credentials updated successfully..."<<endl;
+                Sleep(700);
+                clearScreen();
+            }
+        }
+        if(isVilade==false)
+        {
+            cout<<"Must include the '@' "<<endl;
+            clearScreen();
+        }
     }
     else if (isUSerAuthenciate == false)
     {
-        cout << "Please Enter correct password Or name...";
+        cout << "Please Enter correct password Or name..."<<endl;
         Sleep(700);
         clearScreen();
     }
@@ -1107,7 +1166,7 @@ void totalSoldProduct()
         cout << " *******************************************************" << endl;
         cout << " *          Total Revenue : " << totalPaid << "          *" << endl;
         cout << " *******************************************************" << endl;
-        cout<<"press any key to exist..";
+        cout << "press any key to exist..";
         getch();
     }
     else if (opt == 2)
@@ -1290,10 +1349,9 @@ void trendingProducts()
     }
 }
 
-
 void userViewRepeateCode()
 {
- cout << "No."
+    cout << "No."
          << "\t"
          << "Product Name"
          << "\t"
