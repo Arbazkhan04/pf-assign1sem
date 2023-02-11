@@ -27,6 +27,7 @@ void admin(string);
 void user(string);
 void deleteProduct();
 void userViewProduct();
+void userViewRepeateCode();
 void userbBuyProduct();
 void filterProduct();
 void addToCart();
@@ -177,7 +178,7 @@ void user(string name)
     int number = 0;
     while (number != 9)
     {
-
+        system("cls");
         cout << "#########################################################" << endl;
         cout << "#                Welcome " << name << "                 #" << endl;
         cout << "#  1 View Product                                       #" << endl;
@@ -207,26 +208,32 @@ void user(string name)
         }
         else if (number == 4)
         {
+            system("cls");
             viewCart();
         }
         else if (number == 5)
         {
+            system("cls");
             addToCart();
         }
         else if (number == 6)
         {
+            system("cls");
             userPurchasedProductList();
         }
         else if (number == 7)
         {
+            system("cls");
             trendingProducts();
         }
         else if (number == 8)
         {
+             system("cls");
             userChangeProfileSetting();
         }
         else if (number == 9)
         {
+             system("cls");
             userLogout();
         }
         else if (number == 10)
@@ -238,8 +245,8 @@ void user(string name)
 // admin-components
 void CreateProduct()
 {
-    system("cls");
-    userViewProduct();
+     system("cls");
+    userViewRepeateCode();
     char yesOrNo = 'y';
     while (yesOrNo != 'n')
     {
@@ -286,7 +293,8 @@ void CreateProduct()
 
 void adminUpDateProduct()
 {
-    userViewProduct();
+    system("cls");
+    userViewRepeateCode();
     int idex, updatedPrice, updatedQuantity;
     char yesOrNo = 'y';
     while (yesOrNo != 'n')
@@ -329,7 +337,7 @@ void adminUpDateProduct()
 
 void deleteProduct()
 {
-    userViewProduct();
+    userViewRepeateCode();
     int idex;
     char yesOrNo = 'y';
     while (yesOrNo != 'n')
@@ -385,12 +393,26 @@ void userViewProduct()
     {
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
-    // clearScreen();
+    // cout<<"Pess any key to exit...";
+    // getch();
+    clearScreen();
 }
 
 void userbBuyProduct()
 {
-    userViewProduct();
+    // userViewProduct();
+    system("cls");
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Availabelquantity" << endl;
+    for (int i = 0; i < defaultItemsSize; i++)
+    {
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+    }
     char x = 'y';
     while (x != 'n')
     {
@@ -496,13 +518,14 @@ void userbBuyProduct()
     {
         cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << userBuyProductStatus[i] << endl;
     }
+    clearScreen();
 }
 
 void filterProduct()
 {
     system("cls");
 
-    userViewProduct();
+    // userViewProduct();
     string filterProductNameArr[100];
     int filterProductPriceArr[100];
     int filterProductQuantityArr[100];
@@ -529,33 +552,34 @@ void filterProduct()
                     break;
                 }
             }
+            cout << "No."
+                 << "\t"
+                 << "Product Name"
+                 << "\t"
+                 << "productPrice"
+                 << "\t"
+                 << "Availabelquantity" << endl;
+            for (int i = 0; i < totalFindProduct; i++)
+            {
+
+                cout << i << "\t" << filterProductNameArr[i] << "\t \t" << filterProductPriceArr[i] << "\t \t" << filterProductQuantityArr[i] << endl;
+            }
+
+            if (totalFindProduct > 0)
+            {
+                cout << "Product found.." << endl;
+               
+            }
+            else
+            {
+                cout << "Product Not found.."<<endl;
+                
+            }
         }
         else if (x == 'n')
         {
             break;
         }
-    }
-    cout << "No."
-         << "\t"
-         << "Product Name"
-         << "\t"
-         << "productPrice"
-         << "\t"
-         << "Availabelquantity" << endl;
-    for (int i = 0; i < totalFindProduct; i++)
-    {
-
-        cout << i << "\t" << filterProductNameArr[i] << "\t \t" << filterProductPriceArr[i] << "\t \t" << filterProductQuantityArr[i] << endl;
-    }
-    if (totalFindProduct > 0)
-    {
-        cout << "Product found.." << endl;
-        clearScreen();
-    }
-    else
-    {
-        cout << "Product Not found..";
-        clearScreen();
     }
 }
 
@@ -637,6 +661,7 @@ void viewCartOption()
 }
 void viewCart()
 {
+
     cout << "***************************************************************************" << endl;
     cout << "***************************** ...Total Product.. **************************" << endl;
     cout << "***************************************************************************" << endl
@@ -709,6 +734,7 @@ void viewCart()
     {
         cout << "Your cart is empty..." << endl;
     }
+    clearScreen();
 }
 
 void userAuth()
@@ -733,6 +759,7 @@ void userAuth()
 
 int loginAndSingUpMenu()
 {
+    system("cls");
     cout << "************************************************************************" << endl;
     cout << "****************************** WELCOME *********************************" << endl;
     cout << "************************************************************************" << endl;
@@ -941,6 +968,7 @@ void userChangeProfileSetting()
 
 void adminChangeProfileSetting()
 {
+    system("cls");
     cout << "Enter Your Credentials...";
     string name;
     cout << "Enter your name....";
@@ -977,6 +1005,7 @@ void userLogout()
 }
 void adminLogout()
 {
+    system("cls");
     adminAuthArray[0] = " ";
     adminAuthArray[1] = " ";
     cout << "Account logout successfully..." << endl;
@@ -1033,6 +1062,7 @@ int purchasedProductBill(int quantity, int price)
 
 void totalSoldProduct()
 {
+    system("cls");
     int opt;
     cout << "Choose Catagory " << endl;
     cout << "|--> 1 The Product that has been Paid " << endl;
@@ -1077,7 +1107,8 @@ void totalSoldProduct()
         cout << " *******************************************************" << endl;
         cout << " *          Total Revenue : " << totalPaid << "          *" << endl;
         cout << " *******************************************************" << endl;
-        clearScreen();
+        cout<<"press any key to exist..";
+        getch();
     }
     else if (opt == 2)
     {
@@ -1124,6 +1155,7 @@ void totalSoldProduct()
 
 void productAnalystics()
 {
+    system("cls");
     cout << "***********************************************************************************" << endl;
     cout << "******************************  Welcome to the Product Anaystics  ****************" << endl;
     cout << "**********************************************************************************" << endl;
@@ -1168,9 +1200,12 @@ void productAnalystics()
                 cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
             }
         }
+        clearScreen();
     }
-    else{
-        cout<<"Nothing is sold..";
+    else
+    {
+        cout << "Nothing is sold..";
+        clearScreen();
     }
 }
 
@@ -1248,9 +1283,26 @@ void trendingProducts()
             clearScreen();
         }
     }
-    else{
-        cout<<"No product in trend..";
+    else
+    {
+        cout << "No product in trend..";
         clearScreen();
+    }
+}
+
+
+void userViewRepeateCode()
+{
+ cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Availabelquantity" << endl;
+    for (int i = 0; i < defaultItemsSize; i++)
+    {
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
 }
 
