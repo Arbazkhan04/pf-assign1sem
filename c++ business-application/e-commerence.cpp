@@ -110,22 +110,23 @@ void admin(string name)
 {
     system("cls");
     int number = 0;
-    while (number != 8)
+    while (number != 10)
     {
+        cout << "\n \n";
+        cout << "**********************************************************************" << endl;
+        cout << "              Welcome To The Admin Panel " << name << "                  " << endl;
+        cout << "**********************************************************************" << endl;
 
-        cout << "#########################################################" << endl;
-        cout << "#        Welcome To The Admin Panel " << name << "      #" << endl;
-        cout << "#  1 Create Product                                     #" << endl;
-        cout << "#  2 Update Product                                     #" << endl;
-        cout << "#  3 Delete Product                                     #" << endl;
-        cout << "#  4 View All Product                                   #" << endl;
-        cout << "#  5 Total Sold Product                                 #" << endl;
-        cout << "#  6 Total User List                                    #" << endl;
-        cout << "#  7 Product Analystics                                 #" << endl;
-        cout << "#  8 Change Profile Setting                             #" << endl;
-        cout << "#  9 Logout                                             #" << endl;
-        cout << "#  10 Exit                                              #" << endl;
-        cout << "#########################################################" << endl;
+        cout << "  1 Create Product                                     " << endl;
+        cout << "  2 Update Product                                     " << endl;
+        cout << "  3 Delete Product                                     " << endl;
+        cout << "  4 View All Product                                   " << endl;
+        cout << "  5 Total Sold Product                                 " << endl;
+        cout << "  6 Total User List                                    " << endl;
+        cout << "  7 Product Analystics                                 " << endl;
+        cout << "  8 Change Profile Setting                             " << endl;
+        cout << "  9 Delete Account                                     " << endl;
+        cout << "  10 Exit                                              " << endl;
 
         cout << "Enter the code For the product......";
         cin >> number;
@@ -179,22 +180,24 @@ void user(string name)
 {
     system("cls");
     int number = 0;
-    while (number != 9)
+    while (number != 10)
     {
         system("cls");
-        cout << "#########################################################" << endl;
-        cout << "#                Welcome " << name << "                 #" << endl;
-        cout << "#  1 View Product                                       #" << endl;
-        cout << "#  2 Buy product                                        #" << endl;
-        cout << "#  3 filtter  product                                   #" << endl;
-        cout << "#  4 View Cart                                          #" << endl;
-        cout << "#  5 Add to Cart                                        #" << endl;
-        cout << "#  6 Purchased Product List                             #" << endl;
-        cout << "#  7 Treding Product List                               #" << endl;
-        cout << "#  8 Change Profile Setting                             #" << endl;
-        cout << "#  9 Logout                                             #" << endl;
-        cout << "#  10 Exit                                               #" << endl;
-        cout << "#########################################################" << endl;
+        cout << "\n \n";
+        cout << "**********************************************************************" << endl;
+        cout << "              Welcome To The User Panel " << name << "                 " << endl;
+        cout << "**********************************************************************" << endl;
+        cout << "  1 View Product                                       " << endl;
+        cout << "  2 Buy product                                        " << endl;
+        cout << "  3 filtter  product                                   " << endl;
+        cout << "  4 View Cart                                          " << endl;
+        cout << "  5 Add to Cart                                        " << endl;
+        cout << "  6 Purchased Product List                             " << endl;
+        cout << "  7 Treding Product List                               " << endl;
+        cout << "  8 Change Profile Setting                             " << endl;
+        cout << "  9 Delete Account                                    " << endl;
+        cout << "  10 Exit                                              " << endl;
+
         cout << "Enter The code For the commpoonet...";
         cin >> number;
         if (number == 1)
@@ -249,6 +252,10 @@ void user(string name)
 void CreateProduct()
 {
     system("cls");
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "*                                 Create Prodcut                     *" << endl;
+    cout << "**********************************************************************" << endl;
     userViewRepeateCode();
     char yesOrNo = 'y';
     while (yesOrNo != 'n')
@@ -297,6 +304,10 @@ void CreateProduct()
 void adminUpDateProduct()
 {
     system("cls");
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "*                           UPDATE PRODUCT                           *" << endl;
+    cout << "**********************************************************************" << endl;
     userViewRepeateCode();
     int idex, updatedPrice, updatedQuantity;
     char yesOrNo = 'y';
@@ -336,10 +347,16 @@ void adminUpDateProduct()
     {
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
+    clearScreen();
 }
 
 void deleteProduct()
 {
+    clearScreen();
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "*                        DELETE PRODUCT                              *" << endl;
+    cout << "**********************************************************************" << endl;
     userViewRepeateCode();
     int idex;
     char yesOrNo = 'y';
@@ -357,7 +374,9 @@ void deleteProduct()
                 productPrice[i] = productPrice[i + 1];
                 Availabelquantity[i] = Availabelquantity[i + 1];
             }
+            cout << "product deleted ";
             defaultItemsSize--;
+            clearScreen();
         }
         else if (yesOrNo == 'n')
         {
@@ -376,6 +395,7 @@ void deleteProduct()
     {
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
+    clearScreen();
 }
 
 // addmin-components
@@ -385,6 +405,10 @@ void userViewProduct()
 {
 
     system("cls");
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "***************************** VIEW PRODUCT *************************** *" << endl;
+    cout << "**********************************************************************" << endl;
     cout << "No."
          << "\t"
          << "Product Name"
@@ -405,6 +429,10 @@ void userbBuyProduct()
 {
     // userViewProduct();
     system("cls");
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "******************************* USER BUY PRODUCT **********************" << endl;
+    cout << "**********************************************************************" << endl;
     cout << "No."
          << "\t"
          << "Product Name"
@@ -527,7 +555,10 @@ void userbBuyProduct()
 void filterProduct()
 {
     system("cls");
-
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "**************************** USER FILTER PRODUCT *********************" << endl;
+    cout << "**********************************************************************" << endl;
     // userViewProduct();
     string filterProductNameArr[100];
     int filterProductPriceArr[100];
@@ -586,7 +617,10 @@ void filterProduct()
 
 void addToCart()
 {
-
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "***************************** ADD TO CART PRODUCT ********************" << endl;
+    cout << "**********************************************************************" << endl;
     cout << "No."
          << "\t"
          << "Product Name"
@@ -611,7 +645,7 @@ void addToCart()
         }
 
         char x;
-        cout << "You have Selected " << userBuyProductquantity << " product do you want to Buy these product(y/n) " << endl;
+        cout << "You have Buy  these product do you want to Buy these product(y/n) " << endl;
         cin >> x;
         if (x == 'y')
         {
@@ -677,7 +711,7 @@ void viewCart()
              << "\t"
              << "productPrice"
              << "\t"
-             << "Availabelquantity"
+             << "Selected Quanntity"
              << "\t"
              << "Status " << endl;
 
@@ -761,6 +795,7 @@ void userAuth()
 int loginAndSingUpMenu()
 {
     system("cls");
+    cout << "\n \n";
     cout << "************************************************************************" << endl;
     cout << "****************************** WELCOME *********************************" << endl;
     cout << "************************************************************************" << endl;
@@ -832,15 +867,10 @@ void userRegister()
 
 void userLogin()
 {
-    // for (int i = 0; i < totalNumberOfUser; i++)
-    // {
-    //     cout << userAuthArrayName[i] << "\t";
-    //     cout << userAuthArrayPassWord[i];
-    // }
 
     cout << "Please login first..." << endl;
     string name;
-    cout << "Enter Your Name...";
+    cout << "Enter Your UserName...";
     cin >> name;
     string password;
     cout << "Enter your password...";
@@ -884,6 +914,7 @@ void adminAuth()
     else
     {
         cout << "Enter correct number....";
+        clearScreen();
     }
 }
 
@@ -893,7 +924,7 @@ void adminLogin()
 
     cout << "Please login " << endl;
     string name;
-    cout << "Enter Your Name...";
+    cout << "Enter your UserName...";
     cin >> name;
     string password;
     cout << "Enter your password...";
@@ -915,6 +946,7 @@ void adminLogin()
     else if (isSuccessfulLogin == false)
     {
         cout << "Enter your correct Credentials" << endl;
+        clearScreen();
     }
 }
 void adminRegister()
@@ -963,24 +995,29 @@ void adminRegister()
 void listOfLoginUsers()
 {
     system("cls");
-    cout << "      *********************************************************" << endl;
-    cout << "      *     Total Numnber Of User : " << totalNumberOfUser << "   *" << endl;
-    cout << "      *********************************************************" << endl;
+      cout << "\n \n";
+        cout << "************************************************************************" << endl;
+        cout << "                               USER LIST     "                          << endl;
+        cout << "**************************************************************************" << endl;
     if (totalNumberOfUser > 0)
     {
         cout << "No."
-             << "\t"
+             << "\t \t"
              << "UserName Name"
-             << "\t"
+             << "\t \t"
              << "User Password" << endl;
         for (int i = 0; i < totalNumberOfUser; i++)
         {
             cout << i + 1
-                 << "\t"
+                 << "\t \t"
                  << userAuthArrayName[i]
-                 << "\t"
+                 << "\t \t"
                  << userAuthArrayPassWord[i] << endl;
         }
+        cout << "\n \n";
+        cout << "************************************************************************" << endl;
+        cout << "             Total Numnber Of User : " << totalNumberOfUser << "   " << endl;
+        cout << "**************************************************************************" << endl;
         clearScreen();
     }
     else
@@ -992,9 +1029,13 @@ void listOfLoginUsers()
 
 void userChangeProfileSetting()
 {
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "***************************** USER PROFILE SETTING *******************" << endl;
+    cout << "**********************************************************************" << endl;
     bool isUSerAuthenciate = false;
     int userIndex;
-    cout << "Enter Your Credentials...";
+    cout << "Enter Your Credentials..." << endl;
     string name;
     cout << "Enter your name....";
     cin >> name;
@@ -1056,14 +1097,18 @@ void userChangeProfileSetting()
 void adminChangeProfileSetting()
 {
     system("cls");
-    cout << "Enter Your Credentials...";
+    cout << "\n \n";
+    cout << "**********************************************************************" << endl;
+    cout << "*************************** ADMIN PROFILE SETTING ********************" << endl;
+    cout << "**********************************************************************" << endl;
+    cout << "Enter Your Credentials..." << endl;
     string name;
     cout << "Enter your name....";
     cin >> name;
     string password;
     cout << "Enter your Password...";
     cin >> password;
-    if (adminAuthArray[0] == name && adminAuthArray[1] == password)
+    if (adminAuthArryName[0] == name && adminAuthArryPass[0] == password)
     {
         cout << "Please updated your credentials.." << endl;
         string name2, password2;
@@ -1071,38 +1116,72 @@ void adminChangeProfileSetting()
         cin >> name2;
         cout << "Enter your password...";
         cin >> password2;
-        adminAuthArray[0] = name2;
-        adminAuthArray[1] = password2;
-        cout << "Your Credentials updated successfully...";
-        Sleep(700);
+        int idx = 0;
+        bool isVilade = false;
+        while (name2[idx] != '\0')
+        {
+            if (name2[idx] == '@')
+            {
+                isVilade = true;
+                break;
+            }
+            idx++;
+        }
+        if (isVilade == true)
+        {
+
+            adminAuthArryName[0] = name2;
+            adminAuthArryPass[0] = password2;
+            cout << "Your Credentials updated successfully...";
+            // Sleep(700);
+
+            clearScreen();
+            eCommerenceMenu();
+        }
+        else if (isVilade == false)
+        {
+            cout << "Must include the '@' " << endl;
+            clearScreen();
+        }
     }
     else
     {
         cout << "Please Enter correct password Or name...";
         Sleep(700);
+        clearScreen();
     }
 }
 
 void userLogout()
 {
-
-    for (int i = userLoignIndex; i < totalNumberOfUser; i++)
+    char x;
+    cout << "Do you want to delete your account(y/n) ";
+    cin >> x;
+    if (x == 'y')
     {
-        userAuthArrayName[i] = userAuthArrayName[i + 1];
-        userAuthArrayPassWord[i] = userAuthArrayPassWord[i + 1];
-        totalNumberOfUser--;
-        cout << "Account logout successfully..." << endl;
-        Sleep(700);
+        for (int i = userLoignIndex; i < totalNumberOfUser; i++)
+        {
+            userAuthArrayName[i] = userAuthArrayName[i + 1];
+            userAuthArrayPassWord[i] = userAuthArrayPassWord[i + 1];
+            totalNumberOfUser--;
+            cout << "Account Deleted successfully..." << endl;
+            clearScreen();
+            eCommerenceMenu();
+            // Sleep(700);
+        }
     }
-    // userAuthArrayName[1] = " ";
-    // userAuthArrayPassWord[1] = " ";
+    else if (x == 'n')
+    {
+        cout << "Your Account is not deleted";
+        clearScreen();
+    }
 }
 void adminLogout()
 {
     string tem;
     string pass;
     char x;
-    cout << "Do you want to logout(y/n)";
+    cout << "Do you want to delete you account(y/n)";
     cin >> x;
     if (x == 'y')
     {
@@ -1115,19 +1194,15 @@ void adminLogout()
         adminAuthArryPass[1] = pass;
 
         totalNumberOfAdmin--;
-        cout<<"Successfully logout.."<<endl;
+        cout << "Account is Deleted .." << endl;
+        clearScreen();
+        eCommerenceMenu();
     }
     else if (x == 'n')
     {
-        cout<<"You account is not Deleted..."<<endl;
+        cout << "You account is not Deleted..." << endl;
         clearScreen();
     }
-    // system("cls");
-    // adminAuthArray[0] = " ";
-    // adminAuthArray[1] = " ";
-    // cout << "Account logout successfully..." << endl;
-    // Sleep(700);
-    // clearScreen();
 }
 
 void userPurchasedProductList()
@@ -1135,9 +1210,10 @@ void userPurchasedProductList()
     int totalPaid = 0;
     int idnex = 1;
 
-    cout << "*****************************************************************************************************" << endl;
-    cout << "***********************************List of the Purchased Product*************************************" << endl;
-    cout << "****************************************************************************************************" << endl
+    cout << "\n \n";
+    cout << "******************************************************************************" << endl;
+    cout << "****************************List of the Purchased Product*********************" << endl;
+    cout << "******************************************************************************" << endl
          << endl;
     cout << " Your have the following quantity..." << endl;
     cout << "No."
@@ -1164,10 +1240,10 @@ void userPurchasedProductList()
             idnex++;
         }
     }
-
-    cout << " *******************************************************" << endl;
-    cout << " *          Total Product Price: " << totalPaid << "       *" << endl;
-    cout << " *******************************************************" << endl;
+    cout << "\n";
+    cout << " ******************************************************************************" << endl;
+    cout << "                Total Product Price: " << totalPaid << endl;
+    cout << " ******************************************************************************" << endl;
 
     clearScreen();
 }
@@ -1180,22 +1256,26 @@ int purchasedProductBill(int quantity, int price)
 void totalSoldProduct()
 {
     system("cls");
+    cout << "\n \n";
+    cout << "**********************************************************************************" << endl;
+    cout << "******************************  Sold Product List  *******************************" << endl;
+    cout << "**********************************************************************************" << endl;
     int opt;
     cout << "Choose Catagory " << endl;
-    cout << "|--> 1 The Product that has been Paid " << endl;
-    cout << "|--> 2 The Product that is not Paid " << endl;
+    cout << " --> 1 The Product that has been Sold " << endl;
+    cout << " --> 2 The Product that is not UnPaid " << endl;
     cout << "Enter your option ";
     cin >> opt;
     if (opt == 1)
     {
         int totalPaid = 0;
         int idnex = 1;
-
+          system("cls");
         cout << "*****************************************************************************************************" << endl;
         cout << "***********************************     Total Sold Product      *************************************" << endl;
-        cout << "****************************************************************************************************" << endl
+        cout << "*****************************************************************************************************" << endl
              << endl;
-        cout << " Your have the following quantity..." << endl;
+        cout << "Your have the following quantity..." << endl;
         cout << "No."
              << "\t"
              << "Product Name"
@@ -1222,7 +1302,7 @@ void totalSoldProduct()
         }
 
         cout << " *******************************************************" << endl;
-        cout << " *          Total Revenue : " << totalPaid << "          *" << endl;
+        cout << " *          Total Revenue : " << totalPaid << "         *" << endl;
         cout << " *******************************************************" << endl;
         cout << "press any key to exist..";
         getch();
@@ -1231,9 +1311,9 @@ void totalSoldProduct()
     {
         int totalUnPaid = 0;
         int idnex = 1;
-
-        cout << "*****************************************************************************************************" << endl;
-        cout << "***********************************     Total Unpaid Product      *************************************" << endl;
+           system("cls");
+        cout << "****************************************************************************************************" << endl;
+        cout << "***********************************     Total Unpaid Product      **********************************" << endl;
         cout << "****************************************************************************************************" << endl
              << endl;
         cout << " Your have the following quantity..." << endl;
@@ -1273,7 +1353,8 @@ void totalSoldProduct()
 void productAnalystics()
 {
     system("cls");
-    cout << "***********************************************************************************" << endl;
+    cout << "\n \n";
+    cout << "**********************************************************************************" << endl;
     cout << "******************************  Welcome to the Product Anaystics  ****************" << endl;
     cout << "**********************************************************************************" << endl;
 
@@ -1328,6 +1409,10 @@ void productAnalystics()
 
 void trendingProducts()
 {
+    cout << "\n \n";
+    cout << "**********************************************************************************" << endl;
+    cout << "**********************************  Trending  Product   **************************" << endl;
+    cout << "**********************************************************************************" << endl;
     int prodQuantity, proPrice;
     string prName;
     if (userBuyProductquantity > 0)
@@ -1388,6 +1473,7 @@ void trendingProducts()
                 userBuyProductStatus[userBuyProductquantity] = "UnPaid";
 
                 userBuyProductquantity++;
+                clearScreen();
             }
             else if (x == 'n')
             {
@@ -1396,13 +1482,13 @@ void trendingProducts()
         }
         else
         {
-            cout << "No Product in trend....";
+            cout << "No Product in trend...." << endl;
             clearScreen();
         }
     }
     else
     {
-        cout << "No product in trend..";
+        cout << "No product in trend.." << endl;
         clearScreen();
     }
 }
