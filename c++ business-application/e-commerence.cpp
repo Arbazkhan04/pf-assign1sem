@@ -37,7 +37,6 @@ void userPurchasedProductList();
 void totalSoldProduct();
 int purchasedProductBill(int, int);
 void trendingProducts();
-
 int userBuyProductquantity = 0;
 const int userBuyProductArrSize = 100;
 string userBuyProductStatus[userBuyProductArrSize];
@@ -48,9 +47,13 @@ const int totalSizeOfitems = 100;
 string productName[totalSizeOfitems] = {"Shirt", "Pant", "Bat"};
 int Availabelquantity[totalSizeOfitems] = {32, 54, 23};
 int productPrice[totalSizeOfitems] = {25, 30, 60};
+int userLoignIndex;
 string userAuthArrayName[100];
 string userAuthArrayPassWord[100];
 string adminAuthArray[1];
+string adminAuthArryName[10];
+string adminAuthArryPass[10];
+int totalNumberOfAdmin = 0;
 
 int main()
 {
@@ -767,7 +770,7 @@ int loginAndSingUpMenu()
 
 void userRegister()
 {
-    int isValide = false;
+    bool isValide = false;
     cout << "Pleasse Register" << endl;
     string name;
     cout << "Enter  Username....";
@@ -801,7 +804,7 @@ void userRegister()
             userAuthArrayPassWord[totalNumberOfUser] = password;
             cout << "Successfully Register..." << endl;
             totalNumberOfUser++;
-            Sleep(700);
+            // Sleep(700);
             clearScreen();
         }
         else if (isExist == true)
@@ -816,7 +819,7 @@ void userRegister()
         userAuthArrayPassWord[totalNumberOfUser] = password;
         cout << "Successfully Register...";
         totalNumberOfUser++;
-        Sleep(700);
+        // Sleep(7000);
         clearScreen();
     }
 
@@ -849,6 +852,7 @@ void userLogin()
         if (userAuthArrayName[i] == name && userAuthArrayPassWord[i] == password)
         {
             isUserExist = true;
+            userLoignIndex = i; // get user index
         }
     }
     if (isUserExist == true)
@@ -885,6 +889,7 @@ void adminAuth()
 
 void adminLogin()
 {
+    bool isSuccessfulLogin = false;
 
     cout << "Please login " << endl;
     string name;
@@ -893,21 +898,29 @@ void adminLogin()
     string password;
     cout << "Enter your password...";
     cin >> password;
-    if (adminAuthArray[0] == name && adminAuthArray[1] == password)
+    for (int i = 0; i < totalNumberOfAdmin; i++)
     {
-        cout << "Loign successfully...";
-        Sleep(700);
+
+        if (adminAuthArryName[i] == name && adminAuthArryPass[i] == password)
+        {
+            isSuccessfulLogin = true;
+        }
+    }
+    if (isSuccessfulLogin == true)
+    {
+        cout << "Loign successfully..." << endl;
         clearScreen();
         admin(name);
     }
-    else
+    else if (isSuccessfulLogin == false)
     {
-        cout << "Enter correct username of Passowrd..." << endl;
-        clearScreen();
+        cout << "Enter your correct Credentials" << endl;
     }
 }
 void adminRegister()
 {
+    bool isValide = false;
+    // bool adminAlreadyExist = false;
     cout << "Pleasse Register...." << endl;
     string name;
     cout << "Enter Username....";
@@ -915,21 +928,36 @@ void adminRegister()
     string password;
     cout << "Enter Password ...";
     cin >> password;
-    // totalNumberOfAdmin++;
-    // if (totalNumberOfAdmin == 1)
-    // {
-    adminAuthArray[0] = name;
-    adminAuthArray[1] = password;
-
-    cout << "Successfully Register..." << endl;
-    Sleep(700);
-    clearScreen();
-    // }
-    // else if (totalNumberOfAdmin > 1)
-    // {
-    //     cout << "Admin is already registered..." << endl;
-    //     clearScreen();
-    // }
+    int idx = 0;
+    while (name[idx] != '\0')
+    {
+        if (name[idx] == '@')
+        {
+            isValide = true;
+        }
+        idx++;
+    }
+    if (isValide == true) // authenciation successful
+    {
+        if (totalNumberOfAdmin > 0)
+        {
+            cout << "Admin Alreay Exist" << endl;
+            clearScreen();
+        }
+        else if (totalNumberOfAdmin == 0)
+        {
+            adminAuthArryName[totalNumberOfAdmin] = name;
+            adminAuthArryPass[totalNumberOfAdmin] = password;
+            totalNumberOfAdmin++;
+            cout << "Admin Registered Successfully.." << endl;
+            clearScreen();
+        }
+    }
+    else if (isValide == false)
+    {
+        cout << "userName must contain '@ symbol..'" << endl;
+        clearScreen();
+    }
 }
 
 void listOfLoginUsers()
@@ -1006,20 +1034,20 @@ void userChangeProfileSetting()
             {
                 userAuthArrayName[userIndex] = name2;
                 userAuthArrayPassWord[userIndex] = password2;
-                cout << "Your Credentials updated successfully..."<<endl;
+                cout << "Your Credentials updated successfully..." << endl;
                 Sleep(700);
                 clearScreen();
             }
         }
-        if(isVilade==false)
+        if (isVilade == false)
         {
-            cout<<"Must include the '@' "<<endl;
+            cout << "Must include the '@' " << endl;
             clearScreen();
         }
     }
     else if (isUSerAuthenciate == false)
     {
-        cout << "Please Enter correct password Or name..."<<endl;
+        cout << "Please Enter correct password Or name..." << endl;
         Sleep(700);
         clearScreen();
     }
@@ -1057,19 +1085,49 @@ void adminChangeProfileSetting()
 
 void userLogout()
 {
-    userAuthArrayName[0] = " ";
-    userAuthArrayPassWord[1] = " ";
-    cout << "Account logout successfully..." << endl;
-    Sleep(700);
+
+    for (int i = userLoignIndex; i < totalNumberOfUser; i++)
+    {
+        userAuthArrayName[i] = userAuthArrayName[i + 1];
+        userAuthArrayPassWord[i] = userAuthArrayPassWord[i + 1];
+        totalNumberOfUser--;
+        cout << "Account logout successfully..." << endl;
+        Sleep(700);
+    }
+    // userAuthArrayName[1] = " ";
+    // userAuthArrayPassWord[1] = " ";
 }
 void adminLogout()
 {
-    system("cls");
-    adminAuthArray[0] = " ";
-    adminAuthArray[1] = " ";
-    cout << "Account logout successfully..." << endl;
-    Sleep(700);
-    clearScreen();
+    string tem;
+    string pass;
+    char x;
+    cout << "Do you want to logout(y/n)";
+    cin >> x;
+    if (x == 'y')
+    {
+        tem = adminAuthArryName[0];
+        adminAuthArryName[0] = adminAuthArryName[1];
+        adminAuthArryName[1] = tem;
+        adminAuthArryName[1] = adminAuthArryName[0];
+        pass = adminAuthArryPass[0];
+        adminAuthArryPass[0] = adminAuthArryPass[1];
+        adminAuthArryPass[1] = pass;
+
+        totalNumberOfAdmin--;
+        cout<<"Successfully logout.."<<endl;
+    }
+    else if (x == 'n')
+    {
+        cout<<"You account is not Deleted..."<<endl;
+        clearScreen();
+    }
+    // system("cls");
+    // adminAuthArray[0] = " ";
+    // adminAuthArray[1] = " ";
+    // cout << "Account logout successfully..." << endl;
+    // Sleep(700);
+    // clearScreen();
 }
 
 void userPurchasedProductList()
