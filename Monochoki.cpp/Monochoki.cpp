@@ -2,16 +2,18 @@
 #include <windows.h>
 using namespace std;
 void printMonochoki(int, int);
-void moveMonoChoki(int i, int j);
-void staticMonochikiBullet();
-void monochokiBullet();
+void generateMonochokiBullet();
 void ereaseMonoChoki(int, int);
 void gotoxy(int x, int y);
 void bounderiesOfGame();
 char getCharAtxy(short int x, short int y);
+int monochokiBulletX[100];
+int monochokiBulletY[100];
 int totalNumberOfBullet = 0;
 int monoChokiX = 4;
 int monoChokiY = 7;
+char hel2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
+char hel1[9] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
 
 int main()
 {
@@ -24,8 +26,8 @@ int main()
    {
       if (GetAsyncKeyState(VK_RIGHT))
       {
-         char nextloction = getCharAtxy(monoChokiX+1, monoChokiY);
-         if (nextloction =='>'|| nextloction=='|'|| nextloction=='-'|| nextloction=='_'|| nextloction==' '||nextloction=='}')
+         char nextloction = getCharAtxy(monoChokiX+9, monoChokiY);
+         if (nextloction !='*')
          {
             ereaseMonoChoki(monoChokiX, monoChokiY);
             monoChokiX++;
@@ -35,8 +37,8 @@ int main()
       }
       if (GetAsyncKeyState(VK_LEFT))
       {
-         char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
-         if (nextloction == ' ' || nextloction == 'M')
+         char nextloction = getCharAtxy(monoChokiX, monoChokiY);
+         if (nextloction !='*')
          {
             ereaseMonoChoki(monoChokiX, monoChokiY);
             monoChokiX--;
@@ -46,8 +48,8 @@ int main()
       }
       if (GetAsyncKeyState(VK_DOWN))
       {
-         char nextloction = getCharAtxy(monoChokiX, monoChokiY + 1);
-         if (nextloction == ' ' || nextloction == 'M')
+         char nextloction = getCharAtxy(monoChokiX, monoChokiY + 2);
+         if (nextloction !='*')
          {
             ereaseMonoChoki(monoChokiX, monoChokiY);
             monoChokiY++;
@@ -57,8 +59,8 @@ int main()
       }
       if (GetAsyncKeyState(VK_UP))
       {
-         char nextloction = getCharAtxy(monoChokiX, monoChokiY - 1);
-         if (nextloction == ' ' || nextloction == 'M')
+         char nextloction = getCharAtxy(monoChokiX, monoChokiY);
+         if (nextloction !='*')
          {
             ereaseMonoChoki(monoChokiX, monoChokiY);
             monoChokiY--;
@@ -67,9 +69,7 @@ int main()
       }
       if (GetAsyncKeyState(VK_SPACE))
       {
-         staticMonochikiBullet();
-         monochokiBullet();
-         totalNumberOfBullet++;
+         generateMonochokiBullet();
       }
       if (GetAsyncKeyState(VK_ESCAPE))
       {
@@ -119,14 +119,11 @@ char getCharAtxy(short int x, short int y)
 void printMonochoki(int x, int y)
 {
    gotoxy(x, y);
-   char hel2[10] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
-   char hel1[10] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
-   cout << endl;
    for (int i = 0; i < 9; i++)
    {
       cout << hel2[i];
    }
-   cout << endl;
+   gotoxy(x,y+1);
    for (int i = 0; i < 9; i++)
    {
       cout << hel1[i];
@@ -135,16 +132,13 @@ void printMonochoki(int x, int y)
 void ereaseMonoChoki(int x, int y)
 {
    gotoxy(x, y);
-    char hel2[10] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
-   char hel1[10] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
-   cout << endl;
    for (int i = 0; i < 9; i++)
    {
       char empty=hel2[i];
       empty=' ';
       cout << empty;
    }
-   cout << endl;
+ gotoxy(x, y+1);
    for (int i = 0; i < 9; i++)
    {
       char empty=hel1[i];
@@ -153,31 +147,11 @@ void ereaseMonoChoki(int x, int y)
    }
    
 }
-void monochokiBullet()
+void generateMonochokiBullet()
 {
-   for (int i = 0; i < 80; i++)
-   {
-      for (int j = 0; j < 80; j++)
-      {
-         char locationOfMonochoki = getCharAtxy(i, j);
-         if (locationOfMonochoki == '.')
-         {
-            ereaseMonoChoki(i, j);
-            moveMonoChoki(i, j);
-         }
-      }
-   }
-}
-
-void moveMonoChoki(int i, int j)
-{
-   Sleep(0.5);
-   gotoxy(i + 1, j);
-   cout << ".";
-}
-
-void staticMonochikiBullet()
-{
-   gotoxy(monoChokiX +6, monoChokiY+2);
-   cout << ".";
+   monochokiBulletX[totalNumberOfBullet]=monoChokiX+9;
+   monochokiBulletY[totalNumberOfBullet]=monoChokiY;
+   gotoxy(monoChokiX+9,monoChokiY+1);
+   cout<<".";
+   totalNumberOfBullet++;
 }
