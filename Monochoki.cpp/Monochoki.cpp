@@ -3,15 +3,19 @@
 using namespace std;
 void printMonochoki(int, int);
 void generateMonochokiBullet();
+void moveMonochokiBullet();
 void ereaseMonoChoki(int, int);
 void gotoxy(int x, int y);
+void ereaseMonochokiBullet(int ,int);
+void printMonochokiBullet(int x,int y);
+void removeBulletFromArray(int index);
 void bounderiesOfGame();
 char getCharAtxy(short int x, short int y);
 int monochokiBulletX[100];
 int monochokiBulletY[100];
 int totalNumberOfBullet = 0;
 int monoChokiX = 4;
-int monoChokiY = 7;
+int monoChokiY = 4;
 char hel2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
 char hel1[9] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
 
@@ -69,13 +73,14 @@ int main()
       }
       if (GetAsyncKeyState(VK_SPACE))
       {
-         generateMonochokiBullet();
+        generateMonochokiBullet();
       }
       if (GetAsyncKeyState(VK_ESCAPE))
       {
 
          isGameRunning = false;
       }
+       moveMonochokiBullet();
 
       Sleep(70);
    }
@@ -147,11 +152,54 @@ void ereaseMonoChoki(int x, int y)
    }
    
 }
+
+void removeBulletFromArray(int index)
+{
+    for (int x = index; x < totalNumberOfBullet - 1; x++)
+    {
+        monochokiBulletX[x] = monochokiBulletX[x + 1];
+        monochokiBulletY[x] = monochokiBulletY[x + 1];
+    }
+    totalNumberOfBullet--;
+}
+
+
 void generateMonochokiBullet()
 {
    monochokiBulletX[totalNumberOfBullet]=monoChokiX+9;
-   monochokiBulletY[totalNumberOfBullet]=monoChokiY;
+   monochokiBulletY[totalNumberOfBullet]=monoChokiY+1;
    gotoxy(monoChokiX+9,monoChokiY+1);
    cout<<".";
    totalNumberOfBullet++;
+}
+void moveMonochokiBullet()
+{
+   for(int i=0;i<totalNumberOfBullet;i++)
+   {
+      char nextLocation=getCharAtxy(monochokiBulletX[i]+1,monochokiBulletY[i]+1);
+      if(nextLocation!=' ')
+      {
+         ereaseMonochokiBullet(monochokiBulletX[i],monochokiBulletY[i]);
+         removeBulletFromArray(i);
+
+      }
+      else
+      {
+      ereaseMonochokiBullet(monochokiBulletX[i],monochokiBulletY[i]);
+      monochokiBulletX[i]=monochokiBulletX[i]+1;
+      printMonochokiBullet(monochokiBulletX[i],monochokiBulletY[i]);
+      }
+     
+
+   }
+}
+void ereaseMonochokiBullet(int x,int y)
+{
+   gotoxy(x,y);
+   cout<<" ";
+}
+void printMonochokiBullet(int x,int y)
+{
+   gotoxy(x,y);
+   cout<<".";
 }
