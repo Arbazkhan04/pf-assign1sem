@@ -3,31 +3,70 @@ using namespace std;
 int main()
 
 { 
-    char box = 219;
-    char tank1[6]={' ','^',' '};
-    char tank2[6]={' ','i',' '};
-    char tank3[6] = { box, box, };
-    char tank4[6] = { box, box,};
-    for(int i=0;i<6;i++)
+    char arr[5]={'.','.'};
+    for(int i=0;i<2;i++)
     {
-        cout<<tank1[i];
+        cout<<arr[i]<<" ";
     }
     cout<<"\n";
-    for(int i=0;i<6;i++)
+    for(int i=0;i<2;i++)
     {
-        cout<<tank2[i];
+        arr[i]=arr[i+1];
     }
     cout<<"\n";
-    for(int i=0;i<6;i++)
+    for(int i=0;i<2;i++)
     {
-        cout<<tank3[i];
+      cout<<arr[i];
     }
-    cout<<"\n";
-    for(int i=0;i<6;i++)
-    {
-        cout<<tank4[i];
-    }
-    cout<<"\n";
+
+    // char box = 219;
+    // char arr1[9]={' ',' ',' ',' ',' ',' ',' ',box,box};
+    // char arr2[7]={'<','-',box,box,box,box,box};
+    //  char arr3[9]={' ',' ',' ',' ',' ',' ',' ',box,box};
+    //  for(int i=0;i<9;i++)
+    // {
+    //     cout<<arr1[i];
+    // }
+    // cout<<"\n";
+    // for(int i=0;i<7;i++)
+    // {
+    //     cout<<arr2[i];
+    // }
+    // cout<<"\n";
+    // for(int i=0;i<9;i++)
+    // {
+    //     cout<<arr3[i];
+    // }
+    // cout<<"\n";
+    // for(int i=0;i<6;i++)
+    // {
+    //     cout<<tank4[i];
+    // }
+    // cout<<"\n";
+    // char tank1[6]={' ','^',' '};
+    // char tank2[6]={' ','i',' '};
+    // char tank3[6] = { box, box, };
+    // char tank4[6] = { box, box,};
+    // for(int i=0;i<6;i++)
+    // {
+    //     cout<<tank1[i];
+    // }
+    // cout<<"\n";
+    // for(int i=0;i<6;i++)
+    // {
+    //     cout<<tank2[i];
+    // }
+    // cout<<"\n";
+    // for(int i=0;i<6;i++)
+    // {
+    //     cout<<tank3[i];
+    // }
+    // cout<<"\n";
+    // for(int i=0;i<6;i++)
+    // {
+    //     cout<<tank4[i];
+    // }
+    // cout<<"\n";
 
 
 
