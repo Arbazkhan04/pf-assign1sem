@@ -14,6 +14,10 @@ void generateBulletForUp();
 void removeBulletFromUpArray(int);
 void printDownMonochoki(int, int);
 void eraseDownMonochoki(int, int);
+void generateMonochokiDownBullet();
+void moveBulletForDown();
+void removeBulletFormDownIndex(int index);
+
 void generateMonochokiBullet();
 void moveMonochokiBullet();
 void ereaseMonoChoki(int, int);
@@ -27,13 +31,17 @@ int totalNumberOfBullet = 0;
 int monochokiBulletX[100];
 int monochokiBulletY[100];
 
-int totalNumberOfLeftBullet=0;
+int totalNumberOfLeftBullet = 0;
 int monochokiLeftArrX[100];
 int monochokiLeftArrY[100];
 
-int totalNumberUpBullet=0;
+int totalNumberUpBullet = 0;
 int monochokiUpArrX[100];
 int monochokiUpArrY[100];
+
+int totalNumberDownBullet = 0;
+int monochokiDownArrX[100];
+int monochokiDownArrY[100];
 
 int monoChokiX = 4;
 int monoChokiY = 4;
@@ -65,8 +73,6 @@ int main()
    bounderiesOfGame();
 
    printMonochoki(monoChokiX, monoChokiY);
-   // printMonochokiUp(monoChokiX,monoChokiY);
-   // printDownMonochoki(monoChokiX,monoChokiY);
 
    while (isGameRunning)
    {
@@ -87,7 +93,7 @@ int main()
       }
       if (GetAsyncKeyState(VK_LEFT))
       {
-         char nextloction = getCharAtxy(monoChokiX, monoChokiY);
+         char nextloction = getCharAtxy(monoChokiX-2, monoChokiY);
          if (nextloction != '*')
          {
             eraseLeftMonoChoki(monoChokiX, monoChokiY);
@@ -109,8 +115,6 @@ int main()
             eraseUpMonochoki(monoChokiX, monoChokiY);
             eraseDownMonochoki(monoChokiX, monoChokiY);
             monoChokiY++;
-
-            // printMonochoki(monoChokiX, monoChokiY);
             printDownMonochoki(monoChokiX, monoChokiY);
          }
       }
@@ -130,30 +134,33 @@ int main()
       }
       if (GetAsyncKeyState(VK_SPACE))
       {
-         
-         if(GetAsyncKeyState(VK_LEFT))
+
+         if (GetAsyncKeyState(VK_LEFT))
          {
             generateBulletForLeft();
          }
-         else if(GetAsyncKeyState(VK_RIGHT))
+         else if (GetAsyncKeyState(VK_RIGHT))
          {
             generateMonochokiBullet();
          }
-         else if(GetAsyncKeyState(VK_UP))
+         else if (GetAsyncKeyState(VK_UP))
          {
             generateBulletForUp();
          }
-         
+         else if (GetAsyncKeyState(VK_DOWN))
+         {
+            generateMonochokiDownBullet();
+         }
       }
       if (GetAsyncKeyState(VK_ESCAPE))
       {
 
          isGameRunning = false;
       }
+      moveBulletForDown();
       moveMonochokiBullet();
       moveLeftBullet();
       moveBulletForUp();
-
 
       Sleep(50);
    }
@@ -161,20 +168,35 @@ int main()
 
 void bounderiesOfGame()
 {
-   cout << "*********************************************************************************" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*                                                                               *" << endl;
-   cout << "*********************************************************************************" << endl;
+   cout << "**************************************************************************************************************************" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "*                                                                                                                        *" << endl;
+   cout << "**************************************************************************************************************************" << endl;
 }
 
 void gotoxy(int x, int y)
@@ -440,11 +462,16 @@ void removeBulletFromArray(int index)
 
 void generateMonochokiBullet()
 {
-   monochokiBulletX[totalNumberOfBullet] = monoChokiX + 9;
+   char nextlocation=getCharAtxy(monoChokiX + 9, monoChokiY + 1);
+   if(nextlocation!='*')
+   {
+    monochokiBulletX[totalNumberOfBullet] = monoChokiX + 9;
    monochokiBulletY[totalNumberOfBullet] = monoChokiY + 1;
    gotoxy(monoChokiX + 9, monoChokiY + 1);
    cout << ".";
    totalNumberOfBullet++;
+   }
+
 }
 void moveMonochokiBullet()
 {
@@ -479,32 +506,32 @@ void generateBulletForLeft()
 {
    monochokiLeftArrX[totalNumberOfLeftBullet] = monoChokiX - 1;
    monochokiLeftArrY[totalNumberOfLeftBullet] = monoChokiY;
-   gotoxy(monoChokiX -1, monoChokiY);
+   gotoxy(monoChokiX - 1, monoChokiY);
    cout << ".";
    totalNumberOfLeftBullet++;
 }
 void moveLeftBullet()
 {
-  for(int i=0;i<totalNumberOfLeftBullet;i++)
-  {
-   char previousLocation=getCharAtxy(monochokiLeftArrX[i]-2,monochokiLeftArrY[i]);
-   if(previousLocation!=' ')
+   for (int i = 0; i < totalNumberOfLeftBullet; i++)
    {
-      ereaseMonochokiBullet(monochokiLeftArrX[i],monochokiLeftArrY[i]);
-      removeBulletFormLeftIndex(i);
+      char previousLocation = getCharAtxy(monochokiLeftArrX[i] - 2, monochokiLeftArrY[i]);
+      if (previousLocation != ' ')
+      {
+         ereaseMonochokiBullet(monochokiLeftArrX[i], monochokiLeftArrY[i]);
+         removeBulletFormLeftIndex(i);
+      }
+      else
+      {
+         ereaseMonochokiBullet(monochokiLeftArrX[i], monochokiLeftArrY[i]);
+         monochokiLeftArrX[i] = monochokiLeftArrX[i] - 1;
+         printMonochokiBullet(monochokiLeftArrX[i], monochokiLeftArrY[i]);
+      }
    }
-   else 
-   {
-      ereaseMonochokiBullet(monochokiLeftArrX[i],monochokiLeftArrY[i]);
-      monochokiLeftArrX[i]=monochokiLeftArrX[i]-1;
-      printMonochokiBullet(monochokiLeftArrX[i],monochokiLeftArrY[i]);
-   }
-  }
 }
 
 void removeBulletFormLeftIndex(int index)
 {
-     for (int x = index; x < totalNumberOfLeftBullet - 1; x++)
+   for (int x = index; x < totalNumberOfLeftBullet - 1; x++)
    {
       monochokiLeftArrX[x] = monochokiLeftArrX[x + 1];
       monochokiLeftArrY[x] = monochokiLeftArrY[x + 1];
@@ -512,33 +539,31 @@ void removeBulletFormLeftIndex(int index)
    totalNumberOfLeftBullet--;
 }
 
-
 void generateBulletForUp()
-{ 
-   monochokiUpArrX[totalNumberUpBullet]=monoChokiX+2;
-   monochokiUpArrY[totalNumberUpBullet]=monoChokiY-1;
-   gotoxy(monoChokiX+2,monoChokiY-1);
-   cout<<".";
+{
+   monochokiUpArrX[totalNumberUpBullet] = monoChokiX + 2;
+   monochokiUpArrY[totalNumberUpBullet] = monoChokiY - 1;
+   gotoxy(monoChokiX + 2, monoChokiY - 1);
+   cout << ".";
    totalNumberUpBullet++;
 }
 void moveBulletForUp()
 {
-   for(int i=0;i<totalNumberUpBullet;i++)
+   for (int i = 0; i < totalNumberUpBullet; i++)
    {
-     char upLocation=getCharAtxy(monochokiUpArrX[i],monochokiUpArrY[i]-1);
-     if(upLocation!=' ')
-     {
-       ereaseMonochokiBullet(monochokiUpArrX[i],monochokiUpArrY[i]);
-       removeBulletFromUpArray(i);
+      char upLocation = getCharAtxy(monochokiUpArrX[i], monochokiUpArrY[i] - 1);
+      if (upLocation != ' ')
+      {
+         ereaseMonochokiBullet(monochokiUpArrX[i], monochokiUpArrY[i]);
+         removeBulletFromUpArray(i);
+      }
+      else
+      {
+         ereaseMonochokiBullet(monochokiUpArrX[i], monochokiUpArrY[i]);
+         monochokiUpArrY[i] = monochokiUpArrY[i] - 1;
 
-     }
-     else
-     {
-       ereaseMonochokiBullet(monochokiUpArrX[i],monochokiUpArrY[i]);
-       monochokiUpArrY[i]=monochokiUpArrY[i]-1;
-
-       printMonochokiBullet(monochokiUpArrX[i],monochokiUpArrY[i]);
-     }
+         printMonochokiBullet(monochokiUpArrX[i], monochokiUpArrY[i]);
+      }
    }
 }
 void removeBulletFromUpArray(int index)
@@ -549,4 +574,41 @@ void removeBulletFromUpArray(int index)
       monochokiUpArrY[x] = monochokiUpArrY[x + 1];
    }
    totalNumberUpBullet--;
+}
+
+void generateMonochokiDownBullet()
+{
+   monochokiDownArrX[totalNumberDownBullet] = monoChokiX + 2;
+   monochokiDownArrY[totalNumberDownBullet] = monoChokiY + 6;
+   gotoxy(monoChokiX + 2, monoChokiY + 6);
+   cout << ".";
+   totalNumberDownBullet++;
+}
+
+void moveBulletForDown()
+{
+   for (int i = 0; i < totalNumberDownBullet; i++)
+   {
+      char downBulletLocation = getCharAtxy(monochokiDownArrX[i], monochokiDownArrY[i] + 1);
+      if (downBulletLocation != ' ')
+      {
+         ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
+         removeBulletFormDownIndex(i);
+      }
+      else
+      {
+         ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
+         monochokiDownArrY[i] = monochokiDownArrY[i] + 1;
+         printMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
+      }
+   }
+}
+void removeBulletFormDownIndex(int index)
+{
+   for (int x = index; x < totalNumberDownBullet - 1; x++)
+   {
+      monochokiDownArrX[x] = monochokiDownArrX[x + 1];
+      monochokiDownArrY[x] = monochokiDownArrY[x + 1];
+   }
+   totalNumberDownBullet--;
 }
