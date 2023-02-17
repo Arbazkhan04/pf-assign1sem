@@ -5,12 +5,13 @@ void printMonochoki(int, int);
 void printMonochokiLeft(int, int);
 void generateBulletForLeft();
 void moveLeftBullet();
-void removeBulletFormLeftIndex(int);//issue
+void removeBulletFormLeftIndex(int);
 void eraseLeftMonoChoki(int, int);
 void printMonochokiUp(int, int);
 void moveBulletForUp();
 void eraseUpMonochoki(int, int);
 void generateBulletForUp();
+void removeBulletFromUpArray(int);
 void printDownMonochoki(int, int);
 void eraseDownMonochoki(int, int);
 void generateMonochokiBullet();
@@ -129,15 +130,19 @@ int main()
       }
       if (GetAsyncKeyState(VK_SPACE))
       {
-         generateBulletForUp();
-         // if(GetAsyncKeyState(VK_LEFT))
-         // {
-         //    generateBulletForLeft();
-         // }
-         // else if(GetAsyncKeyState(VK_RIGHT))
-         // {
-         //    generateMonochokiBullet();
-         // }
+         
+         if(GetAsyncKeyState(VK_LEFT))
+         {
+            generateBulletForLeft();
+         }
+         else if(GetAsyncKeyState(VK_RIGHT))
+         {
+            generateMonochokiBullet();
+         }
+         else if(GetAsyncKeyState(VK_UP))
+         {
+            generateBulletForUp();
+         }
          
       }
       if (GetAsyncKeyState(VK_ESCAPE))
@@ -145,8 +150,8 @@ int main()
 
          isGameRunning = false;
       }
-      // moveMonochokiBullet();
-      // moveLeftBullet();
+      moveMonochokiBullet();
+      moveLeftBullet();
       moveBulletForUp();
 
 
@@ -474,7 +479,7 @@ void generateBulletForLeft()
 {
    monochokiLeftArrX[totalNumberOfLeftBullet] = monoChokiX - 1;
    monochokiLeftArrY[totalNumberOfLeftBullet] = monoChokiY;
-   gotoxy(monoChokiX - 1, monoChokiY);
+   gotoxy(monoChokiX -1, monoChokiY);
    cout << ".";
    totalNumberOfLeftBullet++;
 }
@@ -482,17 +487,16 @@ void moveLeftBullet()
 {
   for(int i=0;i<totalNumberOfLeftBullet;i++)
   {
-   char previousLocation=getCharAtxy(monochokiLeftArrX[i]-1,monochokiLeftArrY[i]);
+   char previousLocation=getCharAtxy(monochokiLeftArrX[i]-2,monochokiLeftArrY[i]);
    if(previousLocation!=' ')
    {
       ereaseMonochokiBullet(monochokiLeftArrX[i],monochokiLeftArrY[i]);
-      // removeBulletFormLeftIndex(i);
+      removeBulletFormLeftIndex(i);
    }
    else 
    {
       ereaseMonochokiBullet(monochokiLeftArrX[i],monochokiLeftArrY[i]);
       monochokiLeftArrX[i]=monochokiLeftArrX[i]-1;
-      // gotoxy(monochokiLeftArrX[i],monochokiLeftArrY[i]);
       printMonochokiBullet(monochokiLeftArrX[i],monochokiLeftArrY[i]);
    }
   }
@@ -505,7 +509,7 @@ void removeBulletFormLeftIndex(int index)
       monochokiLeftArrX[x] = monochokiLeftArrX[x + 1];
       monochokiLeftArrY[x] = monochokiLeftArrY[x + 1];
    }
-   totalNumberOfBullet--;
+   totalNumberOfLeftBullet--;
 }
 
 
@@ -525,6 +529,8 @@ void moveBulletForUp()
      if(upLocation!=' ')
      {
        ereaseMonochokiBullet(monochokiUpArrX[i],monochokiUpArrY[i]);
+       removeBulletFromUpArray(i);
+
      }
      else
      {
@@ -534,4 +540,13 @@ void moveBulletForUp()
        printMonochokiBullet(monochokiUpArrX[i],monochokiUpArrY[i]);
      }
    }
+}
+void removeBulletFromUpArray(int index)
+{
+   for (int x = index; x < totalNumberUpBullet - 1; x++)
+   {
+      monochokiUpArrX[x] = monochokiUpArrX[x + 1];
+      monochokiUpArrY[x] = monochokiUpArrY[x + 1];
+   }
+   totalNumberUpBullet--;
 }
