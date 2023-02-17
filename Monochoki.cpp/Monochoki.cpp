@@ -93,7 +93,7 @@ int main()
       }
       if (GetAsyncKeyState(VK_LEFT))
       {
-         char nextloction = getCharAtxy(monoChokiX-2, monoChokiY);
+         char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
          if (nextloction != '*')
          {
             eraseLeftMonoChoki(monoChokiX, monoChokiY);
@@ -462,16 +462,15 @@ void removeBulletFromArray(int index)
 
 void generateMonochokiBullet()
 {
-   char nextlocation=getCharAtxy(monoChokiX + 9, monoChokiY + 1);
-   if(nextlocation!='*')
+   char nextlocation = getCharAtxy(monoChokiX + 9, monoChokiY + 1);
+   if (nextlocation != '*')
    {
-    monochokiBulletX[totalNumberOfBullet] = monoChokiX + 9;
-   monochokiBulletY[totalNumberOfBullet] = monoChokiY + 1;
-   gotoxy(monoChokiX + 9, monoChokiY + 1);
-   cout << ".";
-   totalNumberOfBullet++;
+      monochokiBulletX[totalNumberOfBullet] = monoChokiX + 9;
+      monochokiBulletY[totalNumberOfBullet] = monoChokiY + 1;
+      gotoxy(monoChokiX + 9, monoChokiY + 1);
+      cout << ".";
+      totalNumberOfBullet++;
    }
-
 }
 void moveMonochokiBullet()
 {
@@ -504,11 +503,15 @@ void printMonochokiBullet(int x, int y)
 
 void generateBulletForLeft()
 {
-   monochokiLeftArrX[totalNumberOfLeftBullet] = monoChokiX - 1;
-   monochokiLeftArrY[totalNumberOfLeftBullet] = monoChokiY;
-   gotoxy(monoChokiX - 1, monoChokiY);
-   cout << ".";
-   totalNumberOfLeftBullet++;
+   char nextlocation = getCharAtxy(monoChokiX - 1, monoChokiY);
+   if (nextlocation != '*')
+   {
+      monochokiLeftArrX[totalNumberOfLeftBullet] = monoChokiX - 1;
+      monochokiLeftArrY[totalNumberOfLeftBullet] = monoChokiY;
+      gotoxy(monoChokiX - 1, monoChokiY);
+      cout << ".";
+      totalNumberOfLeftBullet++;
+   }
 }
 void moveLeftBullet()
 {
