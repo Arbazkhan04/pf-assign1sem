@@ -1,13 +1,15 @@
 #include <iostream>
+#include<string>
 #include <windows.h>
 using namespace std;
 void printMonochoki(int, int);
 void printMonochokiLeft(int, int);
 void generateBulletForLeft();
+void monochokiBulletloc();
 void moveLeftBullet();
 void printScore();
 void monochokiScore();
-int score=0;
+int score = 0;
 void removeBulletFormLeftIndex(int);
 void eraseLeftMonoChoki(int, int);
 void printMonochokiUp(int, int);
@@ -76,6 +78,7 @@ char arr2[7] = {'<', '-', box, box, box, box, box};
 char arr3[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box};
 int enemyOneX = 80;
 int enemyOneY = 10;
+void enemyxyloc();
 void printEnemy1();
 void ereaseEnemy1();
 void moveEnemyOneBullet();
@@ -93,6 +96,42 @@ void removeIndexOfEnemyOne(int);
 void enemyCollisionWithBullet();
 // enemy-1
 
+// enemytwo
+void printEnemyleft2(int, int);
+void ereaseEnemyleft2(int, int); 
+void ereaseEnemyright2(int,int);
+void printEnemyright2(int, int);
+void printEnemyUp2(int, int);
+void ereaseEnemyTwoUp(int, int);
+void printEnemyDown2(int,int);
+void ereaseEnemyTwoDown(int,int);
+// void ereaseEnemyright2();
+void moveEnemyTwo();
+char leftBox1[9] = {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+char leftbox2[9] = {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '};
+char enmeyTwoRightArr[8] = {' ', box, box, box, box, box, '-', '>'};
+
+char upEnem0Arr[5] = {' ', ' ', '^', ' ', ' '};
+char upEnem1Arr[5] = {' ', ' ', '|', ' ', ' '};
+char upEnem2Arr[5] = {' ', box, box, box, ' '};
+char upEnem3Arr[5] = {' ', box, box, box, ' '};
+char upEnem4Arr[5] = {' ', box, box, box, ' '};
+char upEnem5Arr[5] = {box, box, ' ', box, box};
+
+char downEnem0Arr[5] = {' ', ' ', 'v', ' ', ' '};
+char downEnem1Arr[5] = {' ', ' ', '|', ' ', ' '};
+char downEnem2Arr[5] = {' ', box, box, box, ' '};
+char downEnem3Arr[5] = {' ', box, box, box, ' '};
+char downEnem4Arr[5] = {' ', box, box, box, ' '};
+char downEnem5Arr[5] = {box, box, ' ', box, box};
+
+// void printEnemyRight
+
+string enemy2Direction = " ";
+int Enemy2RightX = 20;
+int Enemy2RightY = 8;
+// enemytwo
+
 int main()
 {
    system("cls");
@@ -101,10 +140,11 @@ int main()
 
    printMonochoki(monoChokiX, monoChokiY);
    printEnemy1();
+   printEnemyleft2(Enemy2RightX, Enemy2RightY);
 
    while (isGameRunning)
    {
-         printScore();
+      printScore();
       if (GetAsyncKeyState(VK_RIGHT))
       {
          char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
@@ -115,6 +155,7 @@ int main()
             eraseUpMonochoki(monoChokiX, monoChokiY);
             eraseDownMonochoki(monoChokiX, monoChokiY);
             monoChokiX++;
+            enemy2Direction = "up";
 
             printMonochoki(monoChokiX, monoChokiY);
          }
@@ -144,6 +185,7 @@ int main()
             eraseDownMonochoki(monoChokiX, monoChokiY);
             monoChokiY++;
             printDownMonochoki(monoChokiX, monoChokiY);
+            enemy2Direction = "down";
          }
       }
       if (GetAsyncKeyState(VK_UP))
@@ -190,7 +232,10 @@ int main()
          moveEnemyOne();
          generateBullet();
          moveEnemyOneBullet();
-         
+         moveEnemyTwo();
+
+         // enemyxyloc();
+
          enemyOnetimer = 0;
          // totalBulletByEnemyOne=0;
       }
@@ -206,6 +251,7 @@ int main()
       enemyCollisionWithBullet();
       moveLeftBullet();
       moveBulletForUp();
+      // monochokiBulletloc();
       enemyOnetimer++;
       // enemyonetimerDelayContiuosuBullet++;
 
@@ -668,8 +714,8 @@ void removeBulletFormDownIndex(int index)
 }
 void printScore()
 {
-   gotoxy(100,10);
-   cout<<"Score is "<<score;
+   gotoxy(100, 10);
+   cout << "Score is " << score;
 }
 void monochokiScore()
 {
@@ -766,7 +812,7 @@ void generateBullet()
       cout << ".";
       totalBulletByEnemyOne++;
    }
-   
+
    if (enemyOneY == 3)
    {
       enemyOneLocationX[totalBulletByEnemyOne] = enemyOneX - 1;
@@ -796,7 +842,7 @@ void moveEnemyOneBullet()
 {
    for (int i = 0; i < totalBulletByEnemyOne; i++)
    {
-      char nextlocation = getCharAtxy(enemyOneLocationX[i]-1, enemyOneLocationY[i]);
+      char nextlocation = getCharAtxy(enemyOneLocationX[i] - 1, enemyOneLocationY[i]);
       if (nextlocation == ' ')
       {
          ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
@@ -804,25 +850,23 @@ void moveEnemyOneBullet()
          // bool result=checkEnemy1BulletCollide(enemyOneLocationX[i]);
          // if(result==false)
          // {
-            // if(nextlocation=='.')
-            // {
+         // if(nextlocation=='.')
+         // {
 
-            printEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
+         printEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
          // }
          // else if(result==true){
          //    cout<<"**";
          // }
       }
-      if(nextlocation=='*')
+      if (nextlocation == '*')
       {
          ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
 
          removeIndexOfEnemyOne(i);
       }
-      
    }
 }
-
 
 void ereaseEnemyOneBullet(int x, int y)
 {
@@ -837,7 +881,7 @@ void printEnemyOneBullet(int x, int y)
 
 void removeIndexOfEnemyOne(int index)
 {
-    for (int x = index; x < totalBulletByEnemyOne - 1; x++)
+   for (int x = index; x < totalBulletByEnemyOne - 1; x++)
    {
       enemyOneLocationX[x] = enemyOneLocationX[x + 1];
       enemyOneLocationY[x] = enemyOneLocationY[x + 1];
@@ -846,21 +890,391 @@ void removeIndexOfEnemyOne(int index)
 }
 void enemyCollisionWithBullet()
 {
-   for(int i=0;i<totalNumberOfBullet;i++)
+   for (int i = 0; i < totalNumberOfBullet; i++)
    {
-      
-      if(monochokiBulletX[i]+1==enemyOneX && (monochokiBulletY[i]==enemyOneY || monochokiBulletY[i]==enemyOneY+1||monochokiBulletY[i]==enemyOneY+2 || monochokiBulletY[i]==enemyOneY+3 ||  monochokiBulletY[i]==enemyOneY+4 ))
+
+      if (monochokiBulletX[i] + 1 == enemyOneX && (monochokiBulletY[i] == enemyOneY || monochokiBulletY[i] == enemyOneY + 1 || monochokiBulletY[i] == enemyOneY + 2 || monochokiBulletY[i] == enemyOneY + 3 || monochokiBulletY[i] == enemyOneY + 4))
       {
-          ereaseMonoChoki(monochokiBulletX[i],monochokiBulletY[i]);
-          monochokiScore();
+         ereaseMonoChoki(monochokiBulletX[i], monochokiBulletY[i]);
+         monochokiScore();
          removeBulletFromArray(i);
       }
-       if(monochokiBulletY[i]+1==enemyOneY||monochokiBulletY[i]+2==enemyOneY|| monochokiBulletY[i]+3==enemyOneY)
+      //       if(monochokiBulletY[i]+1==enemyOneY &&(monochokiBulletX[i]+1==enemyOneX||monochokiBulletX[i]+2==enemyOneX|| monochokiBulletX[i]+3==enemyOneX||monochokiBulletX[i]==enemyOneX||monochokiBulletX[i]-1==enemyOneX||monochokiBulletX[i]-2==enemyOneX||monochokiBulletX[i]-3==enemyOneX||monochokiBulletX[i]-4==enemyOneX|| monochokiBulletX[i]-5==enemyOneX||monochokiBulletX[i]-6==enemyOneX||monochokiBulletX[i]-7==enemyOneX))
+      //   {
+      //        ereaseMonoChoki(monochokiBulletX[i],monochokiBulletY[i]);
+      //        monochokiScore();
+      //       removeBulletFromArray(i);
+      //    }
+   }
+}
+// void enemyxyloc()
+// {
+//    gotoxy(90,20);
+//    cout<<enemyOneX<<" "<<enemyOneY;
+//    }
+
+//    void monochokiBulletloc()
+//    {
+//        gotoxy(90,30);
+//        for(int i=0;i<totalNumberDownBullet;i++)
+//        {
+//            cout<<monochokiDownArrX[i]<<" "<<monochokiDownArrY[i];
+//        }
+
+//    }
+
+// enenmy-1
+
+// enemy-two
+void printEnemyleft2(int x, int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 9; i++)
+   {
+      cout << arr1[i];
+   }
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 7; i++)
+   {
+      cout << arr2[i];
+   }
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 9; i++)
+   {
+      cout << arr3[i];
+   }
+}
+void ereaseEnemyleft2(int x, int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 9; i++)
+   {
+      char emp;
+      emp = arr1[i];
+      emp = ' ';
+      cout << emp;
+   }
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 7; i++)
+   {
+      char emp;
+      emp = arr2[i];
+      emp = ' ';
+      cout << emp;
+   }
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 9; i++)
+   {
+
+      char emp;
+      emp = arr2[i];
+      emp = ' ';
+      cout << emp;
+   }
+}
+void printEnemyright2(int x, int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 9; i++)
+   {
+      cout << leftBox1[i];
+   }
+
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 8; i++)
+   {
+      cout << enmeyTwoRightArr[i];
+   }
+
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 9; i++)
+   {
+      cout << leftbox2[i];
+   }
+}
+
+void ereaseEnemyright2(int x,int y)
+{
+    gotoxy(x, y);
+   for (int i = 0; i < 9; i++)
+   {
+      char tem=leftBox1[i];
+      tem=' ';
+      cout <<tem ;
+   }
+
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 8; i++)
+   {
+      char tem=enmeyTwoRightArr[i];
+      tem=' ';
+      cout <<tem ;
+      
+   }
+
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 9; i++)
+   {
+      char tem=leftbox2[i];
+      tem=' ';
+      cout <<tem ;
+   }
+}
+
+void printEnemyUp2(int x, int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << upEnem0Arr[i];
+   }
+
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << upEnem1Arr[i];
+   }
+
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << upEnem2Arr[i];
+   }
+   gotoxy(x, y + 3);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << upEnem3Arr[i];
+   }
+   gotoxy(x, y + 4);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << upEnem4Arr[i];
+   }
+   gotoxy(x, y + 5);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << upEnem5Arr[i];
+   }
+}
+
+void ereaseEnemyTwoUp(int x, int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem = upEnem0Arr[i];
+      tem = ' ';
+      cout << tem;
+   }
+
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem = upEnem1Arr[i];
+      tem = ' ';
+      cout << tem;
+     
+   }
+
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem = upEnem2Arr[i];
+      tem = ' ';
+      cout << tem;
+     
+
+      //   cout << upEnem2Arr[i];
+   }
+   gotoxy(x, y + 3);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem = upEnem3Arr[i];
+      tem = ' ';
+      cout << tem;
+   }
+   gotoxy(x, y + 4);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem = upEnem4Arr[i];
+      tem = ' ';
+      cout << tem;
+   }
+   gotoxy(x, y + 5);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem = upEnem5Arr[i];
+      tem = ' ';
+      cout << tem;
+   }
+}
+
+void printEnemyDown2(int x,int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << downEnem5Arr[i];
+   }
+    
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << downEnem4Arr[i];
+   }
+
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << downEnem3Arr[i];
+   }
+   gotoxy(x, y + 3);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << downEnem2Arr[i];
+   }
+   
+   gotoxy(x, y + 4);
+   for (int i = 0; i < 5; i++)
+   {
+      cout << downEnem1Arr[i];
+   }
+   
+   gotoxy(x, y + 5);
+    for (int i = 0; i < 5; i++)
+   {
+      cout << downEnem0Arr[i];
+   }
+   
+}
+
+void ereaseEnemyTwoDown(int x,int y)
+{
+   gotoxy(x, y);
+   for (int i = 0; i < 5; i++)
+   {
+      char tem=downEnem5Arr[i];
+      tem=' ';
+      cout <<tem ;
+   }
+    
+   gotoxy(x, y + 1);
+   for (int i = 0; i < 5; i++)
+   {
+       char tem=downEnem4Arr[i];
+      tem=' ';
+      cout <<tem ;
+  
+   }
+
+   gotoxy(x, y + 2);
+   for (int i = 0; i < 5; i++)
+   {
+       char tem=downEnem3Arr[i];
+      tem=' ';
+      cout <<tem ;
+   
+   }
+   gotoxy(x, y + 3);
+   for (int i = 0; i < 5; i++)
+   {
+       char tem=downEnem2Arr[i];
+      tem=' ';
+      cout <<tem ;
+     
+   }
+   
+   gotoxy(x, y + 4);
+   for (int i = 0; i < 5; i++)
+   {
+       char tem=downEnem1Arr[i];
+      tem=' ';
+      cout <<tem ;
+     
+   }
+   
+   gotoxy(x, y + 5);
+    for (int i = 0; i < 5; i++)
+   {
+       char tem=downEnem0Arr[i];
+      tem=' ';
+      cout <<tem ;
+      
+   }
+   
+}
+
+void moveEnemyTwo()
+{
+   if (enemy2Direction == "up")
+   {
+      char nextlocation = getCharAtxy(Enemy2RightX, Enemy2RightY - 4);
+      if (nextlocation == ' ')
       {
-          ereaseMonoChoki(monochokiBulletX[i],monochokiBulletY[i]);
-          monochokiScore();
-         removeBulletFromArray(i);
+         ereaseEnemyleft2(Enemy2RightX,Enemy2RightY);
+         ereaseEnemyTwoUp(Enemy2RightX, Enemy2RightY);
+         ereaseEnemyright2(Enemy2RightX, Enemy2RightY);
+           ereaseEnemyTwoDown(Enemy2RightX, Enemy2RightY);
+         Enemy2RightY--;
+         printEnemyUp2(Enemy2RightX, Enemy2RightY);
+      }
+      if (nextlocation == '*')
+      {
+         enemy2Direction = "down";
+      }
+   }
+   
+   if (enemy2Direction == "down")//toward negative x-axis my mistake
+   {
+      char nextlocation = getCharAtxy(Enemy2RightX-3, Enemy2RightY);
+      if (nextlocation == ' ')
+      {
+         
+         ereaseEnemyTwoUp(Enemy2RightX, Enemy2RightY);
+         ereaseEnemyleft2(Enemy2RightX,Enemy2RightY);
+         ereaseEnemyright2(Enemy2RightX, Enemy2RightY);
+           ereaseEnemyTwoDown(Enemy2RightX, Enemy2RightY);
+         Enemy2RightX--;
+         printEnemyleft2(Enemy2RightX, Enemy2RightY);
+      }
+      if (nextlocation == '*')
+      {
+         enemy2Direction = "left";
+      }
+   }
+   if (enemy2Direction == "left")
+   {
+      char nextlocation = getCharAtxy(Enemy2RightX +10, Enemy2RightY);
+      if (nextlocation == ' ')
+      {
+          ereaseEnemyleft2(Enemy2RightX,Enemy2RightY);
+         ereaseEnemyTwoUp(Enemy2RightX, Enemy2RightY);
+         ereaseEnemyright2(Enemy2RightX, Enemy2RightY);
+           ereaseEnemyTwoDown(Enemy2RightX, Enemy2RightY);
+         Enemy2RightX++;
+         printEnemyright2(Enemy2RightX, Enemy2RightY);
+      }
+      if (nextlocation == '*')
+      {
+         enemy2Direction = "right";
+      }
+   }
+    if (enemy2Direction == "right") //down
+   {
+      char nextlocation = getCharAtxy(Enemy2RightX , Enemy2RightY+7);
+      if (nextlocation == ' ')
+      {
+          ereaseEnemyleft2(Enemy2RightX,Enemy2RightY);
+         ereaseEnemyTwoUp(Enemy2RightX, Enemy2RightY);
+         ereaseEnemyright2(Enemy2RightX, Enemy2RightY);
+         ereaseEnemyTwoDown(Enemy2RightX, Enemy2RightY);
+         Enemy2RightY++;
+         printEnemyDown2(Enemy2RightX, Enemy2RightY);
+      }
+      if (nextlocation == '*')
+      {
+         enemy2Direction = "up";
       }
    }
 }
-// enenmy-1
+// enemy-two
