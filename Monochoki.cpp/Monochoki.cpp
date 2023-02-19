@@ -91,7 +91,6 @@ void ereaseEnemyOneBullet(int, int);
 string enemyOneDirection = "up";
 void moveEnemyOne();
 int enemyOnetimer = 0;
-// int enemyonetimerDelayContiuosuBullet = 0;
 int enemyOneLocationX[100];
 int enemyOneLocationY[100];
 int totalBulletByEnemyOne = 0;
@@ -181,7 +180,7 @@ void generateBulletForLeftenemy3();
 void moveBulletForLeftEnemy3();
 void removeIndexBulletForLeftEnemy3(int index);
 
-int enemyThreeRightBullettArrX[100]; //right
+int enemyThreeRightBullettArrX[100]; // right
 int enemyThreeRightBulletArrY[100];
 int totalBulletGenerateByrightEnemy3 = 0;
 void generateBulletForRightenemy3();
@@ -313,13 +312,7 @@ int main()
          enemyOnetimer = 0;
          // totalBulletByEnemyOne=0;
       }
-      // if (enemyonetimerDelayContiuosuBullet == 10)
-      // {
-
-      //    generateBullet();
-      //    moveEnemyOneBullet();
-      //    enemyonetimerDelayContiuosuBullet = 0;
-      // }
+      
       moveBulletForDown();
       moveMonochokiBullet();
       enemyCollisionWithBullet();
@@ -336,7 +329,7 @@ int main()
       enemiesBulletCollisionToMonochoki();
       moveEnemyThree();
 
-      monochokiBulletloc();
+      // monochokiBulletloc();
       enemyOnetimer++;
       moveBulletForLeftEnemy3();
       moveBulletForRightEnemy3();
@@ -348,35 +341,37 @@ int main()
 
 void bounderiesOfGame()
 {
-   cout << "**************************************************************************************************************************" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "*                                                                                                                        *" << endl;
-   cout << "**************************************************************************************************************************" << endl;
+   
+   cout << "*******************************************************************************************************" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*                                                                                                     *" << endl;
+   cout << "*******************************************************************************************************" << endl;
 }
 
 void gotoxy(int x, int y)
@@ -801,7 +796,7 @@ void removeBulletFormDownIndex(int index)
 }
 void printScore()
 {
-   gotoxy(100, 10);
+   gotoxy(110, 10);
    cout << "Score is " << score;
 }
 void monochokiScore()
@@ -1612,7 +1607,7 @@ void monochokitestBullletlocation()
 // monochoki health and score
 void MonochokiHealthDecrease()
 {
-   gotoxy(100, 5);
+   gotoxy(104, 5);
    cout << "Monochoki Health " << totalBulletCollideWithMonochki;
 }
 void collideBullettoMonochoki()
@@ -1721,7 +1716,7 @@ void moveEnemyThree()
          ereaseEnemyright2(enemy3X, enemy3y);
          ereaseEnemyTwoDown(enemy3X, enemy3y);
          enemy3y--;
-        
+
          printEnemyUp2(enemy3X, enemy3y);
          generateBulletForUpenemy3();
       }
@@ -1743,7 +1738,6 @@ void moveEnemyThree()
          ereaseEnemyTwoDown(enemy3X, enemy3y);
          generateBulletForLeftenemy3();
          enemy3X--;
-         
 
          // return;
 
@@ -1764,9 +1758,9 @@ void moveEnemyThree()
          ereaseEnemyright2(enemy3X, enemy3y);
          ereaseEnemyTwoDown(enemy3X, enemy3y);
          enemy3X++;
-          
+
          printEnemyright2(enemy3X, enemy3y);
-        generateBulletForRightenemy3();
+         generateBulletForRightenemy3();
       }
       if (nextlocation == '*')
       {
@@ -1806,7 +1800,7 @@ void moveBulletForLeftEnemy3()
 {
    for (int i = 0; i < totalBulletGenerateByLeftEnemy3; i++)
    {
-      char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] -5, enemyThreeBulletArrY[i]);
+      char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] - 5, enemyThreeBulletArrY[i]);
       if (nextlocation == '*')
       {
          ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
@@ -1830,19 +1824,19 @@ void removeIndexBulletForLeftEnemy3(int index)
    }
    totalBulletGenerateByLeftEnemy3--;
 }
- 
- void generateBulletForRightenemy3()
- {
-    enemyThreeRightBullettArrX[totalBulletGenerateByrightEnemy3] = enemy3X + 8;
+
+void generateBulletForRightenemy3()
+{
+   enemyThreeRightBullettArrX[totalBulletGenerateByrightEnemy3] = enemy3X + 8;
    enemyThreeRightBulletArrY[totalBulletGenerateByrightEnemy3] = enemy3y + 1;
    gotoxy(enemy3X + 8, enemy3y + 1);
    cout << ".";
    totalBulletGenerateByrightEnemy3++;
 }
- 
+
 void moveBulletForRightEnemy3()
 {
-    for (int i = 0; i < totalBulletGenerateByrightEnemy3; i++)
+   for (int i = 0; i < totalBulletGenerateByrightEnemy3; i++)
    {
       char nextlocation = getCharAtxy(enemyThreeRightBullettArrX[i] + 2, enemyThreeRightBulletArrY[i]);
       if (nextlocation == '*')
@@ -1861,7 +1855,7 @@ void moveBulletForRightEnemy3()
 
 void removeIndexBulletForRightEnemy3(int index)
 {
-      for (int i = index; i < totalBulletGenerateByrightEnemy3 - 1; i++)
+   for (int i = index; i < totalBulletGenerateByrightEnemy3 - 1; i++)
    {
       enemyThreeRightBullettArrX[i] = enemyThreeRightBullettArrX[i + 1];
       enemyThreeRightBulletArrY[i] = enemyThreeRightBulletArrY[i + 1];
@@ -1871,7 +1865,7 @@ void removeIndexBulletForRightEnemy3(int index)
 
 void generateBulletForDownenemy3()
 {
-    enemyThreeDownBullettArrX[totalBulletGenerateByDownEnemy3] = enemy3X + 1;
+   enemyThreeDownBullettArrX[totalBulletGenerateByDownEnemy3] = enemy3X + 1;
    enemyThreeDownBulletArrY[totalBulletGenerateByDownEnemy3] = enemy3y + 5;
    gotoxy(enemy3X + 1, Enemy2RightY + 5);
    cout << ".";
@@ -1880,7 +1874,7 @@ void generateBulletForDownenemy3()
 
 void moveBulletForDownEnemy3()
 {
-    for (int i = 0; i < totalBulletGenerateByDownEnemy3; i++)
+   for (int i = 0; i < totalBulletGenerateByDownEnemy3; i++)
    {
       char nextlocation = getCharAtxy(enemyThreeDownBullettArrX[i], enemyThreeDownBulletArrY[i] + 2);
       if (nextlocation == '*')
@@ -1918,7 +1912,7 @@ void generateBulletForUpenemy3()
 
 void moveBulletForUpEnemy3()
 {
-    for (int i = 0; i < totalBulletGenerateByUpEnemy3; i++)
+   for (int i = 0; i < totalBulletGenerateByUpEnemy3; i++)
    {
       char nextlocation = getCharAtxy(enemyThreeUpBullettArrX[i], enemyThreeUpBulletArrY[i] - 4);
       if (nextlocation == '*')
@@ -1937,25 +1931,10 @@ void moveBulletForUpEnemy3()
 
 void removeIndexBulletForUpEnemy3(int index)
 {
-      for (int i = index; i < totalBulletGenerateByUpEnemy3 - 1; i++)
+   for (int i = index; i < totalBulletGenerateByUpEnemy3 - 1; i++)
    {
       enemyThreeUpBullettArrX[i] = enemyThreeUpBullettArrX[i + 1];
       enemyThreeUpBulletArrY[i] = enemyThreeUpBulletArrY[i + 1];
    }
    totalBulletGenerateByUpEnemy3--;
 }
-
-// int enemyThreeUpBullettArrX[100];
-// int enemyThreeUpBulletArrY[100];
-// int totalBulletGenerateByUpEnemy3 = 0;
-// void generateBulletForUpenemy3();
-// void moveBulletForUpEnemy3();
-// void removeIndexBulletForUpEnemy3(int index);
-
-// int enemyTwoUpBullettArrX[100];
-// int enemyTwoUpBulletArrY[100];
-// int totalBulletGenerateByUpEnemy2 = 0;
-// void generateBulletForUpenemy2();
-// void moveBulletForUpEnemy2();
-// void removeIndexBulletForUpEnemy2(int index);
-// // enemy three
