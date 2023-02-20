@@ -312,7 +312,7 @@ int main()
          enemyOnetimer = 0;
          // totalBulletByEnemyOne=0;
       }
-      
+
       moveBulletForDown();
       moveMonochokiBullet();
       enemyCollisionWithBullet();
@@ -341,7 +341,7 @@ int main()
 
 void bounderiesOfGame()
 {
-   
+
    cout << "*******************************************************************************************************" << endl;
    cout << "*                                                                                                     *" << endl;
    cout << "*                                                                                                     *" << endl;
@@ -1607,8 +1607,8 @@ void monochokitestBullletlocation()
 // monochoki health and score
 void MonochokiHealthDecrease()
 {
-   gotoxy(100, 5);
-   cout << "Monochoki Health " << totalBulletCollideWithMonochki;
+   gotoxy(104, 5);
+   cout << "Mono Health " << totalBulletCollideWithMonochki;
 }
 void collideBullettoMonochoki()
 {
@@ -1621,18 +1621,28 @@ void enemiesBulletCollisionToMonochoki()
    for (int i = 0; i < totalBulletByEnemyOne; i++)
    {
 
-      if ((enemyOneLocationX[i] == monoChokiX + 12 || enemyOneLocationX[i] == monoChokiX + 13 || enemyOneLocationX[i] == monoChokiX + 11) && enemyOneLocationY[i] == monoChokiY)
+      if (enemyOneLocationX[i] == monoChokiX + 4 && (enemyOneLocationY[i] == monoChokiY + 1 || enemyOneLocationY[i] == monoChokiY + 2 || enemyOneLocationY[i] == monoChokiY + 3 || enemyOneLocationY[i] == monoChokiY + 4 || enemyOneLocationY[i] == monoChokiY + 5))
       {
          collideBullettoMonochoki();
          ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
 
          removeIndexOfEnemyOne(i);
       }
+     char nextlocation=getCharAtxy(enemyOneLocationX[i]-1,enemyOneLocationY[i]);
+     {
+      if(nextlocation=='{')
+      {
+           collideBullettoMonochoki();
+         ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
+
+         removeIndexOfEnemyOne(i);
+      }
+     }
    }
    for (int i = 0; i < totalBulletByEnemyOne; i++)
    {
 
-      if (enemyOneLocationX[i] + 2 == monoChokiX && enemyOneLocationY[i] == monoChokiY)
+      if (enemyOneLocationX[i] == monoChokiX + 10 && (enemyOneLocationY[i] == monoChokiY + 1 || enemyOneLocationY[i] == monoChokiY + 2 || enemyOneLocationY[i] == monoChokiY + 3))
       {
          collideBullettoMonochoki();
          ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
@@ -1800,7 +1810,7 @@ void moveBulletForLeftEnemy3()
 {
    for (int i = 0; i < totalBulletGenerateByLeftEnemy3; i++)
    {
-      char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] -1, enemyThreeBulletArrY[i]);
+      char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] - 1, enemyThreeBulletArrY[i]);
       if (nextlocation == '*')
       {
          ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
