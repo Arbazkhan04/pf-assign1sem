@@ -1607,7 +1607,7 @@ void monochokitestBullletlocation()
 // monochoki health and score
 void MonochokiHealthDecrease()
 {
-   gotoxy(104, 5);
+   gotoxy(100, 5);
    cout << "Monochoki Health " << totalBulletCollideWithMonochki;
 }
 void collideBullettoMonochoki()
@@ -1800,7 +1800,7 @@ void moveBulletForLeftEnemy3()
 {
    for (int i = 0; i < totalBulletGenerateByLeftEnemy3; i++)
    {
-      char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] - 5, enemyThreeBulletArrY[i]);
+      char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] -1, enemyThreeBulletArrY[i]);
       if (nextlocation == '*')
       {
          ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
