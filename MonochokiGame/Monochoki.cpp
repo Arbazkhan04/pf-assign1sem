@@ -335,7 +335,7 @@ int main()
       moveBulletForRightEnemy3();
       moveBulletForDownEnemy3();
       moveBulletForUpEnemy3();
-      Sleep(70);
+      Sleep(1);
    }
 }
 
