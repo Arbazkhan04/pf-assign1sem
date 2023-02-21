@@ -9,7 +9,7 @@ int main()
 {
   fstream file;
   string word;
-  file.open("stduent.txt",ios::in);
+  file.open("story.txt",ios::in);
   while(!file.eof())
   {
     file>>word;
