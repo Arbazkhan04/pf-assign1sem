@@ -1,0 +1,6 @@
+Name: faizan
+Adminssion Number: 134
+Percentage :86
+Name: kazim
+Adminssion Number: 321
+Percentage :96
