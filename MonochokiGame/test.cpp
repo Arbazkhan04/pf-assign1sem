@@ -3,25 +3,51 @@ using namespace std;
 int main()
 
 {
-    for(int i=0;i<=120;i++)
-    {
-        cout<<"*";
-    }
-    cout<<endl;
-    for(int i=0;i<22;i++)
-    {
-        cout<<"*";
-        for(int j=0;j<119;j++)
-        {
-            cout<<" ";
-        }
-        cout<<"*"<<endl;
-    }
-    for(int i=0;i<=120;i++)
-    {
-        cout<<"*";
-    }
+    // cout<< "\033[31m" <<"    (@@)    "<<endl;
+    // cout<< "\033[31m" <<"   g_) (_e  "<<endl;
+    // cout<< "\033[31m" <<"   (=--=)   "<<endl;
+    // cout<< "\033[31m" <<"   _|  |_     "<<endl;
+    // cout << "\033[31m" << "This text is red" << endl;
+    // cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
+    cout << "\033[31m" << "Your text in red color" << "\033[0m";
+
+
+   
+
+
 }
+
+ 
+//     (@@)
+//  g/\_)(_/\e
+// g/\(=--=)/\e
+//     //\\
+//    _|  |_
+    //    _            _    _    _ 
+    // __( )__        ( )__( )__( )__( )__
+    // --. .--       .--. .--. .--. .--'
+    //  / _ \        / _ \/ _ \/ _ \/ _ \
+    //  (/ \)        (/ \)(/ \)(/ \)(/ \)
+     
+    // for(int i=0;i<=120;i++)
+    // {
+    //     cout<<"*";
+    // }
+    // cout<<endl;
+    // for(int i=0;i<6;i++)
+    // {
+    //     cout<<"*";
+    //     for(int j=0;j<119;j++)
+    //     {
+    //         cout<<" ";
+    //     }
+    //     cout<<"*"<<endl;
+    // }
+    // for(int i=0;i<=120;i++)
+    // {
+    //     cout<<"*";
+    // }
+
     // char box = 219;
     // char arr1[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ',' '};
     // char arr3[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ', ' '};

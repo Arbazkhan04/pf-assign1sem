@@ -2,6 +2,21 @@
 #include <string>
 #include <windows.h>
 using namespace std;
+void monochokiStatue();
+void yellowmonochokiStatue();
+void redMonochokiStatue();
+
+int enemy1statueX = 40;
+int enemy1statueY = 1;
+string enemy1Name = "Denver";
+int enemy2statueX = 55;
+int enemy2statueY = 1;
+string enemy2Name = "Tokoyo";
+int enemy3statueX = 70;
+int enemy3statueY = 1;
+string enemy3Name = "Berlin";
+void enemyOneStatue(int, int, string);
+void gameStatusBar();
 void printMonochoki(int, int);
 void printMonochokiLeft(int, int);
 void generateBulletForLeft();
@@ -54,7 +69,7 @@ int monochokiDownArrX[1000];
 int monochokiDownArrY[1000];
 
 int monoChokiX = 4;
-int monoChokiY = 4;
+int monoChokiY = 10;
 
 char hel2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '}; // moving toward right
 char hel1[9] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
@@ -207,7 +222,15 @@ int main()
 {
    system("cls");
    bool isGameRunning = true;
+   gameStatusBar();
    bounderiesOfGame();
+   if (totalBulletCollideWithMonochki < 29)
+   {
+      monochokiStatue();
+   }
+   enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
+   enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name);
+   enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
 
    printMonochoki(monoChokiX, monoChokiY);
    printEnemy1();
@@ -337,43 +360,131 @@ int main()
       moveBulletForRightEnemy3();
       moveBulletForDownEnemy3();
       moveBulletForUpEnemy3();
+      if (totalBulletCollideWithMonochki > 30 && totalBulletCollideWithMonochki < 60)
+      {
+         yellowmonochokiStatue();
+      }
+      else if(totalBulletCollideWithMonochki>60&&totalBulletCollideWithMonochki<90)
+      {
+         redMonochokiStatue();
+      }
+       else if(totalBulletCollideWithMonochki>100)
+      {
+         totalBulletCollideWithMonochki=0;
+         monochokiStatue();
+      }
       Sleep(1);
    }
 }
 
 void bounderiesOfGame()
 {
+   for (int i = 0; i <= 120; i++)
+   {
+      cout << "*";
+   }
+   cout << endl;
+   for (int i = 0; i < 20; i++)
+   {
+      cout << "*";
+      for (int j = 0; j < 119; j++)
+      {
+         cout << " ";
+      }
+      cout << "*" << endl;
+   }
+   for (int i = 0; i <= 120; i++)
+   {
+      cout << "*";
+   }
+}
+void gameStatusBar()
+{
+   for (int i = 0; i <= 120; i++)
+   {
+      cout << "*";
+   }
+   cout << endl;
+   for (int i = 0; i < 5; i++)
+   {
+      cout << "*";
+      for (int j = 0; j < 119; j++)
+      {
+         cout << " ";
+      }
+      cout << "*" << endl;
+   }
+   for (int i = 0; i <= 120; i++)
+   {
+      cout << "*";
+   }
+}
 
-   cout << "*******************************************************************************************************" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*                                                                                                     *" << endl;
-   cout << "*******************************************************************************************************" << endl;
+void monochokiStatue()
+{
+   gotoxy(23, 1);
+   cout << "MonoChoki Player";
+   gotoxy(24, 2);
+   cout << "    _      ";
+   gotoxy(24, 3);
+   cout << " __( )__  ";
+   gotoxy(24, 4);
+
+   cout << " --. .-- ";
+   gotoxy(24, 5);
+
+   cout << "(_|   |_) ";
+}
+void yellowmonochokiStatue()
+{
+   gotoxy(23, 1);
+   cout << "MonoChoki Player";
+   gotoxy(24, 2);
+   cout << "\033[33m"
+        << "    _      "
+        << "\033[0m";
+   gotoxy(24, 3);
+   cout << "\033[33m"
+        << " __( )__  "
+        << "\033[0m";
+   gotoxy(24, 4);
+
+   cout << "\033[33m"
+        << " --. .-- "
+        << "\033[0m";
+   gotoxy(24, 5);
+
+   cout << "\033[33m"
+        << "(_|   |_) "
+        << "\033[0m";
+}
+
+void redMonochokiStatue()
+{
+   gotoxy(24, 2);
+   cout << "\033[31m"<< "    _      "<< "\033[0m";
+   gotoxy(24, 3);
+   cout << "\033[31m"<< " __( )__  "<< "\033[0m";
+   gotoxy(24, 4);
+
+   cout << "\033[31m"<< " --. .-- "<<"\033[0m";
+   gotoxy(24, 5);
+
+   cout << "\033[31m"<< "(_|   |_) "<<"\033[0m";
+}
+
+void enemyOneStatue(int x, int y, string name)
+{
+   gotoxy(x + 3, y);
+   cout << name;
+   gotoxy(x, y + 1);
+   cout << "    (@@)    ";
+   gotoxy(x, y + 2);
+   cout << "   g_) (_e  ";
+   gotoxy(x, y + 3);
+   cout << "   (=--=)   ";
+   gotoxy(x, y + 4);
+   cout << "   _|  |_     ";
 }
 
 void gotoxy(int x, int y)
@@ -798,7 +909,7 @@ void removeBulletFormDownIndex(int index)
 }
 void printScore()
 {
-   gotoxy(110, 10);
+   gotoxy(2, 1);
    cout << "Score is " << score;
 }
 void monochokiScore()
@@ -1011,8 +1122,8 @@ void enemyCollisionWithBullet()
       }
    }
 
-   //enemytwo
-    for (int i = 0; i < totalNumberOfLeftBullet; i++)
+   // enemytwo
+   for (int i = 0; i < totalNumberOfLeftBullet; i++)
    {
       if (monochokiLeftArrX[i] - 1 == Enemy2RightX + 9 && (monochokiLeftArrY[i] == Enemy2RightY || monochokiLeftArrY[i] == Enemy2RightY + 1 || monochokiLeftArrY[i] == Enemy2RightY + 2 || monochokiLeftArrY[i] == Enemy2RightY + 3))
       {
@@ -1032,26 +1143,26 @@ void enemyCollisionWithBullet()
       }
    }
 
-  for(int i=0;i<totalNumberDownBullet;i++)
-  {
-   if(monochokiDownArrY[i]+1==Enemy2RightY&&(monochokiDownArrX[i]==Enemy2RightX||monochokiDownArrX[i]==Enemy2RightX+1||monochokiDownArrX[i]==Enemy2RightX+2||monochokiDownArrX[i]==Enemy2RightX+3))
+   for (int i = 0; i < totalNumberDownBullet; i++)
    {
+      if (monochokiDownArrY[i] + 1 == Enemy2RightY && (monochokiDownArrX[i] == Enemy2RightX || monochokiDownArrX[i] == Enemy2RightX + 1 || monochokiDownArrX[i] == Enemy2RightX + 2 || monochokiDownArrX[i] == Enemy2RightX + 3))
+      {
          ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
          monochokiScore();
          removeBulletFormDownIndex(i);
-   } 
-  }
+      }
+   }
 
-  for(int i=0;i<totalNumberUpBullet;i++)
-  {
-   if(monochokiUpArrY[i]-1==Enemy2RightY&&(monochokiUpArrX[i]==Enemy2RightX||monochokiUpArrX[i]==Enemy2RightX+1||monochokiUpArrX[i]==Enemy2RightX+2||monochokiUpArrX[i]==Enemy2RightX+3||monochokiUpArrX[i]==Enemy2RightX+4))
+   for (int i = 0; i < totalNumberUpBullet; i++)
    {
-        ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
+      if (monochokiUpArrY[i] - 1 == Enemy2RightY && (monochokiUpArrX[i] == Enemy2RightX || monochokiUpArrX[i] == Enemy2RightX + 1 || monochokiUpArrX[i] == Enemy2RightX + 2 || monochokiUpArrX[i] == Enemy2RightX + 3 || monochokiUpArrX[i] == Enemy2RightX + 4))
+      {
+         ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
          monochokiScore();
          removeBulletFromUpArray(i);
+      }
    }
-  }
-   //enemyTwo
+   // enemyTwo
 
    // enemy three
    for (int i = 0; i < totalNumberOfLeftBullet; i++)
@@ -1074,25 +1185,25 @@ void enemyCollisionWithBullet()
       }
    }
 
-  for(int i=0;i<totalNumberDownBullet;i++)
-  {
-   if(monochokiDownArrY[i]+1==enemy3y&&(monochokiDownArrX[i]==enemy3X||monochokiDownArrX[i]==enemy3X+1||monochokiDownArrX[i]==enemy3X+2||monochokiDownArrX[i]==enemy3X+3))
+   for (int i = 0; i < totalNumberDownBullet; i++)
    {
+      if (monochokiDownArrY[i] + 1 == enemy3y && (monochokiDownArrX[i] == enemy3X || monochokiDownArrX[i] == enemy3X + 1 || monochokiDownArrX[i] == enemy3X + 2 || monochokiDownArrX[i] == enemy3X + 3))
+      {
          ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
          monochokiScore();
          removeBulletFormDownIndex(i);
-   } 
-  }
+      }
+   }
 
-  for(int i=0;i<totalNumberUpBullet;i++)
-  {
-   if(monochokiUpArrY[i]-1==enemy3y&&(monochokiUpArrX[i]==enemy3X||monochokiUpArrX[i]==enemy3X+1||monochokiUpArrX[i]==enemy3X+2||monochokiUpArrX[i]==enemy3X+3||monochokiUpArrX[i]==enemy3X+4))
+   for (int i = 0; i < totalNumberUpBullet; i++)
    {
-        ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
+      if (monochokiUpArrY[i] - 1 == enemy3y && (monochokiUpArrX[i] == enemy3X || monochokiUpArrX[i] == enemy3X + 1 || monochokiUpArrX[i] == enemy3X + 2 || monochokiUpArrX[i] == enemy3X + 3 || monochokiUpArrX[i] == enemy3X + 4))
+      {
+         ereaseMonochokiBullet(monochokiDownArrX[i], monochokiDownArrY[i]);
          monochokiScore();
          removeBulletFromUpArray(i);
+      }
    }
-  }
    // enemy three
 }
 void enemyxyloc()
@@ -1687,8 +1798,8 @@ void monochokitestBullletlocation()
 // monochoki health and score
 void MonochokiHealthDecrease()
 {
-   gotoxy(104, 5);
-   cout << "Mono Health " << totalBulletCollideWithMonochki;
+   gotoxy(2, 3);
+   cout << "Monochoki Health " << totalBulletCollideWithMonochki;
 }
 void collideBullettoMonochoki()
 {
