@@ -8,7 +8,7 @@ int main()
         cout<<"*";
     }
     cout<<endl;
-    for(int i=0;i<20;i++)
+    for(int i=0;i<22;i++)
     {
         cout<<"*";
         for(int j=0;j<119;j++)
