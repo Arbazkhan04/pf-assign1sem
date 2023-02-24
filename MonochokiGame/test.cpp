@@ -3,51 +3,70 @@ using namespace std;
 int main()
 
 {
-    char box = 219;
+    for(int i=0;i<=120;i++)
+    {
+        cout<<"*";
+    }
+    cout<<endl;
+    for(int i=0;i<20;i++)
+    {
+        cout<<"*";
+        for(int j=0;j<119;j++)
+        {
+            cout<<" ";
+        }
+        cout<<"*"<<endl;
+    }
+    for(int i=0;i<=120;i++)
+    {
+        cout<<"*";
+    }
+}
+    // char box = 219;
     // char arr1[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ',' '};
     // char arr3[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ', ' '};
     // char enmeyTwoRightArr[7] = {box, box, box, box, box,'-','>'}
-     char upEnem0Arr[5]={' ',' ','^',' ',' '};
-        char upEnem1Arr[5]={' ',' ','|',' ',' '};
-     char upEnem2Arr[5]={' ',box,box,box,' '};
-     char upEnem3Arr[5]={' ',box,box,box,' '};
-     char upEnem4Arr[5]={' ',box,box,box,' '};
-     char upEnem5Arr[5]={box,box,' ',box,box};
-    cout << "\n";
-    for (int i = 0; i <5; i++)
-    {
-        cout << upEnem0Arr[i];
-    }
+//      char upEnem0Arr[5]={' ',' ','^',' ',' '};
+//         char upEnem1Arr[5]={' ',' ','|',' ',' '};
+//      char upEnem2Arr[5]={' ',box,box,box,' '};
+//      char upEnem3Arr[5]={' ',box,box,box,' '};
+//      char upEnem4Arr[5]={' ',box,box,box,' '};
+//      char upEnem5Arr[5]={box,box,' ',box,box};
+//     cout << "\n";
+//     for (int i = 0; i <5; i++)
+//     {
+//         cout << upEnem0Arr[i];
+//     }
     
-    cout << "\n";
-    for (int i = 0; i < 5; i++)
-    {
-        cout << upEnem1Arr[i];
-    }
+//     cout << "\n";
+//     for (int i = 0; i < 5; i++)
+//     {
+//         cout << upEnem1Arr[i];
+//     }
 
-    cout <<endl;
-    for (int i = 0; i <5; i++)
-    {
-        cout << upEnem2Arr[i];
-    }
-    cout <<endl;
-    for (int i = 0; i <5; i++)
-    {
-        cout << upEnem3Arr[i];
-    }
-    cout <<endl;
-    for (int i = 0; i <5; i++)
-    {
-        cout << upEnem4Arr[i];
-    }
-    cout <<endl;
-    for (int i = 0; i <5; i++)
-    {
-        cout << upEnem5Arr[i];
-    }
+//     cout <<endl;
+//     for (int i = 0; i <5; i++)
+//     {
+//         cout << upEnem2Arr[i];
+//     }
+//     cout <<endl;
+//     for (int i = 0; i <5; i++)
+//     {
+//         cout << upEnem3Arr[i];
+//     }
+//     cout <<endl;
+//     for (int i = 0; i <5; i++)
+//     {
+//         cout << upEnem4Arr[i];
+//     }
+//     cout <<endl;
+//     for (int i = 0; i <5; i++)
+//     {
+//         cout << upEnem5Arr[i];
+//     }
    
 
-}
+// }
 // char arr[5]={'.','.'};
 // for(int i=0;i<2;i++)
 // {
