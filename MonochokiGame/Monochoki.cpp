@@ -37,28 +37,28 @@ void enemiesBulletCollisionToMonochoki();
 void MonochokiHealthDecrease();
 int totalBulletCollideWithMonochki = 0;
 int totalNumberOfBullet = 0;
-int monochokiBulletX[100];
-int monochokiBulletY[100];
+int monochokiBulletX[1000];
+int monochokiBulletY[1000];
 
 int totalNumberOfLeftBullet = 0;
-int monochokiLeftArrX[100];
-int monochokiLeftArrY[100];
+int monochokiLeftArrX[1000];
+int monochokiLeftArrY[1000];
 
 int totalNumberUpBullet = 0;
-int monochokiUpArrX[100];
-int monochokiUpArrY[100];
+int monochokiUpArrX[1000];
+int monochokiUpArrY[1000];
 
 int totalNumberDownBullet = 0;
-int monochokiDownArrX[100];
-int monochokiDownArrY[100];
+int monochokiDownArrX[1000];
+int monochokiDownArrY[1000];
 
 int monoChokiX = 4;
 int monoChokiY = 4;
 
-char hel2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
+char hel2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};//moving toward right
 char hel1[9] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
 
-char leftHel1[9] = {'{', '-', '|', '_', '_', '_', '|', '-', '<'};
+char leftHel1[9] = {'{', '-', '|', '_', '_', '_', '|', '-', '<'};//moving toward left
 char leftHeli2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
 
 char upHel6[5] = {' ', ' ', '^', ' ', ' '};
@@ -91,8 +91,8 @@ void ereaseEnemyOneBullet(int, int);
 string enemyOneDirection = "up";
 void moveEnemyOne();
 int enemyOnetimer = 0;
-int enemyOneLocationX[100];
-int enemyOneLocationY[100];
+int enemyOneLocationX[1000];
+int enemyOneLocationY[1000];
 int totalBulletByEnemyOne = 0;
 void generateBullet();
 void removeIndexOfEnemyOne(int);
@@ -134,29 +134,29 @@ char downEnem5Arr[5] = {box, box, ' ', box, box};
 string enemy2Direction = " ";
 int Enemy2RightX = 40;
 int Enemy2RightY = 12;
-int enemyTwoBullettArrX[100]; // left
-int enemyTwoBulletArrY[100];  // left
+int enemyTwoBullettArrX[1000]; // left
+int enemyTwoBulletArrY[1000];  // left
 int totalBulletGenerateByEnemy2 = 0;
 void generateBulletForLeftenemy2();
 void moveBulletForLeftEnemy2();
 
-int enemyTwoRightBullettArrX[100];
-int enemyTwoRightBulletArrY[100];
+int enemyTwoRightBullettArrX[1000];
+int enemyTwoRightBulletArrY[1000];
 int totalBulletGenerateByrightEnemy2 = 0;
 void generateBulletForRightenemy2();
 void moveBulletForRightEnemy2();
 void removeIndexBulletForLeftEnemy2(int index);
 void removeIndexBulletForRightEnemy2(int index);
 
-int enemyTwoUpBullettArrX[100];
-int enemyTwoUpBulletArrY[100];
+int enemyTwoUpBullettArrX[1000];
+int enemyTwoUpBulletArrY[1000];
 int totalBulletGenerateByUpEnemy2 = 0;
 void generateBulletForUpenemy2();
 void moveBulletForUpEnemy2();
 void removeIndexBulletForUpEnemy2(int index);
 
-int enemyTwoDownBullettArrX[100];
-int enemyTwoDownBulletArrY[100];
+int enemyTwoDownBullettArrX[1000];
+int enemyTwoDownBulletArrY[1000];
 int totalBulletGenerateByDownEnemy2 = 0;
 void generateBulletForDownenemy2();
 void moveBulletForDownEnemy2();
@@ -173,29 +173,29 @@ int enemy3X = 10;
 int enemy3y = 10;
 string enemy3Direction = "right";
 void moveEnemyThree();
-int enemyThreeBullettArrX[100];
-int enemyThreeBulletArrY[100];
+int enemyThreeBullettArrX[1000];
+int enemyThreeBulletArrY[1000];
 int totalBulletGenerateByLeftEnemy3 = 0;
 void generateBulletForLeftenemy3();
 void moveBulletForLeftEnemy3();
 void removeIndexBulletForLeftEnemy3(int index);
 
-int enemyThreeRightBullettArrX[100]; // right
-int enemyThreeRightBulletArrY[100];
+int enemyThreeRightBullettArrX[1000]; // right
+int enemyThreeRightBulletArrY[1000];
 int totalBulletGenerateByrightEnemy3 = 0;
 void generateBulletForRightenemy3();
 void moveBulletForRightEnemy3();
 void removeIndexBulletForRightEnemy3(int index);
 
-int enemyThreeDownBullettArrX[100];
-int enemyThreeDownBulletArrY[100];
+int enemyThreeDownBullettArrX[1000];
+int enemyThreeDownBulletArrY[1000];
 int totalBulletGenerateByDownEnemy3 = 0;
 void generateBulletForDownenemy3();
 void moveBulletForDownEnemy3();
 void removeIndexBulletForDownEnemy3(int index);
 
-int enemyThreeUpBullettArrX[100];
-int enemyThreeUpBulletArrY[100];
+int enemyThreeUpBullettArrX[1000];
+int enemyThreeUpBulletArrY[1000];
 int totalBulletGenerateByUpEnemy3 = 0;
 void generateBulletForUpenemy3();
 void moveBulletForUpEnemy3();
@@ -235,7 +235,7 @@ int main()
       if (GetAsyncKeyState(VK_LEFT))
       {
          char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
-         if (nextloction != '*')
+         if (nextloction ==' '||nextloction=='.' )
          {
             eraseLeftMonoChoki(monoChokiX, monoChokiY);
             ereaseMonoChoki(monoChokiX, monoChokiY);
@@ -302,7 +302,7 @@ int main()
       }
       if (enemyOnetimer == 2)
       {
-         moveEnemyOne();
+         // moveEnemyOne();
          generateBullet();
          moveEnemyOneBullet();
          MonochokiHealthDecrease();
@@ -312,7 +312,8 @@ int main()
          enemyOnetimer = 0;
          // totalBulletByEnemyOne=0;
       }
-
+      
+    
       moveBulletForDown();
       moveMonochokiBullet();
       enemyCollisionWithBullet();
@@ -324,17 +325,18 @@ int main()
       moveBulletForLeftEnemy2();
       moveBulletForUpEnemy2();
       moveBulletForDownEnemy2();
+        enemiesBulletCollisionToMonochoki();
       EnemyTwoBulletCollisons();
       // monochokitestBullletlocation();
-      enemiesBulletCollisionToMonochoki();
-      moveEnemyThree();
+   
+      // moveEnemyThree();
 
       // monochokiBulletloc();
       enemyOnetimer++;
       moveBulletForLeftEnemy3();
       moveBulletForRightEnemy3();
       moveBulletForDownEnemy3();
-      moveBulletForUpEnemy3();
+      moveBulletForUpEnemy3();  
       Sleep(1);
    }
 }
@@ -1444,15 +1446,17 @@ void moveBulletForRightEnemy2() // left
 {
    for (int i = 0; i < totalBulletGenerateByrightEnemy2; i++)
    {
-      char nextlocation = getCharAtxy(enemyTwoRightBullettArrX[i] + 2, enemyTwoRightBulletArrY[i]);
+      char nextlocation = getCharAtxy(enemyTwoRightBullettArrX[i] + 2, 
+      enemyTwoRightBulletArrY[i]);
+       ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
       if (nextlocation == '*')
       {
-         ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
+        
          removeIndexBulletForRightEnemy2(i);
       }
-      else
+      else if(nextlocation==' ')
       {
-         ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
+         
          enemyTwoRightBullettArrX[i] = enemyTwoRightBullettArrX[i] + 1;
          printBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
       }
@@ -1628,16 +1632,16 @@ void enemiesBulletCollisionToMonochoki()
 
          removeIndexOfEnemyOne(i);
       }
-     char nextlocation=getCharAtxy(enemyOneLocationX[i]-1,enemyOneLocationY[i]);
-     {
-      if(nextlocation=='{')
+      char nextlocation = getCharAtxy(enemyOneLocationX[i] - 1, enemyOneLocationY[i]);
       {
-           collideBullettoMonochoki();
-         ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
+         if (nextlocation == '{')
+         {
+            collideBullettoMonochoki();
+            ereaseEnemyOneBullet(enemyOneLocationX[i], enemyOneLocationY[i]);
 
-         removeIndexOfEnemyOne(i);
+            removeIndexOfEnemyOne(i);
+         }
       }
-     }
    }
    for (int i = 0; i < totalBulletByEnemyOne; i++)
    {
@@ -1667,8 +1671,16 @@ void enemiesBulletCollisionToMonochoki()
    // second enemy
    for (int i = 0; i < totalBulletGenerateByrightEnemy2; i++)
    {
+      
+      if (enemyTwoRightBullettArrX[i]+2== monoChokiX && (enemyTwoRightBulletArrY[i] == monoChokiY || enemyTwoRightBulletArrY[i] == monoChokiY + 1 || enemyTwoRightBulletArrY[i] == monoChokiY + 2))
+      {
+         collideBullettoMonochoki();
+         ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
 
-      if (enemyTwoRightBullettArrX[i] + 1 == monoChokiX && (enemyTwoRightBulletArrY[i] == monoChokiY || enemyTwoRightBulletArrY[i] == monoChokiY + 1 || enemyTwoRightBulletArrY[i] == monoChokiY + 2 || enemyTwoRightBulletArrY[i] == monoChokiY + 3 || enemyTwoRightBulletArrY[i] == monoChokiY - 1 || enemyTwoRightBulletArrY[i] == monoChokiY - 2))
+         removeIndexBulletForRightEnemy2(i);
+      }
+      char nextlocation = getCharAtxy(enemyTwoRightBullettArrX[i] + 2, enemyTwoRightBulletArrY[i]);
+      if(nextlocation == '}')
       {
          collideBullettoMonochoki();
          ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
@@ -1676,31 +1688,63 @@ void enemiesBulletCollisionToMonochoki()
          removeIndexBulletForRightEnemy2(i);
       }
    }
-   for (int i = 0; i < totalBulletGenerateByrightEnemy2; i++)
+   for(int i=0;i<totalBulletGenerateByEnemy2;i++)
    {
-
-      if (enemyTwoRightBullettArrX[i] + 1 == monoChokiX && (enemyTwoRightBulletArrY[i] == monoChokiY || enemyTwoRightBulletArrY[i] == monoChokiY + 1 || enemyTwoRightBulletArrY[i] == monoChokiY + 2 || enemyTwoRightBulletArrY[i] == monoChokiY + 3 || enemyTwoRightBulletArrY[i] == monoChokiY - 1 || enemyTwoRightBulletArrY[i] == monoChokiY - 2))
+      if(enemyTwoBullettArrX[i]==monoChokiX+10 &&(enemyTwoBulletArrY[i]==monoChokiY||enemyTwoBulletArrY[i]==monoChokiY+1||enemyTwoBulletArrY[i]==monoChokiY+2))
       {
-         collideBullettoMonochoki();
-         ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
-
-         removeIndexBulletForRightEnemy2(i);
-      }
-   }
-
-   for (int i = 0; i < totalBulletGenerateByEnemy2; i++)
-   {
-
-      if (enemyTwoBullettArrX[i] + 1 == monoChokiX && (enemyTwoBulletArrY[i] == monoChokiY || enemyTwoBulletArrY[i] == monoChokiY + 1 || enemyTwoBulletArrY[i] == monoChokiY + 2 || enemyTwoBulletArrY[i] == monoChokiY + 3 || enemyTwoBulletArrY[i] == monoChokiY - 1 || enemyTwoBulletArrY[i] == monoChokiY - 2))
-      {
-         collideBullettoMonochoki();
+          collideBullettoMonochoki();
          ereaseBulletForLeftEnemy2(enemyTwoBullettArrX[i], enemyTwoBulletArrY[i]);
 
-         removeIndexBulletForRightEnemy2(i);
+         removeIndexBulletForLeftEnemy2(i);
       }
    }
+   // for (int i = 0; i < totalBulletGenerateByrightEnemy2; i++)
+   // {
+
+   //    if (enemyTwoRightBullettArrX[i] + 1 == monoChokiX && (enemyTwoRightBulletArrY[i] == monoChokiY || enemyTwoRightBulletArrY[i] == monoChokiY + 1 || enemyTwoRightBulletArrY[i] == monoChokiY + 2 || enemyTwoRightBulletArrY[i] == monoChokiY + 3 || enemyTwoRightBulletArrY[i] == monoChokiY - 1 || enemyTwoRightBulletArrY[i] == monoChokiY - 2))
+   //    {
+   //       collideBullettoMonochoki();
+   //       ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
+
+   //       removeIndexBulletForRightEnemy2(i);
+   //    }
+   // }
+
+   // for (int i = 0; i < totalBulletGenerateByEnemy2; i++)
+   // {
+
+   //    if (enemyTwoBullettArrX[i] + 1 == monoChokiX && (enemyTwoBulletArrY[i] == monoChokiY || enemyTwoBulletArrY[i] == monoChokiY + 1 || enemyTwoBulletArrY[i] == monoChokiY + 2 || enemyTwoBulletArrY[i] == monoChokiY + 3 || enemyTwoBulletArrY[i] == monoChokiY - 1 || enemyTwoBulletArrY[i] == monoChokiY - 2))
+   //    {
+   //       collideBullettoMonochoki();
+   //       ereaseBulletForLeftEnemy2(enemyTwoBullettArrX[i], enemyTwoBulletArrY[i]);
+
+   //       removeIndexBulletForRightEnemy2(i);
+   //    }
+   // }
    // rest of the login implement i version two
    //  second enemy
+
+   // for(int i=0;i<totalBulletGenerateByEnemy2;i++)
+   // {
+      
+   //    if (enemyTwoBullettArrX[i] == monoChokiX + 4 && (enemyTwoBulletArrY[i] == monoChokiY + 1 || enemyTwoBulletArrY[i] == monoChokiY + 2 || enemyTwoBulletArrY[i] == monoChokiY + 3 || enemyTwoBulletArrY[i] == monoChokiY + 4 || enemyTwoBulletArrY[i] == monoChokiY + 5))
+   //    {
+   //       collideBullettoMonochoki();
+   //       ereaseEnemyOneBullet(enemyTwoBullettArrX[i], enemyTwoBulletArrY[i]);
+
+   //       removeIndexOfEnemyOne(i);
+   //    }
+   //    char nextlocation = getCharAtxy(enemyTwoBullettArrX[i] - 1, enemyTwoBulletArrY[i]);
+   //    {
+   //       if (nextlocation == '{')
+   //       {
+   //          collideBullettoMonochoki();
+   //          ereaseBulletForLeftEnemy2(enemyTwoBullettArrX[i], enemyTwoBulletArrY[i]);
+
+   //          removeIndexBulletForLeftEnemy2(i);
+   //       }
+   //    }
+   // }
 }
 
 void enemyOneBulletLoction()

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <conio.h>
 #include <string>
 #include <windows.h>
@@ -15,6 +16,7 @@ void adminLogin();
 void userAuth();
 void userRegister();
 void userLogin();
+void storeUserIntoTheFile(string,string);
 void userChangeProfileSetting();
 void adminChangeProfileSetting();
 void userLogout();
@@ -837,6 +839,7 @@ void userRegister()
         {
             userAuthArrayName[totalNumberOfUser] = name;
             userAuthArrayPassWord[totalNumberOfUser] = password;
+            storeUserIntoTheFile(name,password);
             cout << "Successfully Register..." << endl;
             totalNumberOfUser++;
             // Sleep(700);
@@ -895,6 +898,19 @@ void userLogin()
         cout << "Plaese Enter corrrect userName Or Password.." << endl;
         clearScreen();
     }
+}
+
+void storeUserIntoTheFile(string name,string pass)
+{
+    fstream storeUser;
+    storeUser.open("singUpAndSign.txt", ios::app);
+    for (int i = 0; i < totalNumberOfUser; i++)
+    {
+        storeUser << userAuthArrayName[i] << endl;
+        storeUser << userAuthArrayPassWord[i] << endl;
+    }
+
+    storeUser.close();
 }
 
 void adminAuth()
@@ -995,10 +1011,10 @@ void adminRegister()
 void listOfLoginUsers()
 {
     system("cls");
-      cout << "\n \n";
-        cout << "************************************************************************" << endl;
-        cout << "                               USER LIST     "                          << endl;
-        cout << "**************************************************************************" << endl;
+    cout << "\n \n";
+    cout << "************************************************************************" << endl;
+    cout << "                               USER LIST     " << endl;
+    cout << "**************************************************************************" << endl;
     if (totalNumberOfUser > 0)
     {
         cout << "No."
@@ -1270,7 +1286,7 @@ void totalSoldProduct()
     {
         int totalPaid = 0;
         int idnex = 1;
-          system("cls");
+        system("cls");
         cout << "*****************************************************************************************************" << endl;
         cout << "***********************************     Total Sold Product      *************************************" << endl;
         cout << "*****************************************************************************************************" << endl
@@ -1311,7 +1327,7 @@ void totalSoldProduct()
     {
         int totalUnPaid = 0;
         int idnex = 1;
-           system("cls");
+        system("cls");
         cout << "****************************************************************************************************" << endl;
         cout << "***********************************     Total Unpaid Product      **********************************" << endl;
         cout << "****************************************************************************************************" << endl
