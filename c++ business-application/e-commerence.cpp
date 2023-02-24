@@ -903,17 +903,17 @@ void userLogin()
 void storeUserIntoTheFile(string name,string pass)
 {
     fstream storeUser;
-    storeUser.open("singUpAndSign.txt", ios::app);
+    storeUser.open("singUpAndSign.txt", ios::out);
     for (int i = 0; i < totalNumberOfUser; i++)
     {
-        storeUser << userAuthArrayName[i] << endl;
-        storeUser << userAuthArrayPassWord[i] << endl;
+        storeUser << name << endl;
+        storeUser << pass << endl;
     }
 
     storeUser.close();
 }
 
-void adminAuth()
+void adminAuth()  
 {
     int n;
     loginAndSingUpMenu();
