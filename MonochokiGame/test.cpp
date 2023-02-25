@@ -8,7 +8,7 @@ int main()
     // cout<< "\033[31m" <<"   (=--=)   "<<endl;
     // cout<< "\033[31m" <<"   _|  |_     "<<endl;
     // cout << "\033[31m" << "This text is red" << endl;
-    // cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
+    cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
     cout << "\033[31m" << "Your text in red color" << "\033[0m";
 
 
