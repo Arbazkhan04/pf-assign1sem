@@ -1,7 +1,10 @@
 #include <iostream>
 #include <string>
+#include<conio.h>
 #include <windows.h>
 using namespace std;
+
+void startingOfGame();
 void monochokiStatue();
 void yellowmonochokiStatue();
 void redMonochokiStatue();
@@ -248,6 +251,7 @@ void removeIndexBulletForUpEnemy3(int index);
 
 int main()
 {
+   startingOfGame();
    system("cls");
    bool isGameRunning = true;
    gameStatusBar();
@@ -2827,4 +2831,32 @@ void removeIndexBulletForUpEnemy3(int index)
       enemyThreeUpBulletArrY[i] = enemyThreeUpBulletArrY[i + 1];
    }
    totalBulletGenerateByUpEnemy3--;
+}
+
+void startingOfGame()
+{
+   system("cls");
+   cout << "                  ______                                           __    __ " << endl;
+   cout << "                  /                                              |    |  " << endl;
+   cout << "                |  $$$$$$   ______    ______    _______   ______  | $$  | $$" << endl;
+   cout << "                | $$___ $$ /         |      |  /       | /      |   $$    $$" << endl;
+   cout << "                 $$      |  $$$$$$    $$$$$$||  $$$$$$$|  $$$$$$   >$$  $$ " << endl;
+   cout << "                 _ $$$$$$ | $$  | $$ /      $$| $$      | $$    $$ /  $$$$" << endl;
+   cout << "               |   __| $$| $$__/ $$|  $$$$$$$| $$_____ | $$$$$$$$|  $$  $$" << endl;
+   cout << "                 $$    $$| $$    $$  $$    $$  $$        $$      | $$  | $$" << endl;
+   cout << "                  $$$$$$ | $$$$$$$    $$$$$$$  |$$$$$$$   $$$$$$$  $$    $$" << endl;
+   cout << "                         | $$       " << endl;
+   cout << "                         | $$    " << endl;
+   cout << "                           $$     " << endl<<endl<<endl;
+
+   cout << "                                   MMM8&&&.          " << endl;
+   cout << "                              _...MMMMM88&&&&...       " << endl;
+   cout << "                          .::'''MMMMM88&&&&&&'''::.     " << endl;
+   cout << "                         ::     MMMMM88&&&&&&     ::   " << endl;
+   cout << "                         '::....MMMMM88&&&&&&....::'   " << endl;
+   cout << "                            `''''MMMMM88&&&&''''`     " << endl;
+   cout << "                         '         MMM8&&&          " << endl<<endl;
+   
+   cout<<"Press any key to continue the game ";
+   getch();
 }
