@@ -16,7 +16,9 @@ void adminLogin();
 void userAuth();
 void userRegister();
 void userLogin();
-void storeUserIntoTheFile(string,string);
+void storeUserIntoTheFile(string, string);
+void populateUserIntoArr();
+string commaSeprateUser(string line, int index);
 void userChangeProfileSetting();
 void adminChangeProfileSetting();
 void userLogout();
@@ -61,6 +63,7 @@ int main()
 {
     system("cls");
     eCommerenceMenu();
+    
 }
 
 void eCommerenceTitle()
@@ -74,8 +77,8 @@ void eCommerenceTitle()
 
 void eCommerenceMenu()
 {
-    int number = 0;
-    while (number != 3)
+    string number = "0";
+    while (number != "3")
     {
         system("cls");
         eCommerenceTitle();
@@ -83,26 +86,30 @@ void eCommerenceMenu()
         cout << "#  Select component you have to see                     #" << endl;
         cout << "#  1 User                                               #" << endl;
         cout << "#  2 Admin                                              #" << endl;
+        cout << "#  3 Exit                                               #" << endl;
         cout << "#  Select any option 1 OR 2                             #" << endl;
         cout << "#########################################################" << endl;
 
         cout << "Enter a option.....";
         cin >> number;
 
-        if (number == 1)
+        if (number == "1")
         {
 
             userAuth();
-            // user();
         }
-        else if (number == 2)
+        else if (number == "2")
         {
             adminAuth();
-            // viewProdcut();
         }
-        else if (number == 3)
+        else if (number == "3")
         {
             break;
+        }
+        else
+        {
+            cout << "Please Enter the relevent Number!Press any Key to continue.. ";
+            getch();
         }
     }
 }
@@ -111,8 +118,8 @@ void eCommerenceMenu()
 void admin(string name)
 {
     system("cls");
-    int number = 0;
-    while (number != 10)
+    string number = "0";
+    while (number != "10")
     {
         cout << "\n \n";
         cout << "**********************************************************************" << endl;
@@ -133,44 +140,44 @@ void admin(string name)
         cout << "Enter the code For the product......";
         cin >> number;
 
-        if (number == 10)
+        if (number == "10")
         {
             break;
         }
-        else if (number == 2)
+        else if (number == "2")
         {
             adminUpDateProduct();
         }
-        else if (number == 3)
+        else if (number == "3")
         {
             deleteProduct();
         }
-        else if (number == 4)
+        else if (number == "4")
         {
             userViewProduct();
         }
-        else if (number == 5)
+        else if (number == "5")
         {
             totalSoldProduct();
         }
-        else if (number == 1)
+        else if (number == "1")
         {
             system("cls");
             CreateProduct();
         }
-        else if (number == 6)
+        else if (number == "6")
         {
             listOfLoginUsers();
         }
-        else if (number == 7)
+        else if (number == "7")
         {
             productAnalystics();
         }
-        else if (number == 8)
+        else if (number == "8")
         {
             adminChangeProfileSetting();
         }
-        else if (number == 9)
+        else if (number == "9")
         {
             adminLogout();
         }
@@ -181,8 +188,8 @@ void admin(string name)
 void user(string name)
 {
     system("cls");
-    int number = 0;
-    while (number != 10)
+    string number = "0";
+    while (number != "10")
     {
         system("cls");
         cout << "\n \n";
@@ -202,49 +209,49 @@ void user(string name)
 
         cout << "Enter The code For the commpoonet...";
         cin >> number;
-        if (number == 1)
+        if (number == "1")
         {
             userViewProduct();
         }
-        else if (number == 2)
+        else if (number == "2")
         {
             userbBuyProduct();
         }
-        else if (number == 3)
+        else if (number == "3")
         {
             filterProduct();
         }
-        else if (number == 4)
+        else if (number == "4")
         {
             system("cls");
             viewCart();
         }
-        else if (number == 5)
+        else if (number == "5")
         {
             system("cls");
             addToCart();
         }
-        else if (number == 6)
+        else if (number == "6")
         {
             system("cls");
             userPurchasedProductList();
         }
-        else if (number == 7)
+        else if (number == "7")
         {
             system("cls");
             trendingProducts();
         }
-        else if (number == 8)
+        else if (number == "8")
         {
             system("cls");
             userChangeProfileSetting();
         }
-        else if (number == 9)
+        else if (number == "9")
         {
             system("cls");
             userLogout();
         }
-        else if (number == 10)
+        else if (number == "10")
         {
             break;
         }
@@ -776,21 +783,22 @@ void viewCart()
 
 void userAuth()
 {
-    int n;
+    string n;
     loginAndSingUpMenu();
     cout << "Enter a option...";
     cin >> n;
-    if (n == 1)
+    if (n == "1")
     {
         userRegister();
     }
-    else if (n == 2)
+    else if (n == "2")
     {
         userLogin();
     }
     else
     {
-        cout << "Please Enter a correct number";
+        cout << "Please Enter a correct number!Press any key to continue..";
+        getch();
     }
 }
 
@@ -807,6 +815,10 @@ int loginAndSingUpMenu()
 
 void userRegister()
 {
+    if(totalNumberOfUser>0)
+    {
+        populateUserIntoArr();
+    }
     bool isValide = false;
     cout << "Pleasse Register" << endl;
     string name;
@@ -839,7 +851,7 @@ void userRegister()
         {
             userAuthArrayName[totalNumberOfUser] = name;
             userAuthArrayPassWord[totalNumberOfUser] = password;
-            storeUserIntoTheFile(name,password);
+            storeUserIntoTheFile(name, password);
             cout << "Successfully Register..." << endl;
             totalNumberOfUser++;
             // Sleep(700);
@@ -856,6 +868,7 @@ void userRegister()
         userAuthArrayName[totalNumberOfUser] = name;
         userAuthArrayPassWord[totalNumberOfUser] = password;
         cout << "Successfully Register...";
+        storeUserIntoTheFile(name, password);
         totalNumberOfUser++;
         // Sleep(7000);
         clearScreen();
@@ -871,6 +884,7 @@ void userRegister()
 void userLogin()
 {
 
+     
     cout << "Please login first..." << endl;
     string name;
     cout << "Enter Your UserName...";
@@ -900,30 +914,63 @@ void userLogin()
     }
 }
 
-void storeUserIntoTheFile(string name,string pass)
+void storeUserIntoTheFile(string name, string pass)
 {
-    fstream storeUser;
-    storeUser.open("singUpAndSign.txt", ios::out);
-    for (int i = 0; i < totalNumberOfUser; i++)
-    {
-        storeUser << name << endl;
-        storeUser << pass << endl;
-    }
+    char comma = ',';
+    fstream file;
+    file.open("userAuth.txt", ios::app);
+    file << name;
+    file << comma;
+    file << pass << endl;
 
-    storeUser.close();
+    file.close();
 }
 
-void adminAuth()  
+void populateUserIntoArr()
 {
-    int n;
+
+    fstream file;
+    string line;
+    file.open("userAuth.txt", ios::in);
+    while (!file.eof())
+    {
+        getline(file,line);
+        userAuthArrayName[totalNumberOfUser]=commaSeprateUser(line,1);
+        userAuthArrayPassWord[totalNumberOfUser]=commaSeprateUser(line,2);
+        totalNumberOfUser++;
+
+    }
+    file.close();
+}
+string commaSeprateUser(string line, int index)
+{
+    int commaCount = 1;
+    string nameOrPass;
+    for (int i = 0; i < line.length(); i++)
+    {
+        if (line[i] == ',')
+        {
+            commaCount++;
+        }
+        else if (commaCount == index)
+        {
+            nameOrPass = nameOrPass + line[i];
+        }
+    }
+    return nameOrPass;
+}
+
+void adminAuth()
+{
+    string n;
     loginAndSingUpMenu();
     cout << "Enter option....";
     cin >> n;
-    if (n == 1)
+    if (n == "1")
     {
         adminRegister();
     }
-    else if (n == 2)
+    else if (n == "2")
     {
         adminLogin();
     }
