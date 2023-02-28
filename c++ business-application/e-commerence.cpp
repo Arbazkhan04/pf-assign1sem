@@ -17,10 +17,10 @@ void userAuth();
 void userRegister();
 void userLogin();
 // file handlling
-void storeUserIntoTheFile(string, string);
+void storeUserIntoTheFile();
 void populateUserIntoArr();
 string commaSeprateUser(string line, int index);
-void storeAdminIntoTheFile(string, string);
+void storeAdminIntoTheFile();
 void populateAdminIntoArr();
 void createProductFile();
 void storeUpdateProductDataIntoTheFile();
@@ -870,7 +870,7 @@ void userRegister()
         {
             userAuthArrayName[totalNumberOfUser] = name;
             userAuthArrayPassWord[totalNumberOfUser] = password;
-            storeUserIntoTheFile(name, password);
+
             cout << "Successfully Register..." << endl;
             totalNumberOfUser++;
             // Sleep(700);
@@ -887,7 +887,6 @@ void userRegister()
         userAuthArrayName[totalNumberOfUser] = name;
         userAuthArrayPassWord[totalNumberOfUser] = password;
         cout << "Successfully Register...";
-        storeUserIntoTheFile(name, password);
         totalNumberOfUser++;
         // Sleep(7000);
         clearScreen();
@@ -898,6 +897,7 @@ void userRegister()
         cout << "User must contain'@'symbol" << endl;
         clearScreen();
     }
+    storeUserIntoTheFile();
 }
 
 void userLogin()
@@ -932,14 +932,18 @@ void userLogin()
     }
 }
 
-void storeUserIntoTheFile(string name, string pass)
+void storeUserIntoTheFile()
 {
+    //     string userAuthArrayName[100];
+    // string userAuthArrayPassWord[100];
     char comma = ',';
     fstream file;
-    file.open("userAuth.txt", ios::app);
-    file << name;
-    file << comma;
-    file << pass << endl;
+    file.open("userAuth.txt", ios::out);
+    for (int i = 0; i < totalNumberOfUser; i++)
+    {
+        file << userAuthArrayName[i] << comma;
+        file << userAuthArrayPassWord[i] << endl;
+    }
 
     file.close();
 }
@@ -976,14 +980,18 @@ string commaSeprateUser(string line, int index)
     return nameOrPass;
 }
 
-void storeAdminIntoTheFile(string name, string pass)
+void storeAdminIntoTheFile()
 {
     char comma = ',';
     fstream file;
-    file.open("adminAuth.txt", ios::app);
-    file << name;
-    file << comma;
-    file << pass << endl;
+    file.open("adminAuth.txt", ios::out);
+    for (int i = 0; i < totalNumberOfAdmin; i++)
+    {
+        file << adminAuthArryName[i]<<comma;
+        file << adminAuthArryPass[i]<<endl;
+        
+    }
+
     file.close();
 }
 void populateAdminIntoArr()
@@ -1082,7 +1090,6 @@ void adminRegister()
         {
             adminAuthArryName[totalNumberOfAdmin] = name;
             adminAuthArryPass[totalNumberOfAdmin] = password;
-            storeAdminIntoTheFile(name, password);
             totalNumberOfAdmin++;
             cout << "Admin Registered Successfully.." << endl;
             clearScreen();
@@ -1093,6 +1100,7 @@ void adminRegister()
         cout << "userName must contain '@ symbol..'" << endl;
         clearScreen();
     }
+    storeAdminIntoTheFile();
 }
 
 void listOfLoginUsers()
@@ -1195,7 +1203,7 @@ void userChangeProfileSetting()
         Sleep(700);
         clearScreen();
     }
-    
+    storeUserIntoTheFile();
 }
 
 void adminChangeProfileSetting()
@@ -1240,6 +1248,7 @@ void adminChangeProfileSetting()
             // Sleep(700);
 
             clearScreen();
+             storeAdminIntoTheFile();
             eCommerenceMenu();
         }
         else if (isVilade == false)
@@ -1254,6 +1263,7 @@ void adminChangeProfileSetting()
         Sleep(700);
         clearScreen();
     }
+   
 }
 
 void userLogout()
@@ -1270,6 +1280,7 @@ void userLogout()
             totalNumberOfUser--;
             cout << "Account Deleted successfully..." << endl;
             clearScreen();
+            storeUserIntoTheFile();
             eCommerenceMenu();
             // Sleep(700);
         }
@@ -1300,6 +1311,7 @@ void adminLogout()
         totalNumberOfAdmin--;
         cout << "Account is Deleted .." << endl;
         clearScreen();
+        storeAdminIntoTheFile();
         eCommerenceMenu();
     }
     else if (x == 'n')
@@ -1307,6 +1319,7 @@ void adminLogout()
         cout << "You account is not Deleted..." << endl;
         clearScreen();
     }
+    
 }
 
 void userPurchasedProductList()
@@ -1641,7 +1654,7 @@ void storeUpdateProductDataIntoTheFile()
 
 void storeUserBuyProuctIntoTheFile()
 {
-   
+
     fstream file;
     char comma = ',';
     file.open("storeBuyProduct.txt", ios::out);
@@ -1657,20 +1670,19 @@ void storeUserBuyProuctIntoTheFile()
 
 void loadUserBuyProductIntoTheArr()
 {
-    
+
     fstream file;
     string line;
     file.open("storeBuyProduct.txt", ios::in);
-    while(getline(file,line))
+    while (getline(file, line))
     {
-      userBuyProductName[userBuyProductquantity]=commaSeprateUser(line,1);
-      userBuyProductProce[userBuyProductquantity]=stoi(commaSeprateUser(line,2));
-      userBuySelectedProductQuantity[userBuyProductquantity]=stoi(commaSeprateUser(line,3));
-      userBuyProductStatus[userBuyProductquantity]=commaSeprateUser(line,4);
-      userBuyProductquantity++;
+        userBuyProductName[userBuyProductquantity] = commaSeprateUser(line, 1);
+        userBuyProductProce[userBuyProductquantity] = stoi(commaSeprateUser(line, 2));
+        userBuySelectedProductQuantity[userBuyProductquantity] = stoi(commaSeprateUser(line, 3));
+        userBuyProductStatus[userBuyProductquantity] = commaSeprateUser(line, 4);
+        userBuyProductquantity++;
     }
     file.close();
-
 }
 // clear screen
 void clearScreen()
