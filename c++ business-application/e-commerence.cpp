@@ -4,7 +4,7 @@
 #include <string>
 #include <windows.h>
 using namespace std;
-int defaultItemsSize = 3;
+int defaultItemsSize = 0;
 int totalNumberOfUser = 0;
 void clearScreen();
 int loginAndSingUpMenu();
@@ -16,9 +16,14 @@ void adminLogin();
 void userAuth();
 void userRegister();
 void userLogin();
+// file handlling
 void storeUserIntoTheFile(string, string);
 void populateUserIntoArr();
 string commaSeprateUser(string line, int index);
+void storeAdminIntoTheFile(string, string);
+void populateAdminIntoArr();
+void createProductFile();
+// file handling
 void userChangeProfileSetting();
 void adminChangeProfileSetting();
 void userLogout();
@@ -48,9 +53,9 @@ string userBuyProductName[userBuyProductArrSize];
 int userBuySelectedProductQuantity[userBuyProductArrSize];
 int userBuyProductProce[userBuyProductArrSize];
 const int totalSizeOfitems = 100;
-string productName[totalSizeOfitems] = {"Shirt", "Pant", "Bat"};
-int Availabelquantity[totalSizeOfitems] = {32, 54, 23};
-int productPrice[totalSizeOfitems] = {25, 30, 60};
+string productName[totalSizeOfitems];
+int Availabelquantity[totalSizeOfitems];
+int productPrice[totalSizeOfitems];
 int userLoignIndex;
 string userAuthArrayName[100];
 string userAuthArrayPassWord[100];
@@ -62,8 +67,10 @@ int totalNumberOfAdmin = 0;
 int main()
 {
     system("cls");
+    createProductFile();
+    populateUserIntoArr();
+    populateAdminIntoArr();
     eCommerenceMenu();
-    
 }
 
 void eCommerenceTitle()
@@ -320,24 +327,41 @@ void adminUpDateProduct()
     userViewRepeateCode();
     int idex, updatedPrice, updatedQuantity;
     char yesOrNo = 'y';
+    fstream file;
+    string line;
+    string namePro;
+    int proPri;
+    int Quna;
+    file.open("createProduct.txt", ios::in);
     while (yesOrNo != 'n')
     {
-        cout << "Do you want to updated the product(y/n)..";
+        cout << "Do you want to update the product(y/n)..";
         cin >> yesOrNo;
         if (yesOrNo == 'y')
         {
             cout << "Enter the index of product you want to update.. ";
             cin >> idex;
-            string updatedName;
-            cout << "Enter the name of product.. ";
-            cin >> updatedName;
-            productName[idex] = updatedName;
-            cout << "updated product price ";
-            cin >> updatedPrice;
-            productPrice[idex] = updatedPrice;
-            cout << "updated product quantity ";
-            cin >> updatedQuantity;
-            Availabelquantity[idex] = updatedQuantity;
+            while (getline(file, line))
+            {
+                namePro = commaSeprateUser(line, 1);
+                proPri = stoi(commaSeprateUser(line, 2));
+                Quna = stoi(commaSeprateUser(line, 3));
+                if (productName[idex] == namePro && productPrice[idex] == proPri && Availabelquantity[idex] == Quna)
+                {
+                    fstream fild2;
+                    fild2.open("createProduct.txt",ios::out);
+                    string updatedName;
+                    cout << "Enter the name of product.. ";
+                    fild2 << updatedName;
+                    productName[idex] = updatedName;
+                    cout << "updated product price ";
+                    fild2<< updatedPrice;
+                   
+                    cout << "updated product quantity ";
+                    fild2 << updatedQuantity;
+                   fild2.close();
+                }
+            }
         }
         else if (yesOrNo == 'n')
         {
@@ -345,6 +369,7 @@ void adminUpDateProduct()
             break;
         }
     }
+    file.close();
     cout << "No."
          << "\t"
          << "Product Name"
@@ -815,10 +840,7 @@ int loginAndSingUpMenu()
 
 void userRegister()
 {
-    if(totalNumberOfUser>0)
-    {
-        populateUserIntoArr();
-    }
+
     bool isValide = false;
     cout << "Pleasse Register" << endl;
     string name;
@@ -839,6 +861,7 @@ void userRegister()
     }
     if (totalNumberOfUser > 0)
     {
+
         bool isExist = true;
         for (int i = 0; i < totalNumberOfUser; i++)
         {
@@ -884,7 +907,6 @@ void userRegister()
 void userLogin()
 {
 
-     
     cout << "Please login first..." << endl;
     string name;
     cout << "Enter Your UserName...";
@@ -932,13 +954,11 @@ void populateUserIntoArr()
     fstream file;
     string line;
     file.open("userAuth.txt", ios::in);
-    while (!file.eof())
+    while (getline(file, line))
     {
-        getline(file,line);
-        userAuthArrayName[totalNumberOfUser]=commaSeprateUser(line,1);
-        userAuthArrayPassWord[totalNumberOfUser]=commaSeprateUser(line,2);
+        userAuthArrayName[totalNumberOfUser] = commaSeprateUser(line, 1);
+        userAuthArrayPassWord[totalNumberOfUser] = commaSeprateUser(line, 2);
         totalNumberOfUser++;
-
     }
     file.close();
 }
@@ -958,6 +978,29 @@ string commaSeprateUser(string line, int index)
         }
     }
     return nameOrPass;
+}
+
+void storeAdminIntoTheFile(string name, string pass)
+{
+    char comma = ',';
+    fstream file;
+    file.open("adminAuth.txt", ios::app);
+    file << name;
+    file << comma;
+    file << pass << endl;
+    file.close();
+}
+void populateAdminIntoArr()
+{
+    fstream file;
+    string line;
+    file.open("adminAuth.txt", ios::in);
+    while (getline(file, line))
+    {
+        adminAuthArryName[totalNumberOfAdmin] = commaSeprateUser(line, 1);
+        adminAuthArryPass[totalNumberOfAdmin] = commaSeprateUser(line, 2);
+        totalNumberOfAdmin++;
+    }
 }
 
 void adminAuth()
@@ -1043,6 +1086,7 @@ void adminRegister()
         {
             adminAuthArryName[totalNumberOfAdmin] = name;
             adminAuthArryPass[totalNumberOfAdmin] = password;
+            storeAdminIntoTheFile(name, password);
             totalNumberOfAdmin++;
             cout << "Admin Registered Successfully.." << endl;
             clearScreen();
@@ -1568,6 +1612,19 @@ void userViewRepeateCode()
     for (int i = 0; i < defaultItemsSize; i++)
     {
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+    }
+}
+void createProductFile()
+{
+    fstream file;
+    string line;
+    file.open("createProduct.txt", ios::in);
+    while (getline(file, line))
+    {
+        productName[defaultItemsSize] = commaSeprateUser(line, 1);
+        productPrice[defaultItemsSize] = stoi(commaSeprateUser(line, 2));
+        Availabelquantity[defaultItemsSize] = stoi(commaSeprateUser(line, 3));
+        defaultItemsSize++;
     }
 }
 
