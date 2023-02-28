@@ -23,6 +23,9 @@ string commaSeprateUser(string line, int index);
 void storeAdminIntoTheFile(string, string);
 void populateAdminIntoArr();
 void createProductFile();
+void storeUpdateProductDataIntoTheFile();
+void storeUserBuyProuctIntoTheFile();
+void loadUserBuyProductIntoTheArr();
 // file handling
 void userChangeProfileSetting();
 void adminChangeProfileSetting();
@@ -70,7 +73,10 @@ int main()
     createProductFile();
     populateUserIntoArr();
     populateAdminIntoArr();
+    loadUserBuyProductIntoTheArr();
     eCommerenceMenu();
+
+    // call lastly
 }
 
 void eCommerenceTitle()
@@ -327,12 +333,6 @@ void adminUpDateProduct()
     userViewRepeateCode();
     int idex, updatedPrice, updatedQuantity;
     char yesOrNo = 'y';
-    fstream file;
-    string line;
-    string namePro;
-    int proPri;
-    int Quna;
-    file.open("createProduct.txt", ios::in);
     while (yesOrNo != 'n')
     {
         cout << "Do you want to update the product(y/n)..";
@@ -341,27 +341,18 @@ void adminUpDateProduct()
         {
             cout << "Enter the index of product you want to update.. ";
             cin >> idex;
-            while (getline(file, line))
-            {
-                namePro = commaSeprateUser(line, 1);
-                proPri = stoi(commaSeprateUser(line, 2));
-                Quna = stoi(commaSeprateUser(line, 3));
-                if (productName[idex] == namePro && productPrice[idex] == proPri && Availabelquantity[idex] == Quna)
-                {
-                    fstream fild2;
-                    fild2.open("createProduct.txt",ios::out);
-                    string updatedName;
-                    cout << "Enter the name of product.. ";
-                    fild2 << updatedName;
-                    productName[idex] = updatedName;
-                    cout << "updated product price ";
-                    fild2<< updatedPrice;
-                   
-                    cout << "updated product quantity ";
-                    fild2 << updatedQuantity;
-                   fild2.close();
-                }
-            }
+
+            string updatedName;
+            cout << "Enter the name of product.. ";
+            cin >> updatedName;
+            productName[idex] = updatedName;
+            cout << "updated product price ";
+            cin >> updatedPrice;
+            productPrice[idex] = updatedPrice;
+
+            cout << "updated product quantity ";
+            cin >> updatedQuantity;
+            Availabelquantity[idex] = updatedQuantity;
         }
         else if (yesOrNo == 'n')
         {
@@ -369,7 +360,7 @@ void adminUpDateProduct()
             break;
         }
     }
-    file.close();
+
     cout << "No."
          << "\t"
          << "Product Name"
@@ -382,6 +373,7 @@ void adminUpDateProduct()
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
     clearScreen();
+    storeUpdateProductDataIntoTheFile();
 }
 
 void deleteProduct()
@@ -430,6 +422,7 @@ void deleteProduct()
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
     clearScreen();
+    storeUpdateProductDataIntoTheFile();
 }
 
 // addmin-components
@@ -584,6 +577,7 @@ void userbBuyProduct()
         cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << userBuyProductStatus[i] << endl;
     }
     clearScreen();
+    storeUserBuyProuctIntoTheFile();
 }
 
 void filterProduct()
@@ -706,6 +700,7 @@ void addToCart()
                     cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
                 }
                 cout << "Successfully paid..." << endl;
+                storeUserBuyProuctIntoTheFile();
             }
             // cout << "Successfully add to the cart..." << endl; // later on i will implement the logic
         }
@@ -803,6 +798,7 @@ void viewCart()
     {
         cout << "Your cart is empty..." << endl;
     }
+    storeUserBuyProuctIntoTheFile();
     clearScreen();
 }
 
@@ -1199,6 +1195,7 @@ void userChangeProfileSetting()
         Sleep(700);
         clearScreen();
     }
+    
 }
 
 void adminChangeProfileSetting()
@@ -1598,6 +1595,7 @@ void trendingProducts()
         cout << "No product in trend.." << endl;
         clearScreen();
     }
+    storeUserBuyProuctIntoTheFile();
 }
 
 void userViewRepeateCode()
@@ -1627,7 +1625,53 @@ void createProductFile()
         defaultItemsSize++;
     }
 }
+void storeUpdateProductDataIntoTheFile()
+{
+    fstream file;
+    char comma = ',';
+    file.open("createProduct.txt", ios::out);
+    for (int i = 0; i < defaultItemsSize; i++)
+    {
+        file << productName[i] << comma;
+        file << productPrice[i] << comma;
+        file << Availabelquantity[i] << endl;
+    }
+    file.close();
+}
 
+void storeUserBuyProuctIntoTheFile()
+{
+   
+    fstream file;
+    char comma = ',';
+    file.open("storeBuyProduct.txt", ios::out);
+    for (int i = 0; i < userBuyProductquantity; i++)
+    {
+        file << userBuyProductName[i] << comma;
+        file << userBuyProductProce[i] << comma;
+        file << userBuySelectedProductQuantity[i] << comma;
+        file << userBuyProductStatus[i] << endl;
+    }
+    file.close();
+}
+
+void loadUserBuyProductIntoTheArr()
+{
+    
+    fstream file;
+    string line;
+    file.open("storeBuyProduct.txt", ios::in);
+    while(getline(file,line))
+    {
+      userBuyProductName[userBuyProductquantity]=commaSeprateUser(line,1);
+      userBuyProductProce[userBuyProductquantity]=stoi(commaSeprateUser(line,2));
+      userBuySelectedProductQuantity[userBuyProductquantity]=stoi(commaSeprateUser(line,3));
+      userBuyProductStatus[userBuyProductquantity]=commaSeprateUser(line,4);
+      userBuyProductquantity++;
+    }
+    file.close();
+
+}
 // clear screen
 void clearScreen()
 {
