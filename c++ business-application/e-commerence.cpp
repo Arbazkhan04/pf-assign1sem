@@ -41,12 +41,13 @@ void admin(string);
 void user(string);
 void deleteProduct();
 void userViewProduct();
+void adminProductDetails();
 void userViewRepeateCode();
 void userbBuyProduct();
 void filterProduct();
 bool isAnyProductUnpaid();
 bool isDuplicateExistInTrendProd(int index);
-void plcaeTrendProdcutName(string,int);
+void plcaeTrendProdcutName(string, int);
 void addToCart();
 void viewCart();
 void viewCartOption();
@@ -155,16 +156,21 @@ void admin(string name)
         cout << "  5 Total Sold Product                                 " << endl;
         cout << "  6 Total User List                                    " << endl;
         cout << "  7 Product Analystics                                 " << endl;
-        cout << "  8 Change Profile Setting                             " << endl;
-        cout << "  9 Delete Account                                     " << endl;
-        cout << "  10 Exit                                              " << endl;
+        cout << "  8 Product Detail                                     " << endl;
+        cout << "  9 Change Profile Setting                             " << endl;
+        cout << "  10 Delete Account                                     " << endl;
+        cout << "  11 Exit                                              " << endl;
 
         cout << "Enter the code For the product......";
         cin >> number;
 
-        if (number == "10")
+        if (number == "11")
         {
             break;
+        }
+        else if (number == "8")
+        {
+            adminProductDetails();
         }
         else if (number == "2")
         {
@@ -195,11 +201,11 @@ void admin(string name)
         {
             productAnalystics();
         }
-        else if (number == "8")
+        else if (number == "9")
         {
             adminChangeProfileSetting();
         }
-        else if (number == "9")
+        else if (number == "10")
         {
             adminLogout();
         }
@@ -465,7 +471,6 @@ void userViewProduct()
 
 void userbBuyProduct()
 {
-    // userViewProduct();
 
     system("cls");
     cout << "\n \n";
@@ -481,14 +486,17 @@ void userbBuyProduct()
          << "Availabelquantity" << endl;
     for (int i = 0; i < defaultItemsSize; i++)
     {
-        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+        if (Availabelquantity[i] != 0)
+        {
+            cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+        }
     }
-    char x = 'y';
-    while (x != 'n')
+    string x = "y";
+    while (x != "n")
     {
         cout << "Do you want to buy product(y/n)..";
         cin >> x;
-        if (x == 'y')
+        if (x == "y")
         {
             int n;
             cout << "How much product you want to buy.. ";
@@ -501,16 +509,24 @@ void userbBuyProduct()
                 cin >> idex;
                 cout << "Enter No. of quantity you want to buy ";
                 cin >> selectedQuantity;
+                if (selectedQuantity > Availabelquantity[idex])
+                {
+                    cout << "Selected Quantiy " << selectedQuantity << " is greater than availabe quantiy " << Availabelquantity[idex] << endl;
+                }
+                else
+                {
 
-                userBuyProductName[userBuyProductquantity] = productName[idex];
-                userBuyProductProce[userBuyProductquantity] = productPrice[idex];
-                userBuySelectedProductQuantity[userBuyProductquantity] = selectedQuantity;
-                userBuyProductStatus[userBuyProductquantity] = "UnPaid";
-                UserNameArr[userBuyProductquantity] = userName;
-                userBuyProductquantity++;
+                    userBuyProductName[userBuyProductquantity] = productName[idex];
+                    userBuyProductProce[userBuyProductquantity] = productPrice[idex];
+                    userBuySelectedProductQuantity[userBuyProductquantity] = selectedQuantity;
+                    Availabelquantity[idex] = Availabelquantity[idex] - selectedQuantity; // update availabel quantity
+                    userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                    UserNameArr[userBuyProductquantity] = userName;
+                    userBuyProductquantity++;
+                }
             }
         }
-        else if (x == 'n')
+        else if (x == "n")
         {
             // Trending Algorithm
             if (userBuyProductquantity > 4)
@@ -546,15 +562,17 @@ void userbBuyProduct()
                      << "productPrice"
                      << "\t"
                      << "Sold Quantity"
+                     << "\t"
+                     << "Available quantity"
                      << "\t" << endl;
                 for (int i = 0; i < 2; i++)
                 {
-                    cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+                    cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << Availabelquantity[i] << endl;
                 }
                 cout << "Demanded Product! Do you want to buy?(y/n) ";
                 cin >> x;
                 int index, quantity2;
-                if (x == 'y')
+                if (x == "y")
                 {
                     cout << "Enter the index of the product..";
                     cin >> index;
@@ -562,16 +580,24 @@ void userbBuyProduct()
                     userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
                     cout << "Enter Quantity..";
                     cin >> quantity2;
-                    userBuySelectedProductQuantity[index - 1] = quantity2;
-                    userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
-                    userBuyProductStatus[userBuyProductquantity] = "UnPaid";
-                    UserNameArr[userBuyProductquantity] = userName;
+                    if (quantity2 > Availabelquantity[index])
+                    {
+                        cout << "Selected Quantiy " << quantity2 << " is greater than availabe quantiy " << Availabelquantity[index] << endl;
+                    }
+                    else if (quantity2 <= Availabelquantity[index])
+                    {
+                        Availabelquantity[index] = Availabelquantity[index] - quantity2; // update availabel quantiy
+                        userBuySelectedProductQuantity[index - 1] = quantity2;
+                        userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
+                        userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                        UserNameArr[userBuyProductquantity] = userName;
 
-                    userBuyProductquantity++;
+                        userBuyProductquantity++;
+                    }
                 }
                 else
                 {
-                    clearScreen();
+                    // clearScreen();
                     break;
                 }
             }
@@ -595,6 +621,7 @@ void userbBuyProduct()
         }
     }
     storeUserBuyProuctIntoTheFile();
+    storeUpdateProductDataIntoTheFile();
     clearScreen();
 }
 
@@ -1461,7 +1488,7 @@ void totalSoldProduct()
                 totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
                 int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << "\t" << UserNameArr[i] << endl;
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << "\t \t" << UserNameArr[i] << endl;
                 idnex++;
             }
         }
@@ -1504,7 +1531,7 @@ void totalSoldProduct()
                 totalUnPaid = totalUnPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
                 int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << "\t" << UserNameArr[i] << endl;
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << "\t \t" << UserNameArr[i] << endl;
                 idnex++;
             }
         }
@@ -1551,11 +1578,11 @@ void productAnalystics()
         }
         if (userBuyProductquantity > 0)
         {
-               barChar();
-              
-               gotoxy(1,15);
+            barChar();
+
+            gotoxy(1, 15);
             cout << "Top Sold Products!..." << endl;
-            gotoxy(1,16);
+            gotoxy(1, 16);
             cout << "No."
                  << "\t"
                  << "Product Name"
@@ -1569,18 +1596,17 @@ void productAnalystics()
             {
                 if (i == 0 || !isDuplicateExistInTrendProd(i))
                 {
-                     isNotMatch++;
-                    plcaeTrendProdcutName(userBuyProductName[i] ,isNotMatch);
-                    gotoxy(1,16+isNotMatch);
+                    isNotMatch++;
+                    plcaeTrendProdcutName(userBuyProductName[i], isNotMatch);
+                    gotoxy(1, 16 + isNotMatch);
                     cout << isNotMatch << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
-                   
+
                     if (isNotMatch == 3)
                     {
                         break;
                     }
                 }
             }
-          
         }
         clearScreen();
     }
@@ -1802,7 +1828,7 @@ void barChar()
     }
     for (int i = 0; i < 5; i++)
     {
-        gotoxy(5, 11- i);
+        gotoxy(5, 11 - i);
         cout << box << endl;
     }
 
@@ -1822,16 +1848,59 @@ void plcaeTrendProdcutName(string name, int matchIndex)
     if (matchIndex == 1)
     {
         gotoxy(2, 13);
-        cout <<name;
+        cout << name;
     }
     else if (matchIndex == 2)
     {
         gotoxy(13, 13);
-        cout <<name;
+        cout << name;
     }
     else if (matchIndex == 3)
     {
         gotoxy(23, 13);
-        cout <<name<<endl;
+        cout << name << endl;
     }
+}
+
+void adminProductDetails()
+{
+    system("cls");
+    cout << "************************************************************************" << endl;
+    cout << "*                              Product Detail                          * " << endl;
+    cout << "************************************************************************" << endl;
+    cout << "No."
+         << "\t"
+         << "Product Name"
+         << "\t"
+         << "productPrice"
+         << "\t"
+         << "Availabelquantity"
+         << "\t"
+         << "Product Stock" << endl;
+
+    for (int i = 0; i < defaultItemsSize; i++)
+    {
+        string stock = (Availabelquantity[i] == 0) ? "\033[31mOut of Stock\033[0m" : "\033[33mIn Stock\033[0m";
+        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << "\t \t \t " << stock << endl;
+    }
+    string y;
+    cout << "Do you want to  increase the product quantity(y/n)";
+    cin >> y;
+    int index, quantity;
+    if (y == "y")
+    {
+        int howMany;
+        cout << "How many product you want update ";
+        cin >> howMany;
+        for (int i = 0; i < howMany; i++)
+        {
+            cout << "Enter the index of the product";
+            cin >> index;
+            cout << "Enter qunatity";
+            cin >> quantity;
+            Availabelquantity[index] = quantity;
+        }
+    }
+   storeUpdateProductDataIntoTheFile();
+    clearScreen();
 }
