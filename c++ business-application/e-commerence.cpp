@@ -6,6 +6,8 @@
 using namespace std;
 int defaultItemsSize = 0;
 int totalNumberOfUser = 0;
+void gotoxy(int x, int y);
+void barChar();
 void clearScreen();
 int loginAndSingUpMenu();
 void eCommerenceTitle();
@@ -42,6 +44,7 @@ void userViewProduct();
 void userViewRepeateCode();
 void userbBuyProduct();
 void filterProduct();
+bool isAnyProductUnpaid();
 void addToCart();
 void viewCart();
 void viewCartOption();
@@ -49,12 +52,16 @@ void userPurchasedProductList();
 void totalSoldProduct();
 int purchasedProductBill(int, int);
 void trendingProducts();
+
+string userName = " ";
 int userBuyProductquantity = 0;
 const int userBuyProductArrSize = 100;
 string userBuyProductStatus[userBuyProductArrSize];
 string userBuyProductName[userBuyProductArrSize];
+string UserNameArr[userBuyProductArrSize];
 int userBuySelectedProductQuantity[userBuyProductArrSize];
 int userBuyProductProce[userBuyProductArrSize];
+
 const int totalSizeOfitems = 100;
 string productName[totalSizeOfitems];
 int Availabelquantity[totalSizeOfitems];
@@ -228,6 +235,7 @@ void user(string name)
         }
         else if (number == "2")
         {
+
             userbBuyProduct();
         }
         else if (number == "3")
@@ -320,6 +328,7 @@ void CreateProduct()
 
         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
     }
+    storeUpdateProductDataIntoTheFile();
     clearScreen();
 }
 
@@ -455,6 +464,7 @@ void userViewProduct()
 void userbBuyProduct()
 {
     // userViewProduct();
+
     system("cls");
     cout << "\n \n";
     cout << "**********************************************************************" << endl;
@@ -494,6 +504,7 @@ void userbBuyProduct()
                 userBuyProductProce[userBuyProductquantity] = productPrice[idex];
                 userBuySelectedProductQuantity[userBuyProductquantity] = selectedQuantity;
                 userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                UserNameArr[userBuyProductquantity] = userName;
                 userBuyProductquantity++;
             }
         }
@@ -552,6 +563,7 @@ void userbBuyProduct()
                     userBuySelectedProductQuantity[index - 1] = quantity2;
                     userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
                     userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                    UserNameArr[userBuyProductquantity] = userName;
 
                     userBuyProductquantity++;
                 }
@@ -574,10 +586,14 @@ void userbBuyProduct()
          << "Status" << endl;
     for (int i = 0; i < userBuyProductquantity; i++)
     {
-        cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << userBuyProductStatus[i] << endl;
+        if (userName == UserNameArr[i] && userBuyProductStatus[i] == "UnPaid")
+        {
+
+            cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << userBuyProductStatus[i] << endl;
+        }
     }
-    clearScreen();
     storeUserBuyProuctIntoTheFile();
+    clearScreen();
 }
 
 void filterProduct()
@@ -657,7 +673,8 @@ void addToCart()
          << "\t"
          << "Selected Quantity" << endl;
     int index = 1;
-    if (userBuyProductquantity > 0)
+     bool result = isAnyProductUnpaid();
+    if (userBuyProductquantity > 0&&result==true)
     {
         for (int i = 0; i < userBuyProductquantity; i++)
         {
@@ -667,8 +684,11 @@ void addToCart()
             }
             else
             {
-                cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
-                index++;
+                if (userName == UserNameArr[i])
+                {
+                    cout << index << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << endl;
+                    index++;
+                }
             }
         }
 
@@ -684,7 +704,7 @@ void addToCart()
             {
                 string buyProductStatus = "Paid";
                 // cout<<"Enter the index of the product you want to pay..";
-                cout << "Your have the Buy the quantity..." << endl;
+                cout << "Great! Till now you have the Buy the quantity..." << endl;
                 cout << "No."
                      << "\t"
                      << "Product Name"
@@ -696,8 +716,11 @@ void addToCart()
                      << "Status" << endl;
                 for (int i = 0; i < userBuyProductquantity; i++)
                 {
-                    userBuyProductStatus[i] = buyProductStatus;
-                    cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
+                    if (userName == UserNameArr[i])
+                    {
+                        userBuyProductStatus[i] = buyProductStatus;
+                        cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
+                    }
                 }
                 cout << "Successfully paid..." << endl;
                 storeUserBuyProuctIntoTheFile();
@@ -723,6 +746,18 @@ void viewCartOption()
     cout << "--> 2 Update Quantity" << endl;
     cout << "--> 3 Exit " << endl;
 }
+bool isAnyProductUnpaid()
+{
+    bool yesOrNo = false;
+    for (int i = 0; i < userBuyProductquantity; i++)
+    {
+        if (userName == UserNameArr[i] && userBuyProductStatus[i] == "UnPaid")
+        {
+            yesOrNo = true;
+        }
+    }
+    return yesOrNo;
+}
 void viewCart()
 {
 
@@ -730,7 +765,9 @@ void viewCart()
     cout << "***************************** ...Total Product.. **************************" << endl;
     cout << "***************************************************************************" << endl
          << endl;
-    if (userBuyProductquantity != 0)
+    bool result = isAnyProductUnpaid();
+
+    if (userBuyProductquantity != 0 && result == true)
     {
         cout << "****************************************************************************************" << endl;
         cout << " Your have the following quantity..." << endl;
@@ -752,7 +789,10 @@ void viewCart()
             }
             else
             {
-                cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
+                if (userName == UserNameArr[i])
+                {
+                    cout << i << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << userBuyProductStatus[i] << endl;
+                }
             }
         }
         cout << "****************************************************************************************" << endl;
@@ -870,7 +910,7 @@ void userRegister()
         {
             userAuthArrayName[totalNumberOfUser] = name;
             userAuthArrayPassWord[totalNumberOfUser] = password;
-
+            userName = name; // global
             cout << "Successfully Register..." << endl;
             totalNumberOfUser++;
             // Sleep(700);
@@ -887,7 +927,9 @@ void userRegister()
         userAuthArrayName[totalNumberOfUser] = name;
         userAuthArrayPassWord[totalNumberOfUser] = password;
         cout << "Successfully Register...";
+        userName = name; // global
         totalNumberOfUser++;
+
         // Sleep(7000);
         clearScreen();
     }
@@ -922,6 +964,8 @@ void userLogin()
     }
     if (isUserExist == true)
     {
+
+        userName = name;
         clearScreen();
         user(name);
     }
@@ -987,9 +1031,8 @@ void storeAdminIntoTheFile()
     file.open("adminAuth.txt", ios::out);
     for (int i = 0; i < totalNumberOfAdmin; i++)
     {
-        file << adminAuthArryName[i]<<comma;
-        file << adminAuthArryPass[i]<<endl;
-        
+        file << adminAuthArryName[i] << comma;
+        file << adminAuthArryPass[i] << endl;
     }
 
     file.close();
@@ -1248,7 +1291,7 @@ void adminChangeProfileSetting()
             // Sleep(700);
 
             clearScreen();
-             storeAdminIntoTheFile();
+            storeAdminIntoTheFile();
             eCommerenceMenu();
         }
         else if (isVilade == false)
@@ -1263,7 +1306,6 @@ void adminChangeProfileSetting()
         Sleep(700);
         clearScreen();
     }
-   
 }
 
 void userLogout()
@@ -1319,7 +1361,6 @@ void adminLogout()
         cout << "You account is not Deleted..." << endl;
         clearScreen();
     }
-    
 }
 
 void userPurchasedProductList()
@@ -1350,11 +1391,14 @@ void userPurchasedProductList()
         }
         else
         {
-            totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+            if (userName == UserNameArr[i])
+            {
+                totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
-            int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-            cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
-            idnex++;
+                int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
+                idnex++;
+            }
         }
     }
     cout << "\n";
@@ -1401,7 +1445,7 @@ void totalSoldProduct()
              << "\t"
              << "Selected Quantity"
              << "\t"
-             << "Total Price " << endl;
+             << "Total Price " <<"\t"<< " User Name "<< endl;
         for (int i = 0; i < userBuyProductquantity; i++)
         {
             if (userBuyProductStatus[i] == "UnPaid")
@@ -1413,7 +1457,7 @@ void totalSoldProduct()
                 totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
                 int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice<<"\t" <<UserNameArr[i]<<endl;
                 idnex++;
             }
         }
@@ -1442,7 +1486,7 @@ void totalSoldProduct()
              << "\t"
              << "Selected Quantity"
              << "\t"
-             << "Total Price " << endl;
+             << "Total Price " <<"\t"<<"userName"<< endl;
         for (int i = 0; i < userBuyProductquantity; i++)
         {
             if (userBuyProductStatus[i] == "Paid")
@@ -1454,7 +1498,7 @@ void totalSoldProduct()
                 totalUnPaid = totalUnPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
                 int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << endl;
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice <<"\t" <<UserNameArr[i]<<endl;
                 idnex++;
             }
         }
@@ -1500,8 +1544,9 @@ void productAnalystics()
             }
         }
         if (userBuyProductquantity > 0)
-        {
-            cout << "To Sold Products..." << endl;
+        {  
+            barChar();
+            cout << "Top Sold Products!..." << endl;
             cout << "No."
                  << "\t"
                  << "Product Name"
@@ -1510,9 +1555,19 @@ void productAnalystics()
                  << "\t"
                  << "Sold Quantity"
                  << "\t" << endl;
-            for (int i = 0; i < 2; i++)
+                  int isNotMatch=0;
+            for (int i = 0; i <userBuyProductquantity; i++)
             {
-                cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+                if(userBuyProductName[i]!=userBuyProductName[i+1])
+                {
+                  cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+                  isNotMatch++;
+                  if(isNotMatch==6)
+                  {
+                    break;
+                  }
+                }
+                
             }
         }
         clearScreen();
@@ -1588,6 +1643,7 @@ void trendingProducts()
                 userBuySelectedProductQuantity[index - 1] = quantity2;
                 userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
                 userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                UserNameArr[userBuyProductquantity] = userName;
 
                 userBuyProductquantity++;
                 clearScreen();
@@ -1663,7 +1719,8 @@ void storeUserBuyProuctIntoTheFile()
         file << userBuyProductName[i] << comma;
         file << userBuyProductProce[i] << comma;
         file << userBuySelectedProductQuantity[i] << comma;
-        file << userBuyProductStatus[i] << endl;
+        file << userBuyProductStatus[i] << comma;
+        file << UserNameArr[i] << endl;
     }
     file.close();
 }
@@ -1674,12 +1731,15 @@ void loadUserBuyProductIntoTheArr()
     fstream file;
     string line;
     file.open("storeBuyProduct.txt", ios::in);
+
     while (getline(file, line))
     {
+
         userBuyProductName[userBuyProductquantity] = commaSeprateUser(line, 1);
         userBuyProductProce[userBuyProductquantity] = stoi(commaSeprateUser(line, 2));
         userBuySelectedProductQuantity[userBuyProductquantity] = stoi(commaSeprateUser(line, 3));
         userBuyProductStatus[userBuyProductquantity] = commaSeprateUser(line, 4);
+        UserNameArr[userBuyProductquantity] = commaSeprateUser(line, 5);
         userBuyProductquantity++;
     }
     file.close();
@@ -1693,3 +1753,57 @@ void clearScreen()
 }
 // clear screen
 // user-component
+
+void gotoxy(int x, int y)
+{
+    COORD coordinate;
+    coordinate.X = x;
+    coordinate.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinate);
+}
+void barChar()
+{
+    system("cls");
+    int more = 30;
+    int less = 20;
+    int moreLess = 10;
+    char box = 219;
+    for (int i = 0; i < 7; i++)
+    {
+        cout << "|";
+        for (int j = 0; j < 10; j++)
+        {
+            cout << " ";
+        }
+        cout << endl;
+    }
+    for (int i = 0; i < 10; i++)
+    {
+        cout << "---";
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        gotoxy(5, 6 - i);
+        cout << box << endl;
+    }
+
+     for (int i = 0; i < 3; i++)
+    {
+        gotoxy(15, 6 - i);
+        cout << box << endl;
+    }
+     for (int i = 0; i < 1; i++)
+    {
+        gotoxy(25, 6 - i);
+        cout << box << endl;
+    }
+   gotoxy(2,8);
+   cout<<"Name1";
+    gotoxy(13,8);
+   cout<<"Name2";
+    gotoxy(23,8);
+   cout<<"Name3";
+   
+    cout << "exit";
+    getch();
+}

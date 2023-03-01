@@ -1,8 +1,27 @@
-// // #include<iostream>
-// // using namespace std;
-// // int arr[100];
-// // int main()
-// // {
+#include <iostream>
+using namespace std;
+
+string arr[5] = {"pant", "shirt", "blue", "pant", "blue"};
+
+bool isDuplicate(int index) {
+  for (int i = 0; i < index; i++) {
+    if (arr[i] == arr[index]) {
+      return true;
+    }
+  }
+  return false;
+}
+
+int main() {
+  for (int i = 0; i < 5; i++) {
+    if (i == 0 || !isDuplicate(i)) {
+      cout << arr[i] << " ";
+    }
+  }
+  return 0;
+}
+
+
 // //     // int jn;
 // //     // cout<<"Enter a number";
 // //     // cin>>jn;
@@ -49,14 +68,14 @@
 //     cout << "\n\n Enter the " << n << " elements of the array: \n\n";
 //     for(i=0; i<n; i++)
 //     {
-//         cin >> arr[i]; 
+//         cin >> arr[i];
 //     }
 
 //     //Printing the original array before deletion
 //     cout << "\n\n The " << n << " elements of the array, before deletion are : \n\n";
 //     for(i=0; i<n; i++)
 //     {
-//         cout << arr[i] << "  "; 
+//         cout << arr[i] << "  ";
 //     }
 
 //     cout << "\n\n Enter the position, between 1 and " << n << " , of the element to be deleted : ";
@@ -72,53 +91,49 @@
 //     cout << " \n\nThe " << n-1 << " elements of the array, after deletion are : \n\n";
 //     for(i=0; i<n-1; i++)
 //     {
-//         cout << arr[i] << "  "; 
+//         cout << arr[i] << "  ";
 //     }
-             
+
 //     cout << "\n\n";
 
 //     return 0;
 // }
-#include<iostream>
-using namespace std;
-int main()
-{
-  string proName[3]={"abc","adc","amc"};
-  int proQuantity[3]={1,2,3};
-  int price[3]={23,43,53};
-  int rapperQ;
-  int rapperP;
-  string Name=" ";
-  
-  
+// #include <iostream>
+// using namespace std;
+// int main()
+// {
+//   string proName[3] = {"abc", "adc", "amc"};
+//   int proQuantity[3] = {1, 2, 3};
+//   int price[3] = {23, 43, 53};
+//   int rapperQ;
+//   int rapperP;
+//   string Name = " ";
 
-  for(int i=0;i<3;i++)
-  {
-    
-    for(int j=i+1;j<3;j++)
-    {
-      if(proQuantity[i]<proQuantity[j])
-      {
-        rapperQ=proQuantity[i];
-        proQuantity[i]=proQuantity[j];
-        proQuantity[j]=rapperQ;
-        cout<<"yes";
+//   for (int i = 0; i < 3; i++)
+//   {
 
-        Name=proName[i];
-        proName[i]=proName[j];
-        proName[j]=Name;
-        rapperP=price[i];
-        price[i]=price[j];
-        price[j]=rapperP;
+//     for (int j = i + 1; j < 3; j++)
+//     {
+//       if (proQuantity[i] < proQuantity[j])
+//       {
+//         rapperQ = proQuantity[i];
+//         proQuantity[i] = proQuantity[j];
+//         proQuantity[j] = rapperQ;
+//         cout << "yes";
 
-
-      }
-    }
-  }
-  for(int i=0;i<3;i++)
-  {
-    cout<<proQuantity[i]<<" "<<proName[i]<<" "<<price[i];
-  }
+//         Name = proName[i];
+//         proName[i] = proName[j];
+//         proName[j] = Name;
+//         rapperP = price[i];
+//         price[i] = price[j];
+//         price[j] = rapperP;
+//       }
+//     }
+//   }
+//   for (int i = 0; i < 3; i++)
+//   {
+//     cout << proQuantity[i] << " " << proName[i] << " " << price[i];
+//   }
 
   // int del=1;
   // for(int i=del;i<3;i++)
@@ -132,4 +147,4 @@ int main()
   //   cout<<arr2[i]<<" "<<endl;
 
   // }
-}
+// }
