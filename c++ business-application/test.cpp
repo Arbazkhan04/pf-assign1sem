@@ -3,7 +3,7 @@ using namespace std;
 
 string arr[5] = {"pant", "shirt", "blue", "pant", "blue"};
 
-bool isDuplicate(int index) {
+bool isDuplicateExistInTrendProd(int index) {
   for (int i = 0; i < index; i++) {
     if (arr[i] == arr[index]) {
       return true;
@@ -14,7 +14,7 @@ bool isDuplicate(int index) {
 
 int main() {
   for (int i = 0; i < 5; i++) {
-    if (i == 0 || !isDuplicate(i)) {
+    if (i == 0 || !isDuplicateExistInTrendProd(i)) {
       cout << arr[i] << " ";
     }
   }

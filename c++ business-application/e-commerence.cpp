@@ -45,6 +45,8 @@ void userViewRepeateCode();
 void userbBuyProduct();
 void filterProduct();
 bool isAnyProductUnpaid();
+bool isDuplicateExistInTrendProd(int index);
+void plcaeTrendProdcutName(string,int);
 void addToCart();
 void viewCart();
 void viewCartOption();
@@ -673,8 +675,8 @@ void addToCart()
          << "\t"
          << "Selected Quantity" << endl;
     int index = 1;
-     bool result = isAnyProductUnpaid();
-    if (userBuyProductquantity > 0&&result==true)
+    bool result = isAnyProductUnpaid();
+    if (userBuyProductquantity > 0 && result == true)
     {
         for (int i = 0; i < userBuyProductquantity; i++)
         {
@@ -1445,7 +1447,9 @@ void totalSoldProduct()
              << "\t"
              << "Selected Quantity"
              << "\t"
-             << "Total Price " <<"\t"<< " User Name "<< endl;
+             << "Total Price "
+             << "\t"
+             << " User Name " << endl;
         for (int i = 0; i < userBuyProductquantity; i++)
         {
             if (userBuyProductStatus[i] == "UnPaid")
@@ -1457,7 +1461,7 @@ void totalSoldProduct()
                 totalPaid = totalPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
                 int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice<<"\t" <<UserNameArr[i]<<endl;
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << "\t" << UserNameArr[i] << endl;
                 idnex++;
             }
         }
@@ -1486,7 +1490,9 @@ void totalSoldProduct()
              << "\t"
              << "Selected Quantity"
              << "\t"
-             << "Total Price " <<"\t"<<"userName"<< endl;
+             << "Total Price "
+             << "\t"
+             << "userName" << endl;
         for (int i = 0; i < userBuyProductquantity; i++)
         {
             if (userBuyProductStatus[i] == "Paid")
@@ -1498,7 +1504,7 @@ void totalSoldProduct()
                 totalUnPaid = totalUnPaid + purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
 
                 int singleProductPrice = purchasedProductBill(userBuyProductProce[i], userBuySelectedProductQuantity[i]);
-                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice <<"\t" <<UserNameArr[i]<<endl;
+                cout << idnex << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << " \t \t" << singleProductPrice << "\t" << UserNameArr[i] << endl;
                 idnex++;
             }
         }
@@ -1544,9 +1550,12 @@ void productAnalystics()
             }
         }
         if (userBuyProductquantity > 0)
-        {  
-            barChar();
+        {
+               barChar();
+              
+               gotoxy(1,15);
             cout << "Top Sold Products!..." << endl;
+            gotoxy(1,16);
             cout << "No."
                  << "\t"
                  << "Product Name"
@@ -1555,20 +1564,23 @@ void productAnalystics()
                  << "\t"
                  << "Sold Quantity"
                  << "\t" << endl;
-                  int isNotMatch=0;
-            for (int i = 0; i <userBuyProductquantity; i++)
+            int isNotMatch = 0;
+            for (int i = 0; i < userBuyProductquantity; i++)
             {
-                if(userBuyProductName[i]!=userBuyProductName[i+1])
+                if (i == 0 || !isDuplicateExistInTrendProd(i))
                 {
-                  cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
-                  isNotMatch++;
-                  if(isNotMatch==6)
-                  {
-                    break;
-                  }
+                     isNotMatch++;
+                    plcaeTrendProdcutName(userBuyProductName[i] ,isNotMatch);
+                    gotoxy(1,16+isNotMatch);
+                    cout << isNotMatch << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+                   
+                    if (isNotMatch == 3)
+                    {
+                        break;
+                    }
                 }
-                
             }
+          
         }
         clearScreen();
     }
@@ -1578,7 +1590,17 @@ void productAnalystics()
         clearScreen();
     }
 }
-
+bool isDuplicateExistInTrendProd(int index)
+{
+    for (int i = 0; i < index; i++)
+    {
+        if (userBuyProductName[i] == userBuyProductName[index])
+        {
+            return true;
+        }
+    }
+    return false;
+}
 void trendingProducts()
 {
     cout << "\n \n";
@@ -1763,10 +1785,7 @@ void gotoxy(int x, int y)
 }
 void barChar()
 {
-    system("cls");
-    int more = 30;
-    int less = 20;
-    int moreLess = 10;
+    // system("cls");
     char box = 219;
     for (int i = 0; i < 7; i++)
     {
@@ -1783,27 +1802,36 @@ void barChar()
     }
     for (int i = 0; i < 5; i++)
     {
-        gotoxy(5, 6 - i);
+        gotoxy(5, 11- i);
         cout << box << endl;
     }
 
-     for (int i = 0; i < 3; i++)
+    for (int i = 0; i < 3; i++)
     {
-        gotoxy(15, 6 - i);
+        gotoxy(15, 11 - i);
         cout << box << endl;
     }
-     for (int i = 0; i < 1; i++)
+    for (int i = 0; i < 1; i++)
     {
-        gotoxy(25, 6 - i);
+        gotoxy(25, 11 - i);
         cout << box << endl;
     }
-   gotoxy(2,8);
-   cout<<"Name1";
-    gotoxy(13,8);
-   cout<<"Name2";
-    gotoxy(23,8);
-   cout<<"Name3";
-   
-    cout << "exit";
-    getch();
+}
+void plcaeTrendProdcutName(string name, int matchIndex)
+{
+    if (matchIndex == 1)
+    {
+        gotoxy(2, 13);
+        cout <<name;
+    }
+    else if (matchIndex == 2)
+    {
+        gotoxy(13, 13);
+        cout <<name;
+    }
+    else if (matchIndex == 3)
+    {
+        gotoxy(23, 13);
+        cout <<name<<endl;
+    }
 }
