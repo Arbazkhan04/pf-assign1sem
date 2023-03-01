@@ -565,9 +565,29 @@ void userbBuyProduct()
                      << "\t"
                      << "Available quantity"
                      << "\t" << endl;
-                for (int i = 0; i < 2; i++)
+                int isMatch = 0;
+                for (int i = 0; i < userBuyProductquantity; i++)
                 {
-                    cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << Availabelquantity[i] << endl;
+
+                    if (i == 0 || !isDuplicateExistInTrendProd(i))
+                    {
+                        
+                        if (Availabelquantity[i] == 0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            cout << isMatch + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << Availabelquantity[i] << endl;
+                            isMatch++;
+                            if (isMatch == 2)
+                            {
+                                break;
+                            }
+                        }
+
+                        // }
+                    }
                 }
                 cout << "Demanded Product! Do you want to buy?(y/n) ";
                 cin >> x;
@@ -838,6 +858,15 @@ void viewCart()
                 int index;
                 cout << "Enter the index of the product you want to delete ";
                 cin >> index;
+                // update quantity of original array
+                for (int i = 0; i < defaultItemsSize; i++)
+                {
+                    if (productName[i] == userBuyProductName[index])
+                    {
+                        Availabelquantity[i] = Availabelquantity[i] + userBuySelectedProductQuantity[index];
+                    }
+                }
+                // update quantity of original array
                 for (int i = index; i < userBuyProductquantity; i++)
                 {
                     userBuyProductName[i] = userBuyProductName[i + 1];
@@ -854,6 +883,22 @@ void viewCart()
                 cin >> index;
                 cout << "Enter The Quantity ";
                 cin >> updatedquan;
+                for (int i = 0; i < defaultItemsSize; i++)
+                {
+                    if (productName[i] == userBuyProductName[index])
+                    {
+                        if (userBuySelectedProductQuantity[index] < updatedquan)
+                        {
+                            int increaseUpdate = updatedquan - userBuySelectedProductQuantity[index];
+                            Availabelquantity[i] = Availabelquantity[i] - increaseUpdate;
+                        }
+                        if (userBuySelectedProductQuantity[index] > updatedquan)
+                        {
+                            int decreseUpdate = userBuySelectedProductQuantity[index] - updatedquan;
+                            Availabelquantity[i] = decreseUpdate + Availabelquantity[i];
+                        }
+                    }
+                }
                 userBuySelectedProductQuantity[index] = updatedquan;
             }
             else if (opt == 3)
@@ -1671,10 +1716,30 @@ void trendingProducts()
                  << "productPrice"
                  << "\t"
                  << "Sold Quantity"
+                 << "\t"
+                 << "Available quantity"
                  << "\t" << endl;
-            for (int i = 0; i < 2; i++)
+
+            int isMatch = 0;
+            for (int i = 0; i <userBuyProductquantity; i++)
             {
-                cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
+                if (i == 0 || !isDuplicateExistInTrendProd(i))
+                {
+                    if (Availabelquantity[i] == 0)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        cout << isMatch + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << Availabelquantity[i] << endl;
+                        isMatch++;
+                        if (isMatch == 2)
+                        {
+                            break;
+                        }
+                    }
+                }
+                // cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
             }
             char x;
             cout << "Demanded Product! Do you want to buy?(y/n) ";
@@ -1688,13 +1753,21 @@ void trendingProducts()
                 userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
                 cout << "Enter Quantity..";
                 cin >> quantity2;
-                userBuySelectedProductQuantity[index - 1] = quantity2;
-                userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
-                userBuyProductStatus[userBuyProductquantity] = "UnPaid";
-                UserNameArr[userBuyProductquantity] = userName;
+                if (quantity2 > Availabelquantity[index])
+                {
+                    cout << "Selected Quantiy " << quantity2 << " is greater than availabe quantiy " << Availabelquantity[index] << endl;
+                }
+                else if (quantity2 <= Availabelquantity[index])
+                {
+                    Availabelquantity[index] = Availabelquantity[index] - quantity2; // update availabel quantiy
+                    userBuySelectedProductQuantity[index - 1] = quantity2;
+                    userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
+                    userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                    UserNameArr[userBuyProductquantity] = userName;
 
-                userBuyProductquantity++;
-                clearScreen();
+                    userBuyProductquantity++;
+                    clearScreen();
+                }
             }
             else if (x == 'n')
             {
@@ -1901,6 +1974,6 @@ void adminProductDetails()
             Availabelquantity[index] = quantity;
         }
     }
-   storeUpdateProductDataIntoTheFile();
+    storeUpdateProductDataIntoTheFile();
     clearScreen();
 }
