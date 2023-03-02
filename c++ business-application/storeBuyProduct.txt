@@ -1,4 +1,6 @@
-pant,32,4,UnPaid,a@
-[ant,2,2,UnPaid,a@
-Shirt,32,2,UnPaid,a@
-pant,32,4,UnPaid,a@
+pant,32,42,Paid,a@
+ball,2,21,Paid,a@
+Shirt,32,2,Paid,a@
+pant,32,1,Paid,a@
+ball,2,1,Paid,a@
+Shirt,32,1,UnPaid,a@@

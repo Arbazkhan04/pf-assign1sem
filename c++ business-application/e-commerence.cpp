@@ -462,7 +462,10 @@ void userViewProduct()
          << "Availabelquantity" << endl;
     for (int i = 0; i < defaultItemsSize; i++)
     {
-        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+        if (Availabelquantity[i] != 0)
+        {
+            cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+        }
     }
     // cout<<"Pess any key to exit...";
     // getch();
@@ -566,23 +569,30 @@ void userbBuyProduct()
                      << "Available quantity"
                      << "\t" << endl;
                 int isMatch = 0;
+
                 for (int i = 0; i < userBuyProductquantity; i++)
                 {
 
                     if (i == 0 || !isDuplicateExistInTrendProd(i))
                     {
-                        
+
                         if (Availabelquantity[i] == 0)
                         {
                             continue;
                         }
                         else
                         {
-                            cout << isMatch + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << Availabelquantity[i] << endl;
-                            isMatch++;
-                            if (isMatch == 2)
+                            for (int j = 0; j < defaultItemsSize; j++)
                             {
-                                break;
+                                if (productName[j] == userBuyProductName[i])
+                                {
+                                    cout << isMatch << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t" << Availabelquantity[j] << endl;
+                                    isMatch++;
+                                    if (isMatch == 2)
+                                    {
+                                        break;
+                                    }
+                                }
                             }
                         }
 
@@ -596,23 +606,31 @@ void userbBuyProduct()
                 {
                     cout << "Enter the index of the product..";
                     cin >> index;
-                    userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
-                    userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
+                    // userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
+                    // userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
                     cout << "Enter Quantity..";
                     cin >> quantity2;
-                    if (quantity2 > Availabelquantity[index])
+                    for (int i = 0; i < defaultItemsSize; i++)
                     {
-                        cout << "Selected Quantiy " << quantity2 << " is greater than availabe quantiy " << Availabelquantity[index] << endl;
-                    }
-                    else if (quantity2 <= Availabelquantity[index])
-                    {
-                        Availabelquantity[index] = Availabelquantity[index] - quantity2; // update availabel quantiy
-                        userBuySelectedProductQuantity[index - 1] = quantity2;
-                        userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
-                        userBuyProductStatus[userBuyProductquantity] = "UnPaid";
-                        UserNameArr[userBuyProductquantity] = userName;
+                        if (userBuyProductName[index] == productName[i])
+                        {
+                            if (quantity2 > Availabelquantity[i])
+                            {
+                                cout << "Selected Quantiy " << quantity2 << " is greater than availabe quantiy " << Availabelquantity[i] << endl;
+                            }
+                            else if (quantity2 <= Availabelquantity[i])
+                            {
+                                Availabelquantity[i] = Availabelquantity[i] - quantity2; // update availabel quantiy
+                                userBuySelectedProductQuantity[index - 1] = quantity2;
+                                userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
+                                userBuyProductName[userBuyProductquantity] = productName[i];
+                                userBuyProductProce[userBuyProductquantity] = productPrice[i];
+                                userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                                UserNameArr[userBuyProductquantity] = userName;
 
-                        userBuyProductquantity++;
+                                userBuyProductquantity++;
+                            }
+                        }
                     }
                 }
                 else
@@ -1702,7 +1720,7 @@ void trendingProducts()
                 }
             }
         }
-        if (userBuyProductquantity > 0)
+        if (userBuyProductquantity > 3)
         {
             if (userBuyProductquantity == 1)
             {
@@ -1721,7 +1739,8 @@ void trendingProducts()
                  << "\t" << endl;
 
             int isMatch = 0;
-            for (int i = 0; i <userBuyProductquantity; i++)
+            int newAvailaleQuanityAccToProName;
+            for (int i = 0; i < userBuyProductquantity; i++)
             {
                 if (i == 0 || !isDuplicateExistInTrendProd(i))
                 {
@@ -1731,15 +1750,23 @@ void trendingProducts()
                     }
                     else
                     {
-                        cout << isMatch + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << Availabelquantity[i] << endl;
-                        isMatch++;
-                        if (isMatch == 2)
+                        // check the availbe quantiy by their name
+                        for (int j = 0; j < defaultItemsSize; j++)
                         {
-                            break;
+                            if (userBuyProductName[i] == productName[j])
+                            {
+                                newAvailaleQuanityAccToProName = Availabelquantity[j];
+                                cout << isMatch << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << newAvailaleQuanityAccToProName << endl;
+                                isMatch++;
+                                if (isMatch == 2)
+                                {
+                                    break;
+                                }
+                            }
                         }
+                        // check the availbe quantiy by their name
                     }
                 }
-                // cout << i + 1 << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << endl;
             }
             char x;
             cout << "Demanded Product! Do you want to buy?(y/n) ";
@@ -1753,20 +1780,30 @@ void trendingProducts()
                 userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
                 cout << "Enter Quantity..";
                 cin >> quantity2;
-                if (quantity2 > Availabelquantity[index])
+                for (int i = 0; i < totalSizeOfitems; i++)
                 {
-                    cout << "Selected Quantiy " << quantity2 << " is greater than availabe quantiy " << Availabelquantity[index] << endl;
-                }
-                else if (quantity2 <= Availabelquantity[index])
-                {
-                    Availabelquantity[index] = Availabelquantity[index] - quantity2; // update availabel quantiy
-                    userBuySelectedProductQuantity[index - 1] = quantity2;
-                    userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
-                    userBuyProductStatus[userBuyProductquantity] = "UnPaid";
-                    UserNameArr[userBuyProductquantity] = userName;
+                    if (userBuyProductName[index] == productName[i])
+                    {
+                        if (quantity2 > Availabelquantity[i])
+                        {
+                            cout << "Selected Quantiy " << quantity2 << " is greater than availabe quantiy " << Availabelquantity[i] << endl;
+                            cout << "press any key to contiue..";
+                            getch();
+                        }
+                        else if (quantity2 <= Availabelquantity[i])
+                        {
+                            Availabelquantity[i] = Availabelquantity[i] - quantity2; // update availabel quantiy
+                            userBuySelectedProductQuantity[index - 1] = quantity2;
+                            userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
+                            userBuyProductName[userBuyProductquantity] = productName[i];
+                            userBuyProductProce[userBuyProductquantity] = productPrice[i];
+                            userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                            UserNameArr[userBuyProductquantity] = userName;
 
-                    userBuyProductquantity++;
-                    clearScreen();
+                            userBuyProductquantity++;
+                            clearScreen();
+                        }
+                    }
                 }
             }
             else if (x == 'n')
@@ -1786,6 +1823,7 @@ void trendingProducts()
         clearScreen();
     }
     storeUserBuyProuctIntoTheFile();
+    storeUpdateProductDataIntoTheFile();
 }
 
 void userViewRepeateCode()
@@ -1799,7 +1837,11 @@ void userViewRepeateCode()
          << "Availabelquantity" << endl;
     for (int i = 0; i < defaultItemsSize; i++)
     {
-        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+        if (Availabelquantity[i] != 0)
+        {
+
+            cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+        }
     }
 }
 void createProductFile()
