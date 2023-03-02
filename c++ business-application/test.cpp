@@ -1,26 +1,58 @@
 #include <iostream>
+#include <string>
 using namespace std;
+void myFun();
+ bool intvalid(string value);
+ int number();
 
-string arr[5] = {"pant", "shirt", "blue", "pant", "blue"};
+int main()
+{
 
-bool isDuplicateExistInTrendProd(int index) {
-  for (int i = 0; i < index; i++) {
-    if (arr[i] == arr[index]) {
-      return true;
-    }
-  }
-  return false;
+
+   int result=number();
+   if(result==1)
+   {
+    myFun();
+   }
 }
 
-int main() {
-  for (int i = 0; i < 5; i++) {
-    if (i == 0 || !isDuplicateExistInTrendProd(i)) {
-      cout << arr[i] << " ";
-    }
+int number(int limit)
+{
+  string value;
+  cout<<"Enter a op ";
+  cin >> value;
+  while (!intvalid(value) || stoi(value) <= 0 || stoi(value) > limit)
+  {
+    cout << "invalid input: "<<endl;
+    cout<<"Enter opt..";
+    cin >> value;
   }
-  return 0;
+ return stoi(value); 
 }
 
+bool intvalid(string value)
+{
+  string num = "0123456789";
+  for (int i = 0; i < value.length(); i++)
+  {
+    for (int j = 0; j < num.length(); j++)
+    {
+      if (value[i] == num[j])
+      {
+        break;
+      }
+      else if(num[j] == '9')
+      {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+void myFun()
+{
+  cout<<"valid number ";
+}
 
 // //     // int jn;
 // //     // cout<<"Enter a number";

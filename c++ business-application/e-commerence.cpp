@@ -606,8 +606,6 @@ void userbBuyProduct()
                 {
                     cout << "Enter the index of the product..";
                     cin >> index;
-                    // userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
-                    // userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
                     cout << "Enter Quantity..";
                     cin >> quantity2;
                     for (int i = 0; i < defaultItemsSize; i++)
@@ -713,6 +711,51 @@ void filterProduct()
             if (totalFindProduct > 0)
             {
                 cout << "Product found.." << endl;
+                string x = "y";
+                cout << "Do you want to buy product(y/n)..";
+                cin >> x;
+                if (x == "y")
+                {
+                    int n;
+                    cout << "How many products you want to buy.. ";
+                    cin >> n;
+                    int idex;
+                    int selectedQuantity;
+                    for (int i = 0; i < n; i++)
+                    {
+                        cout << "Enter the index of the product ";
+                        cin >> idex;
+                        cout << "Enter No. of quantity you want to buy ";
+                        cin >> selectedQuantity;
+                        for (int j = 0; j < defaultItemsSize; j++)
+                        {
+                            if (filterProductNameArr[idex] == productName[j])
+                            {
+                                if (selectedQuantity > Availabelquantity[j])
+                                {
+                                    cout << "Selected Quantiy " << selectedQuantity << " is greater than availabe quantiy " << Availabelquantity[j] << endl;
+                                }
+                                else
+                                {
+                                    // string filterProductNameArr[100];
+                                    // int filterProductPriceArr[100];
+                                    // int filterProductQuantityArr[100];
+                                    userBuyProductName[userBuyProductquantity] = filterProductNameArr[idex];
+                                    userBuyProductProce[userBuyProductquantity] = filterProductPriceArr[idex];
+                                    userBuySelectedProductQuantity[userBuyProductquantity] = selectedQuantity;
+                                    Availabelquantity[j] = Availabelquantity[i] - selectedQuantity; // update availabel quantity
+                                    userBuyProductStatus[userBuyProductquantity] = "UnPaid";
+                                    UserNameArr[userBuyProductquantity] = userName;
+                                    userBuyProductquantity++;
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    break;
+                }
             }
             else
             {
@@ -724,6 +767,9 @@ void filterProduct()
             break;
         }
     }
+    storeUserBuyProuctIntoTheFile();
+    storeUpdateProductDataIntoTheFile();
+    clearScreen();
 }
 
 void addToCart()
@@ -1722,10 +1768,7 @@ void trendingProducts()
         }
         if (userBuyProductquantity > 3)
         {
-            if (userBuyProductquantity == 1)
-            {
-                cout << "No thing in trends...";
-            }
+
             cout << "Trending Products..." << endl;
             cout << "No."
                  << "\t"
@@ -1755,8 +1798,9 @@ void trendingProducts()
                         {
                             if (userBuyProductName[i] == productName[j])
                             {
-                                newAvailaleQuanityAccToProName = Availabelquantity[j];
-                                cout << isMatch << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" << newAvailaleQuanityAccToProName << endl;
+                                
+
+                                cout << isMatch << "\t" << userBuyProductName[i] << "\t \t" << userBuyProductProce[i] << "\t \t \t" << userBuySelectedProductQuantity[i] << "\t \t \t" <<  Availabelquantity[j] << endl;
                                 isMatch++;
                                 if (isMatch == 2)
                                 {
@@ -1776,8 +1820,8 @@ void trendingProducts()
             {
                 cout << "Enter the index of the product..";
                 cin >> index;
-                userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
-                userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
+                // userBuyProductName[userBuyProductquantity] = userBuyProductName[index - 1];
+                // userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index - 1];
                 cout << "Enter Quantity..";
                 cin >> quantity2;
                 for (int i = 0; i < totalSizeOfitems; i++)
@@ -1793,10 +1837,12 @@ void trendingProducts()
                         else if (quantity2 <= Availabelquantity[i])
                         {
                             Availabelquantity[i] = Availabelquantity[i] - quantity2; // update availabel quantiy
-                            userBuySelectedProductQuantity[index - 1] = quantity2;
-                            userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index - 1];
-                            userBuyProductName[userBuyProductquantity] = productName[i];
-                            userBuyProductProce[userBuyProductquantity] = productPrice[i];
+                            userBuySelectedProductQuantity[index] = quantity2;
+                            userBuySelectedProductQuantity[userBuyProductquantity] = userBuySelectedProductQuantity[index];
+                            userBuyProductName[userBuyProductquantity] = userBuyProductName[index];
+                            userBuyProductProce[userBuyProductquantity] = userBuyProductProce[index];
+                            // userBuyProductName[userBuyProductquantity] = productName[i];
+                            // userBuyProductProce[userBuyProductquantity] = productPrice[i];
                             userBuyProductStatus[userBuyProductquantity] = "UnPaid";
                             UserNameArr[userBuyProductquantity] = userName;
 
