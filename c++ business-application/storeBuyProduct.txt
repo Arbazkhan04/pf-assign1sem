@@ -1,8 +1,8 @@
+pant,32,5,UnPaid,a@
+Shirt,32,3,UnPaid,a@
 pant,32,2,UnPaid,a@
+ball,2,2,UnPaid,a@
 pant,32,2,UnPaid,a@
-ball,2,1,UnPaid,a@
-ball,2,1,UnPaid,a@
-ball,2,1,UnPaid,a@
-ball,2,1,UnPaid,a@
 pant,32,1,UnPaid,a@
-ball,2,1,UnPaid,a@
+Shirt,32,1,UnPaid,a@
+pant,32,1,UnPaid,a@

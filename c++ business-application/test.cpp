@@ -2,32 +2,31 @@
 #include <string>
 using namespace std;
 void myFun();
- bool intvalid(string value);
- int number();
+bool intvalid(string value);
+int number(int);
 
 int main()
 {
 
-
-   int result=number();
-   if(result==1)
-   {
+  int result = number(4);
+  if (result == 1)
+  {
     myFun();
-   }
+  }
 }
 
 int number(int limit)
 {
   string value;
-  cout<<"Enter a op ";
+  cout << "Enter a op ";
   cin >> value;
   while (!intvalid(value) || stoi(value) <= 0 || stoi(value) > limit)
   {
-    cout << "invalid input: "<<endl;
-    cout<<"Enter opt..";
+    cout << "invalid input: " << endl;
+    cout << "Enter opt..";
     cin >> value;
   }
- return stoi(value); 
+  return stoi(value);
 }
 
 bool intvalid(string value)
@@ -41,7 +40,7 @@ bool intvalid(string value)
       {
         break;
       }
-      else if(num[j] == '9')
+      else if (num[j] == '9')
       {
         return false;
       }
@@ -51,7 +50,7 @@ bool intvalid(string value)
 }
 void myFun()
 {
-  cout<<"valid number ";
+  cout << "valid number ";
 }
 
 // //     // int jn;
@@ -167,16 +166,16 @@ void myFun()
 //     cout << proQuantity[i] << " " << proName[i] << " " << price[i];
 //   }
 
-  // int del=1;
-  // for(int i=del;i<3;i++)
-  // {
-  //    arr[i]=arr[i+1];
-  //    arr2[i]=arr2[i+1];
-  // }
-  // for(int i=0;i<2;i++)
-  // {
-  //   cout<<arr[i]<<" "<<endl;
-  //   cout<<arr2[i]<<" "<<endl;
+// int del=1;
+// for(int i=del;i<3;i++)
+// {
+//    arr[i]=arr[i+1];
+//    arr2[i]=arr2[i+1];
+// }
+// for(int i=0;i<2;i++)
+// {
+//   cout<<arr[i]<<" "<<endl;
+//   cout<<arr2[i]<<" "<<endl;
 
-  // }
+// }
 // }
