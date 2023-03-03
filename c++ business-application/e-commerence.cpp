@@ -2,11 +2,12 @@
 #include <fstream>
 #include <conio.h>
 #include <string>
-#include<cstring>
+#include <cstring>
 #include <windows.h>
 using namespace std;
 int defaultItemsSize = 0;
 int totalNumberOfUser = 0;
+int totalTredingProduct=0;
 void gotoxy(int x, int y);
 void barChar();
 void clearScreen();
@@ -47,6 +48,7 @@ void deleteProduct();
 int checkSizeOfArrayIndex();
 void userViewProduct();
 void adminProductDetails();
+
 void userViewRepeateCode();
 void userbBuyProduct();
 void filterProduct();
@@ -60,7 +62,7 @@ void userPurchasedProductList();
 void totalSoldProduct();
 int purchasedProductBill(int, int);
 void trendingProducts();
-string adminNmae=" ";
+string adminNmae = " ";
 string userName = " ";
 int userBuyProductquantity = 0;
 const int userBuyProductArrSize = 100;
@@ -151,7 +153,7 @@ void admin(string name)
     cout << "  9 Change Profile Setting                             " << endl;
     cout << "  10 Delete Account                                     " << endl;
     cout << "  11 Exit                                              " << endl;
-    cout<<"Enter option ";
+    cout << "Enter option ";
     int number = enterOpt(11);
     if (number == 11)
     {
@@ -184,7 +186,7 @@ void admin(string name)
     }
     else if (number == 6)
     {
-        listOfLoginUsers();
+        adminViewProduct();
     }
     else if (number == 7)
     {
@@ -317,16 +319,16 @@ void CreateProduct()
         {
             int totalProductAdminWantToAdd;
             cout << "Enter number of product you want to add..";
-            totalProductAdminWantToAdd=enterOpt(20);
+            totalProductAdminWantToAdd = enterOpt(20);
             for (int i = 0; i < totalProductAdminWantToAdd; i++)
             {
 
                 cout << "Enter name of product ";
                 cin >> productName[defaultItemsSize];
                 cout << "Enter price for the product ";
-                 productPrice[defaultItemsSize]=enterOpt(2000);
+                productPrice[defaultItemsSize] = enterOpt(2000);
                 cout << "Enter Quantity ";
-               Availabelquantity[defaultItemsSize]=enterOpt(1000);
+                Availabelquantity[defaultItemsSize] = enterOpt(1000);
                 defaultItemsSize++;
             }
         }
@@ -371,18 +373,18 @@ void adminUpDateProduct()
         if (yesOrNo == 'y')
         {
             cout << "Enter the index of product you want to update.. ";
-            idex=enterOpt(50);
+            idex = enterOpt(50);
 
             string updatedName;
             cout << "Enter the name of product.. ";
             cin >> updatedName;
             productName[idex] = updatedName;
             cout << "updated product price ";
-             updatedPrice=enterOpt(1000);
+            updatedPrice = enterOpt(1000);
             productPrice[idex] = updatedPrice;
 
             cout << "updated product quantity ";
-            updatedQuantity=enterOpt(500);
+            updatedQuantity = enterOpt(500);
             Availabelquantity[idex] = updatedQuantity;
         }
         else if (yesOrNo == 'n')
@@ -425,15 +427,15 @@ void deleteProduct()
         if (yesOrNo == 'y')
         {
             cout << "Enter the index for deletion of product..";
-             idex=enterOpt(50);
+            idex = enterOpt(50);
             for (int i = idex; i < defaultItemsSize; i++)
             {
                 productName[i] = productName[i + 1];
                 productPrice[i] = productPrice[i + 1];
                 Availabelquantity[i] = Availabelquantity[i + 1];
             }
-            cout << "product deleted "<<endl;
-            break;
+            
+            cout << "product deleted " << endl;
             defaultItemsSize--;
             // clearScreen();
         }
@@ -452,10 +454,13 @@ void deleteProduct()
          << "Availabelquantity" << endl;
     for (int i = 0; i < defaultItemsSize; i++)
     {
-        cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+       if(Availabelquantity[i]!=0)
+       {
+         cout << i << "\t" << productName[i] << "\t \t" << productPrice[i] << "\t \t" << Availabelquantity[i] << endl;
+       }
     }
     clearScreen();
-    storeUpdateProductDataIntoTheFile();
+     storeUpdateProductDataIntoTheFile();
     admin(adminNmae);
 }
 
@@ -490,7 +495,7 @@ void userViewProduct()
 
 void adminViewProduct()
 {
-  system("cls");
+    system("cls");
     cout << "\n \n";
     cout << "**********************************************************************" << endl;
     cout << "***************************** VIEW PRODUCT *************************** " << endl;
@@ -588,6 +593,7 @@ void userbBuyProduct()
                             userBuyProductName[i] = userBuyProductName[j];
                             userBuyProductName[j] = prName;
 
+              
                             proPrice = userBuyProductProce[i];
                             userBuyProductProce[i] = userBuyProductProce[j];
                             userBuyProductProce[j] = proPrice;
@@ -878,8 +884,6 @@ void addToCart()
                 }
                 cout << "Successfully paid..." << endl;
                 storeUserBuyProuctIntoTheFile();
-                user(userName);
-                clearScreen();
             }
         }
         else if (x == 'n')
@@ -895,6 +899,8 @@ void addToCart()
         clearScreen();
         user(userName);
     }
+    clearScreen();
+    user(userName);
 }
 void viewCartOption()
 {
@@ -1279,7 +1285,7 @@ void adminLogin()
     {
         cout << "Loign successfully..." << endl;
         clearScreen();
-        adminNmae=name;
+        adminNmae = name;
         admin(name);
     }
     else if (isSuccessfulLogin == false)
@@ -1483,8 +1489,8 @@ void adminChangeProfileSetting()
 
             adminAuthArryName[0] = name2;
             adminAuthArryPass[0] = password2;
-            cout << "Your Credentials updated successfully..."<<endl;
-            adminNmae=name2;
+            cout << "Your Credentials updated successfully..." << endl;
+            adminNmae = name2;
             clearScreen();
             storeAdminIntoTheFile();
             admin(adminNmae);
@@ -1498,7 +1504,7 @@ void adminChangeProfileSetting()
     }
     else
     {
-        cout << "Please Enter correct password Or name..."<<endl;
+        cout << "Please Enter correct password Or name..." << endl;
         Sleep(700);
         clearScreen();
         admin(adminNmae);
@@ -1518,8 +1524,8 @@ void userLogout()
             userAuthArrayPassWord[i] = userAuthArrayPassWord[i + 1];
             totalNumberOfUser--;
             cout << "Account Deleted successfully..." << endl;
-            clearScreen();
             storeUserIntoTheFile();
+             clearScreen();
             eCommerenceMenu();
             // Sleep(700);
         }
@@ -1626,9 +1632,9 @@ void totalSoldProduct()
     cout << "     Choose Catagory " << endl;
     cout << " --> 1 The Product that has been Sold " << endl;
     cout << " --> 2 The Product that is not UnPaid " << endl;
-    cout<<  " --> 3 Exit "<<endl;
+    cout << " --> 3 Exit " << endl;
     cout << "Enter your option ";
-     opt=enterOpt(3);
+    opt = enterOpt(3);
     if (opt == 1)
     {
         int totalPaid = 0;
@@ -1713,17 +1719,18 @@ void totalSoldProduct()
         cout << " *          Total Revenue : " << totalUnPaid << "      *" << endl;
         cout << " *******************************************************" << endl;
     }
-    else if(opt==3)
+    else if (opt == 3)
     {
-       admin(adminNmae);
-       clearScreen();
+        admin(adminNmae);
+        clearScreen();
     }
 
     clearScreen();
-      admin(adminNmae);
+    admin(adminNmae);
 }
 
-void productAnalystics()
+void 
+productAnalystics()
 {
     system("cls");
     cout << "\n \n";
@@ -1838,7 +1845,7 @@ void trendingProducts()
                 }
             }
         }
-        if (userBuyProductquantity > 3)
+        if (userBuyProductquantity > 0)
         {
 
             cout << "Trending Products..." << endl;
@@ -2123,13 +2130,13 @@ void adminProductDetails()
     {
         int howMany;
         cout << "How many product you want update ";
-         howMany=enterOpt(30);
+        howMany = enterOpt(30);
         for (int i = 0; i < howMany; i++)
         {
             cout << "Enter the index of the product";
-            index=enterOpt(100);
+            index = enterOpt(100);
             cout << "Enter qunatity";
-            quantity=enterOpt(500);
+            quantity = enterOpt(500);
             Availabelquantity[index] = quantity;
         }
     }
