@@ -1,4 +1,5 @@
 #include <iostream>
+#include<cmath>
 using namespace std;
 int main()
 
@@ -8,8 +9,21 @@ int main()
     // cout<< "\033[31m" <<"   (=--=)   "<<endl;
     // cout<< "\033[31m" <<"   _|  |_     "<<endl;
     // cout << "\033[31m" << "This text is red" << endl;
-    cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
-    cout << "\033[31m" << "Your text in red color" << "\033[0m";
+    // cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
+    // cout << "\033[31m" << "Your text in red color" << "\033[0m";
+
+    int x1=2,x2=3,y1=2,y2=3;
+    int xDis=(x1-x2);
+    int AxSquare=pow(xDis,2);
+    int yDis=y1-y2;
+    int AySquare=pow(yDis,2);
+    int sum=AxSquare+AySquare;
+    float sqare=sqrt(sum);
+    cout<<sqare;
+
+
+    
+
 
 
    
