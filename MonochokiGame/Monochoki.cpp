@@ -3293,11 +3293,11 @@ void moveEnemyFour()
    if (enemy4Direction == "right") // right
    {
       char nextlocation = getCharAtxy(enemy4X + 10, enemy4Y);
-      if(enemy4Y+4==128)
+      if(enemy4Y+4==25)
       {
-         enemy4Direction=="up";
+         enemy4Direction="up";
       }
-      if (nextlocation == ' ')
+     else if (nextlocation == ' ')
       {
          ereaseEnemyleft4(enemy4X, enemy4Y);
          ereaseEnemyFourUp(enemy4X, enemy4Y);
@@ -3310,7 +3310,7 @@ void moveEnemyFour()
          generateBulletForRightenemy4();
       }
       
-      if (nextlocation == '*')
+     else if (nextlocation == '*')
       {
          enemy4Direction = "up";
       }
