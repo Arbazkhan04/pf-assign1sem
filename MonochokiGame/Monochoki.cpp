@@ -444,6 +444,10 @@ int main()
       if (enemyOnetimer == 2)
       {
          lastCyldeEnemy();
+         // generateBulletForUpenemy4();
+         generateBulletForLeftenemy4(); 
+         generateBulletForRightenemy4();
+         generateBulletForDownenemy4();
 
          if (enemyOnelife < 20)
          {
@@ -2308,7 +2312,7 @@ void enemiesBulletCollisionToMonochoki()
    {
       if (isMonochokiDirectionUpOrDown == true)
       {
-         if (enemyThreeRightBullettArrX[i] + 2 == monoChokiX && (enemyThreeRightBulletArrY[i] == monoChokiY || enemyThreeRightBulletArrY[i] == monoChokiY + 1 || enemyThreeRightBulletArrY[i] == monoChokiY + 2|| enemyThreeRightBulletArrY[i] == monoChokiY + 3|| enemyThreeRightBulletArrY[i] == monoChokiY + 4|| enemyThreeRightBulletArrY[i] == monoChokiY + 5))
+         if (enemyThreeRightBullettArrX[i] + 2 == monoChokiX && (enemyThreeRightBulletArrY[i] == monoChokiY || enemyThreeRightBulletArrY[i] == monoChokiY + 1 || enemyThreeRightBulletArrY[i] == monoChokiY + 2 || enemyThreeRightBulletArrY[i] == monoChokiY + 3 || enemyThreeRightBulletArrY[i] == monoChokiY + 4 || enemyThreeRightBulletArrY[i] == monoChokiY + 5))
          {
             collideBullettoMonochoki();
             ereaseBulletForLeftEnemy2(enemyThreeRightBullettArrX[i], enemyThreeRightBulletArrY[i]);
@@ -3247,7 +3251,6 @@ void ereaseEnemyFourDown(int x, int y)
       cout << tem;
    }
 }
-
 void moveEnemyFour()
 {
    if (enemy4Direction == "up")
@@ -3262,7 +3265,6 @@ void moveEnemyFour()
          enemy4Y--;
 
          printEnemyUp4(enemy4X, enemy4Y);
-         generateBulletForUpenemy4();
       }
       if (nextlocation == '*')
       {
@@ -3280,7 +3282,7 @@ void moveEnemyFour()
          ereaseEnemyleft4(enemy4X, enemy4Y);
          ereaseEnemyright4(enemy4X, enemy4Y);
          ereaseEnemyFourDown(enemy4X, enemy4Y);
-         generateBulletForLeftenemy4();
+
          enemy4X--;
 
          printEnemyleft4(enemy4X, enemy4Y);
@@ -3293,11 +3295,11 @@ void moveEnemyFour()
    if (enemy4Direction == "right") // right
    {
       char nextlocation = getCharAtxy(enemy4X + 10, enemy4Y);
-      if(enemy4Y+4==25)
+      if (enemy4Y + 4 == 25)
       {
-         enemy4Direction="up";
+         enemy4Direction = "up";
       }
-     else if (nextlocation == ' ')
+      else if (nextlocation == ' ')
       {
          ereaseEnemyleft4(enemy4X, enemy4Y);
          ereaseEnemyFourUp(enemy4X, enemy4Y);
@@ -3307,10 +3309,9 @@ void moveEnemyFour()
          enemy4Y++;
 
          printEnemyright4(enemy4X, enemy4Y);
-         generateBulletForRightenemy4();
       }
-      
-     else if (nextlocation == '*')
+
+      else if (nextlocation == '*')
       {
          enemy4Direction = "up";
       }
@@ -3326,7 +3327,6 @@ void moveEnemyFour()
          ereaseEnemyFourDown(enemy4X, enemy4Y);
          enemy4Y++;
          printEnemyDown4(enemy4X, enemy4Y);
-         generateBulletForDownenemy4();
       }
       if (nextlocation == '*')
       {
@@ -3337,18 +3337,26 @@ void moveEnemyFour()
 
 void generateBulletForLeftenemy4()
 {
-   enemyFourBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4X - 2;
-   enemyFourBulletArrY[totalBulletGenerateByLeftEnemy4] = enemy4Y + 1;
-   gotoxy(enemy4X - 2, enemy4Y + 1);
-   cout << ".";
-   totalBulletGenerateByLeftEnemy4++;
+   if (enemy4Direction == "left")
+   {
+      // enemyFourRightBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4X + 8;
+      // enemyFourRightBulletArrY[totalBulletGenerateByLeftEnemy4] = enemy4Y + 1;
+      // gotoxy(enemy4X + 8, enemy4Y + 1);
+      // cout << ".";
+      // totalBulletGenerateByLeftEnemy4++;
+      enemyFourBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4X - 2;
+      enemyFourBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4Y + 1;
+      gotoxy(enemy4X - 2, enemy4Y + 1);
+      cout << ".";
+      totalBulletGenerateByLeftEnemy4++;
+   }
 }
 
 void moveBulletForLeftEnemy4()
 {
    for (int i = 0; i < totalBulletGenerateByLeftEnemy4; i++)
    {
-      char nextlocation = getCharAtxy(enemyFourBullettArrX[i] - 1, enemyFourBulletArrY[i]);
+      char nextlocation = getCharAtxy(enemyFourBullettArrX[i] - 2, enemyFourBulletArrY[i]);
       if (nextlocation == '*')
       {
          ereaseBulletForLeftEnemy2(enemyFourBullettArrX[i], enemyFourBulletArrY[i]);
@@ -3374,11 +3382,14 @@ void removeIndexBulletForLeftEnemy4(int index)
 
 void generateBulletForRightenemy4()
 {
-   enemyFourRightBullettArrX[totalBulletGenerateByrightEnemy4] = enemy4X + 8;
-   enemyFourRightBulletArrY[totalBulletGenerateByrightEnemy4] = enemy4Y + 1;
-   gotoxy(enemy4X + 8, enemy4Y + 1);
-   cout << ".";
-   totalBulletGenerateByrightEnemy4++;
+   if (enemy4Direction == "right")
+   {
+      enemyFourRightBullettArrX[totalBulletGenerateByrightEnemy4] = enemy4X + 8;
+      enemyFourRightBulletArrY[totalBulletGenerateByrightEnemy4] = enemy4Y + 1;
+      gotoxy(enemy4X + 8, enemy4Y + 1);
+      cout << ".";
+      totalBulletGenerateByrightEnemy4++;
+   }
 }
 
 void moveBulletForRightEnemy4()
@@ -3412,11 +3423,14 @@ void removeIndexBulletForRightEnemy4(int index)
 
 void generateBulletForDownenemy4()
 {
-   enemyFourDownBullettArrX[totalBulletGenerateByDownEnemy4] = enemy4X + 1;
-   enemyFourDownBulletArrY[totalBulletGenerateByDownEnemy4] = enemy4Y + 5;
-   gotoxy(enemy3X + 1, enemy4Y + 5);
-   cout << ".";
-   totalBulletGenerateByDownEnemy4++;
+   if (enemy4Direction == "down")
+   {
+      enemyFourDownBullettArrX[totalBulletGenerateByDownEnemy4] = enemy4X + 1;
+      enemyFourDownBulletArrY[totalBulletGenerateByDownEnemy4] = enemy4Y + 5;
+      gotoxy(enemy3X + 1, enemy4Y + 5);
+      cout << ".";
+      totalBulletGenerateByDownEnemy4++;
+   }
 }
 void moveBulletForDownEnemy4()
 {
@@ -3449,11 +3463,14 @@ void removeIndexBulletForDownEnemy4(int index)
 
 void generateBulletForUpenemy4()
 {
-   enemyFourUpBullettArrX[totalBulletGenerateByUpEnemy4] = enemy3X + 1;
-   enemyFourUpBulletArrY[totalBulletGenerateByUpEnemy4] = enemy3y;
-   gotoxy(enemy3X + 1, enemy3y);
-   cout << ".";
-   totalBulletGenerateByUpEnemy4++;
+   if (enemy4Direction == "up")
+   {
+      enemyFourUpBullettArrX[totalBulletGenerateByUpEnemy4] = enemy3X + 1;
+      enemyFourUpBulletArrY[totalBulletGenerateByUpEnemy4] = enemy3y;
+      gotoxy(enemy3X + 1, enemy3y);
+      cout << ".";
+      totalBulletGenerateByUpEnemy4++;
+   }
 }
 
 void moveBulletForUpEnemy4()

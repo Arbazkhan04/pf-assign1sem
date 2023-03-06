@@ -1,1 +1,4 @@
 Shirt,32,2,UnPaid,arbaz@12
+pant,32,10,UnPaid,ar@
+pant,32,12,UnPaid,ar@
+bool,32,3,UnPaid,ar@
