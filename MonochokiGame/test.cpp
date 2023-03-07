@@ -1,79 +1,111 @@
 #include <iostream>
-#include<cmath>
-using namespace std;
-int retrunValue();
+#include <string>
+#include <string.h>
+#include <windows.h> // for sleep() function
+void printTime(int, int,int);
+int hour = 0;
+int minute = 0;
+int second = 0;
+void gotoxy(int x, int y)
+{
+    COORD coordinate;
+    coordinate.X = x;
+    coordinate.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinate);
+}
 int main()
-
 {
-    // cout<< "\033[31m" <<"    (@@)    "<<endl;
-    // cout<< "\033[31m" <<"   g_) (_e  "<<endl;
-    // cout<< "\033[31m" <<"   (=--=)   "<<endl;
-    // cout<< "\033[31m" <<"   _|  |_     "<<endl;
-    // cout << "\033[31m" << "This text is red" << endl;
-    // cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
-    // cout << "\033[31m" << "Your text in red color" << "\033[0m";
 
-    // int x1=2,x2=3,y1=2,y2=3;
-    // int xDis=(x1-x2);
-    // int AxSquare=pow(xDis,2);
-    // int yDis=y1-y2;
-    // int AySquare=pow(yDis,2);
-    // int sum=AxSquare+AySquare;
-    // float sqare=sqrt(sum);
-    // cout<<sqare;
+    while (true)
+    {
+        // Increment the second counter
 
+        second++;
 
-   int result= retrunValue();
-   cout<<result;
+        // Update minute and hour as needed
+        if (second == 60)
+        {
+            second = 0;
+            
+            minute++;
+        }
+        if (minute == 60)
+        {
+            minute = 0;
+         
+            hour++;
+        }
+        if (hour == 24)
+        {
+            hour = 0;
+        }
 
+        // Print the time
+        gotoxy(5, 5);
 
+        printTime(hour, minute,second);
+        // Wait for 1 second
+        Sleep(1000);
+    }
 
-   
-
-
+    return 0;
+}
+void printTime(int h, int m,int s)
+{
+    std::cout << h << ":" << m<<":"<<s;
 }
 
-int retrunValue()
-{
-    return 1;
-    return 2;
-}
+// cout<< "\033[31m" <<"    (@@)    "<<endl;
+// cout<< "\033[31m" <<"   g_) (_e  "<<endl;
+// cout<< "\033[31m" <<"   (=--=)   "<<endl;
+// cout<< "\033[31m" <<"   _|  |_     "<<endl;
+// cout << "\033[31m" << "This text is red" << endl;
+// cout << "\033[33m" << "Your text in yellow color" << "\033[0m";
+// cout << "\033[31m" << "Your text in red color" << "\033[0m";
 
- 
+// int x1=2,x2=3,y1=2,y2=3;
+// int xDis=(x1-x2);
+// int AxSquare=pow(xDis,2);
+// int yDis=y1-y2;
+// int AySquare=pow(yDis,2);
+// int sum=AxSquare+AySquare;
+// float sqare=sqrt(sum);
+// cout<<sqare;
+
 //     (@@)
 //  g/\_)(_/\e
 // g/\(=--=)/\e
 //     //\\
 //    _|  |_
-    //    _            _    _    _ 
-    // __( )__        ( )__( )__( )__( )__
-    // --. .--       .--. .--. .--. .--'
-    //  / _ \        / _ \/ _ \/ _ \/ _ \
+//    _            _    _    _
+// __( )__        ( )__( )__( )__( )__
+// --. .--       .--. .--. .--. .--'
+//  / _ \        / _ \/ _ \/ _ \/ _ \
     //  (/ \)        (/ \)(/ \)(/ \)(/ \)
-     
-    // for(int i=0;i<=120;i++)
-    // {
-    //     cout<<"*";
-    // }
-    // cout<<endl;
-    // for(int i=0;i<6;i++)
-    // {
-    //     cout<<"*";
-    //     for(int j=0;j<119;j++)
-    //     {
-    //         cout<<" ";
-    //     }
-    //     cout<<"*"<<endl;
-    // }
-    // for(int i=0;i<=120;i++)
-    // {
-    //     cout<<"*";
-    // }
 
-    // char box = 219;
-    // char arr1[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ',' '};
-    // char arr3[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ', ' '};
-    // char enmeyTwoRightArr[7] = {box, box, box, box, box,'-','>'}
+// for(int i=0;i<=120;i++)
+// {
+//     cout<<"*";
+// }
+// cout<<endl;
+// for(int i=0;i<6;i++)
+// {
+//     cout<<"*";
+//     for(int j=0;j<119;j++)
+//     {
+//         cout<<" ";
+//     }
+//     cout<<"*"<<endl;
+// }
+// for(int i=0;i<=120;i++)
+// {
+//     cout<<"*";
+// }
+
+// char box = 219;
+// char arr1[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ',' '};
+// char arr3[9] = {box, box,' ', ' ', ' ', ' ', ' ', ' ', ' '};
+// char enmeyTwoRightArr[7] = {box, box, box, box, box,'-','>'}
 //      char upEnem0Arr[5]={' ',' ','^',' ',' '};
 //         char upEnem1Arr[5]={' ',' ','|',' ',' '};
 //      char upEnem2Arr[5]={' ',box,box,box,' '};
@@ -85,7 +117,7 @@ int retrunValue()
 //     {
 //         cout << upEnem0Arr[i];
 //     }
-    
+
 //     cout << "\n";
 //     for (int i = 0; i < 5; i++)
 //     {
@@ -112,7 +144,6 @@ int retrunValue()
 //     {
 //         cout << upEnem5Arr[i];
 //     }
-   
 
 // }
 // char arr[5]={'.','.'};
