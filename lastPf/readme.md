@@ -1,0 +1,1 @@
+pointer in cpp from beginig to advance 
