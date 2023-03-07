@@ -2,7 +2,7 @@
 #include <string>
 #include <string.h>
 #include <windows.h> // for sleep() function
-void printTime(int, int,int);
+void printTime(int, int, int);
 int hour = 0;
 int minute = 0;
 int second = 0;
@@ -26,13 +26,13 @@ int main()
         if (second == 60)
         {
             second = 0;
-            
+
             minute++;
         }
         if (minute == 60)
         {
             minute = 0;
-         
+
             hour++;
         }
         if (hour == 24)
@@ -43,16 +43,16 @@ int main()
         // Print the time
         gotoxy(5, 5);
 
-        printTime(hour, minute,second);
+        printTime(hour, minute, second);
         // Wait for 1 second
         Sleep(1000);
     }
 
     return 0;
 }
-void printTime(int h, int m,int s)
+void printTime(int h, int m, int s)
 {
-    std::cout << h << ":" << m<<":"<<s;
+    std::cout << h << ":" << m << ":" << s;
 }
 
 // cout<< "\033[31m" <<"    (@@)    "<<endl;
