@@ -3,10 +3,10 @@
 #include <conio.h>
 #include <windows.h>
 using namespace std;
-//timer-start
+// timer-start
 void timer();
-int hour=0,minute=0,second=0;
-//timer-end
+int hour = 0, minute = 0, second = 0;
+// timer-end
 void startingOfGame();
 void monochokiStatue();
 void yellowmonochokiStatue();
@@ -325,7 +325,7 @@ int main()
    while (isGameRunning)
    {
       printScore();
-      
+
       if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
       {
          // enemy4Life++;
@@ -444,16 +444,15 @@ int main()
             generateMonochokiDownBullet();
          }
       }
-      if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20)
+      if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5)
       {
-
          isGameRunning = false;
       }
       if (enemyOnetimer == 2)
       {
          // lastCyldeEnemy();
-          timer();
-         
+         timer();
+
          if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
          {
             if (bringEnemy4IntoTheMaze)
@@ -534,7 +533,7 @@ int main()
       moveBulletForLeftEnemy3();
       moveBulletForRightEnemy3();
       moveBulletForDownEnemy3();
-        
+
       moveBulletForUpEnemy3();
 
       // moveBulletForLeftEnemy4();
@@ -591,7 +590,6 @@ int main()
       }
 
       Sleep(1);
-      
    }
 }
 
@@ -3364,25 +3362,24 @@ void removeIndexBulletForRightEnemy4(int index)
 
 void timer()
 {
-      second++;
-      if(second==60)
-      {
-         second=0;
-         minute++;
-      }
-      if(minute==60)
-      {
-         minute=0;
-         hour++;
-      }
-      if(hour==24)
-      {
-         hour=0;
-      }
-      gotoxy(2,5);
-      cout<<"Time:" <<" "<<hour<<":"<<minute<<":"<<second;
-
-   
+   second++;
+   if (second == 60)
+   {
+      second = 0;
+      minute++;
+   }
+   if (minute == 60)
+   {
+      minute = 0;
+      hour++;
+   }
+   if (hour == 24)
+   {
+      hour = 0;
+   }
+   gotoxy(2, 5);
+   cout << "Time:"
+        << " " << hour << ":" << minute << ":" << second;
 }
 
 // void generateBulletForDownenemy4()
