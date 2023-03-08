@@ -3,7 +3,10 @@
 #include <conio.h>
 #include <windows.h>
 using namespace std;
-
+//timer-start
+void timer();
+int hour=0,minute=0,second=0;
+//timer-end
 void startingOfGame();
 void monochokiStatue();
 void yellowmonochokiStatue();
@@ -13,33 +16,27 @@ int totalCallKFor1Enemy = 1; // flag
 int totalCallKFor2Enemy = 1;
 int totalCallKFor3Enemy = 1;
 
-int enemy1statueX = 40;
+int enemy1statueX = 38;
 int enemy1statueY = 1;
 string enemy1Name = "Denver";
 int enemy2statueX = 55;
 int enemy2statueY = 1;
 string enemy2Name = "Tokoyo";
-int enemy3statueX = 70;
+int enemy3statueX = 68;
 int enemy3statueY = 1;
 string enemy3Name = "Berlin";
+int enemy4statueX = 80;
+int enemy4statueY = 1;
+string enemy4Name = "Cylde";
 
-void enemyOneStatue();
-void enemyOneYellowStatue();
-void enemyOneRedStatue();
-
-void enemyTwoStatue();
-void enemyTwoYellowStatue();
-void enemyTwoRedStatue();
-
-void enemyThreeStatue();
-void enemyThreeYellowStatue();
-void enemyThreeRedStatue();
+void enemyOneStatue(int, int, string);
+void enemyOneYellowStatue(int, int, string);
+void enemyOneRedStatue(int, int, string);
 
 void gameStatusBar();
 void printMonochoki(int, int);
 void printMonochokiLeft(int, int);
 void generateBulletForLeft();
-void monochokiBulletloc();
 void moveLeftBullet();
 void printScore();
 void monochokiScore();
@@ -117,7 +114,7 @@ char arr2[7] = {'<', '-', box, box, box, box, box};
 char arr3[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box};
 int enemyOneX = 80;
 int enemyOneY = 10;
-int enemyOnelife = 20;
+int enemyOnelife = 15;
 void printEnemy1();
 void ereaseEnemy1();
 void moveEnemyOneBullet();
@@ -145,7 +142,7 @@ void ereaseEnemyTwoUp(int, int);
 void printEnemyDown2(int, int);
 void ereaseEnemyTwoDown(int, int);
 // void ereaseEnemyright2();
-int enemyTwoLife = 20;
+int enemyTwoLife = 15;
 void moveEnemyTwo();
 char leftBox1[9] = {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '};
 char leftbox2[9] = {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '};
@@ -215,7 +212,7 @@ void ereaseEnemyThreeUp(int, int);
 void printEnemyDown3(int, int);
 void ereaseEnemyThreeDown(int, int);
 
-int enemyThreeLife = 20;
+int enemyThreeLife = 15;
 int totalLife = 20;
 int enemy3X = 10;
 int enemy3y = 10;
@@ -259,12 +256,13 @@ void printEnemyUp4(int, int);
 void ereaseEnemyFourUp(int, int);
 void printEnemyDown4(int, int);
 void ereaseEnemyFourDown(int, int);
-int enemy4X = 40;
-int enemy4Y = 12;
+int enemy4Life = 0;
+int enemy4X = 90;
+int enemy4Y = 1;
 
 string enemy4Direction = "left";
 void moveEnemyFour();
-void lastCyldeEnemy();
+// void lastCyldeEnemy();
 
 // int enemyFourBullettArrX[1000];
 // int enemyFourBulletArrY[1000];
@@ -313,19 +311,29 @@ int main()
    printEnemyleft2(Enemy2RightX, Enemy2RightY);
    if (enemyOnelife < 7)
    {
-      enemyOneStatue();
+      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
    }
    if (enemyTwoLife < 7)
    {
-      enemyTwoStatue();
+      enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name); // enemy two statue
    }
    if (enemyThreeLife < 7)
    {
-      enemyThreeStatue();
+      enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
    }
+   bool bringEnemy4IntoTheMaze = true;
    while (isGameRunning)
    {
       printScore();
+      
+      if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+      {
+         // enemy4Life++;
+         if (enemy4Life < 7)
+         {
+            enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
+         }
+      }
 
       printEnemy1();
 
@@ -436,7 +444,7 @@ int main()
             generateMonochokiDownBullet();
          }
       }
-      if (GetAsyncKeyState(VK_ESCAPE))
+      if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20)
       {
 
          isGameRunning = false;
@@ -444,14 +452,18 @@ int main()
       if (enemyOnetimer == 2)
       {
          // lastCyldeEnemy();
+          timer();
+         
          if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
          {
-            // printEnemyleft4(enemy4X, enemy4Y);
+            if (bringEnemy4IntoTheMaze)
+            {
+               enemy4X = 40;
+               enemy4Y = 12;
+               bringEnemy4IntoTheMaze = false;
+            }
             moveEnemyFour();
-            // generateBulletForUpenemy4();
-            // generateBulletForLeftenemy4();
             generateBulletForRightenemy4();
-            // generateBulletForDownenemy4();
          }
 
          if (enemyOnelife < 20)
@@ -522,6 +534,7 @@ int main()
       moveBulletForLeftEnemy3();
       moveBulletForRightEnemy3();
       moveBulletForDownEnemy3();
+        
       moveBulletForUpEnemy3();
 
       // moveBulletForLeftEnemy4();
@@ -544,31 +557,41 @@ int main()
       }
       if (enemyOnelife > 7 && enemyOnelife < 14)
       {
-         enemyOneYellowStatue();
+         enemyOneYellowStatue(enemy1statueX, enemy1statueY, enemy1Name);
       }
       if (enemyOnelife > 14 && enemyOnelife < 20)
       {
-         enemyOneRedStatue();
+         enemyOneRedStatue(enemy1statueX, enemy1statueY, enemy1Name);
       }
       if (enemyTwoLife > 7 && enemyTwoLife < 14)
       {
-         enemyTwoYellowStatue();
+         enemyOneYellowStatue(enemy2statueX, enemy2statueY, enemy2Name);
       }
       if (enemyTwoLife > 14 && enemyTwoLife < 20)
       {
-         enemyTwoRedStatue();
+         enemyOneRedStatue(enemy2statueX, enemy2statueY, enemy2Name);
       }
 
       if (enemyThreeLife > 7 && enemyThreeLife < 14)
       {
-         enemyThreeYellowStatue();
+         enemyOneYellowStatue(enemy3statueX, enemy3statueY, enemy3Name);
       }
       if (enemyThreeLife > 14 && enemyThreeLife < 20)
       {
-         enemyThreeRedStatue();
+         enemyOneRedStatue(enemy3statueX, enemy3statueY, enemy3Name);
+      }
+
+      if (enemy4Life > 7 && enemy4Life < 14)
+      {
+         enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      }
+      if (enemy4Life > 14 && enemy4Life < 20)
+      {
+         enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
       }
 
       Sleep(1);
+      
    }
 }
 
@@ -676,176 +699,62 @@ void redMonochokiStatue()
         << "\033[0m";
 }
 
-void enemyOneYellowStatue()
+void enemyOneYellowStatue(int x, int y, string name)
 {
-   gotoxy(enemy1statueX + 3, enemy1statueY);
-   cout << enemy1Name;
-   gotoxy(enemy1statueX, enemy1statueY + 1);
+   gotoxy(x + 3, y);
+   cout << name;
+   gotoxy(x, y + 1);
    cout << "\033[33m"
         << "    (@@)    "
         << "\033[0m";
-   gotoxy(enemy1statueX, enemy1statueY + 2);
+   gotoxy(x, y + 2);
    cout << "\033[33m"
         << "   g_) (_e  "
         << "\033[0m";
-   gotoxy(enemy1statueX, enemy1statueY + 3);
+   gotoxy(x, y + 3);
    cout << "\033[33m"
         << "   (=--=)   "
         << "\033[0m";
-   gotoxy(enemy1statueX, enemy1statueY + 4);
+   gotoxy(x, y + 4);
    cout << "\033[33m"
         << "   _|  |_     "
         << "\033[0m";
 }
 
-void enemyOneStatue()
+void enemyOneStatue(int x, int y, string name)
 {
-   gotoxy(enemy1statueX + 3, enemy1statueY);
-   cout << enemy1Name;
-   gotoxy(enemy1statueX, enemy1statueY + 1);
+   gotoxy(x + 3, y);
+   cout << name;
+   gotoxy(x, y + 1);
    cout << "    (@@)    ";
-   gotoxy(enemy1statueX, enemy1statueY + 2);
+   gotoxy(x, y + 2);
    cout << "   g_) (_e  ";
-   gotoxy(enemy1statueX, enemy1statueY + 3);
+   gotoxy(x, y + 3);
    cout << "   (=--=)   ";
-   gotoxy(enemy1statueX, enemy1statueY + 4);
+   gotoxy(x, y + 4);
    cout << "   _|  |_     ";
 }
 
-void enemyOneRedStatue()
+void enemyOneRedStatue(int x, int y, string name)
 {
-   gotoxy(enemy1statueX + 3, enemy1statueY);
-   cout << enemy1Name;
-   gotoxy(enemy1statueX, enemy1statueY + 1);
+   gotoxy(x + 3, y);
+   cout << name;
+   gotoxy(x, y + 1);
    cout << "\033[31m"
         << "    (@@)    "
         << "\033[0m";
-   gotoxy(enemy1statueX, enemy1statueY + 2);
+   gotoxy(x, y + 2);
    cout << "\033[31m"
         << "   g_) (_e  "
         << "\033[0m";
-   gotoxy(enemy1statueX, enemy1statueY + 3);
+   gotoxy(x, y + 3);
    cout << "\033[31m"
         << "   (=--=)   "
         << "\033[0m";
-   gotoxy(enemy1statueX, enemy1statueY + 4);
+   gotoxy(x, y + 4);
    cout << "\033[31m"
         << "   _|  |_     "
         << "\033[0m";
-}
-
-void enemyTwoStatue()
-{
-   gotoxy(enemy2statueX + 3, enemy2statueY);
-   cout << enemy2Name;
-   gotoxy(enemy2statueX, enemy2statueY + 1);
-   cout << "    (@@)    ";
-   gotoxy(enemy2statueX, enemy2statueY + 2);
-   cout << "   g_) (_e  ";
-   gotoxy(enemy2statueX, enemy2statueY + 3);
-   cout << "   (=--=)   ";
-   gotoxy(enemy2statueX, enemy2statueY + 4);
-   cout << "   _|  |_     ";
-}
-
-void enemyTwoYellowStatue()
-{
-   gotoxy(enemy2statueX + 3, enemy2statueY);
-   cout << enemy2Name;
-   gotoxy(enemy2statueX, enemy2statueY + 1);
-   cout << "\033[33m"
-        << "    (@@)    "
-        << "\033[0m";
-   gotoxy(enemy2statueX, enemy2statueY + 2);
-   cout << "\033[33m"
-        << "   g_) (_e  "
-        << "\033[0m";
-   gotoxy(enemy2statueX, enemy2statueY + 3);
-   cout << "\033[33m"
-        << "   (=--=)   "
-        << "\033[0m";
-   gotoxy(enemy2statueX, enemy2statueY + 4);
-   cout << "\033[33m"
-        << "   _|  |_     "
-        << "\033[0m";
-}
-void enemyTwoRedStatue()
-{
-
-   gotoxy(enemy2statueX + 3, enemy2statueY);
-   cout << enemy2Name;
-   gotoxy(enemy2statueX, enemy2statueY + 1);
-   cout << "\033[31m"
-        << "    (@@)    "
-        << "\033[0m";
-   gotoxy(enemy2statueX, enemy2statueY + 2);
-   cout << "\033[31m"
-        << "   g_) (_e  "
-        << "\033[0m";
-   gotoxy(enemy2statueX, enemy2statueY + 3);
-   cout << "\033[31m"
-        << "   (=--=)   "
-        << "\033[0m";
-   gotoxy(enemy2statueX, enemy2statueY + 4);
-   cout << "\033[31m"
-        << "   _|  |_     "
-        << "\033[0m";
-}
-
-void enemyThreeRedStatue()
-{
-   gotoxy(enemy3statueX + 3, enemy3statueY);
-   cout << enemy3Name;
-   gotoxy(enemy3statueX, enemy3statueY + 1);
-   cout << "\033[31m"
-        << "    (@@)    "
-        << "\033[0m";
-   gotoxy(enemy3statueX, enemy3statueY + 2);
-   cout << "\033[31m"
-        << "   g_) (_e  "
-        << "\033[0m";
-   gotoxy(enemy3statueX, enemy3statueY + 3);
-   cout << "\033[31m"
-        << "   (=--=)   "
-        << "\033[0m";
-   gotoxy(enemy3statueX, enemy3statueY + 4);
-   cout << "\033[31m"
-        << "   _|  |_     "
-        << "\033[0m";
-}
-void enemyThreeYellowStatue()
-{
-   gotoxy(enemy3statueX + 3, enemy3statueY);
-   cout << enemy3Name;
-   gotoxy(enemy3statueX, enemy3statueY + 1);
-   cout << "\033[33m"
-        << "    (@@)    "
-        << "\033[0m";
-   gotoxy(enemy3statueX, enemy3statueY + 2);
-   cout << "\033[33m"
-        << "   g_) (_e  "
-        << "\033[0m";
-   gotoxy(enemy3statueX, enemy3statueY + 3);
-   cout << "\033[33m"
-        << "   (=--=)   "
-        << "\033[0m";
-   gotoxy(enemy3statueX, enemy3statueY + 4);
-   cout << "\033[33m"
-        << "   _|  |_     "
-        << "\033[0m";
-}
-void enemyThreeStatue()
-{
-   gotoxy(enemy3statueX + 3, enemy3statueY);
-   cout << enemy3Name;
-   gotoxy(enemy3statueX, enemy3statueY + 1);
-   cout << "    (@@)    ";
-   gotoxy(enemy3statueX, enemy3statueY + 2);
-   cout << "   g_) (_e  ";
-   gotoxy(enemy3statueX, enemy3statueY + 3);
-   cout << "   (=--=)   ";
-   gotoxy(enemy3statueX, enemy3statueY + 4);
-   cout << "   _|  |_     ";
 }
 
 void gotoxy(int x, int y)
@@ -1602,25 +1511,12 @@ void enemyCollisionWithBullet()
          ereaseMonochokiBullet(monochokiLeftArrX[i], monochokiLeftArrY[i]);
          monochokiScore();
          // enemyTwoLife++;
+         enemy4Life++;
          removeBulletFormLeftIndex(i);
       }
    }
 
    // enemy 4 end
-}
-void enemyxyloc()
-{
-   gotoxy(90, 20);
-   cout << enemyOneX << " " << enemyOneY;
-}
-
-void monochokiBulletloc()
-{
-   gotoxy(90, 30);
-   for (int i = 0; i < totalNumberOfLeftBullet; i++)
-   {
-      cout << monochokiLeftArrX[i] << " " << monochokiLeftArrY[i];
-   }
 }
 
 // enenmy-1
@@ -2992,14 +2888,14 @@ void startingOfGame()
    getch();
 }
 
-void lastCyldeEnemy() // new module for cylde
-{
-   if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-   {
-      // printEnemyleft4(enemy4X, enemy4Y);
-      moveEnemyFour();
-   }
-}
+// void lastCyldeEnemy() // new module for cylde
+// {
+//    if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+//    {
+//       // printEnemyleft4(enemy4X, enemy4Y);
+//       moveEnemyFour();
+//    }
+// }
 
 void printEnemyleft4(int x, int y)
 {
@@ -3464,6 +3360,29 @@ void removeIndexBulletForRightEnemy4(int index)
       enemyFourRightBulletArrY[i] = enemyFourRightBulletArrY[i + 1];
    }
    totalBulletGenerateByrightEnemy4--;
+}
+
+void timer()
+{
+      second++;
+      if(second==60)
+      {
+         second=0;
+         minute++;
+      }
+      if(minute==60)
+      {
+         minute=0;
+         hour++;
+      }
+      if(hour==24)
+      {
+         hour=0;
+      }
+      gotoxy(2,5);
+      cout<<"Time:" <<" "<<hour<<":"<<minute<<":"<<second;
+
+   
 }
 
 // void generateBulletForDownenemy4()
