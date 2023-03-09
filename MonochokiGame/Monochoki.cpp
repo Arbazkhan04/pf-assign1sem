@@ -489,8 +489,9 @@ int main()
          }
          if (enemyTwoLife == 20)
          {
-            Enemy2RightX = 90;
+            Enemy2RightX = 95;
             Enemy2RightY = 3;
+
             if (totalCallKFor2Enemy == 1)
             {
                gotoxy(40, 20);
@@ -541,11 +542,11 @@ int main()
       // moveBulletForDownEnemy4();
       // moveBulletForUpEnemy4();
 
-      if (totalBulletCollideWithMonochki > 30 && totalBulletCollideWithMonochki < 60)
+      if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
       {
          yellowmonochokiStatue();
       }
-      else if (totalBulletCollideWithMonochki > 60 && totalBulletCollideWithMonochki < 90)
+      else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
       {
          redMonochokiStatue();
       }
