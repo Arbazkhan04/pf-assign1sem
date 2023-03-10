@@ -2,7 +2,24 @@
 #include <string>
 #include <conio.h>
 #include <windows.h>
+#include <cstring>
 using namespace std;
+
+// game level start
+int gameMenu();
+void levelOneModule();
+void levelTwoModule();
+bool isValidOption(string value);
+int enterOption(int limit);
+// game level end
+
+// monochoki-Movement-start
+void moveMonchokiUp();
+void moveMonochokiDown();
+void moveMonochokiLeft();
+void moveMonochokiRight();
+// monochoki-Movement-end
+
 // timer-start
 void timer();
 int hour = 0, minute = 0, second = 0;
@@ -234,8 +251,8 @@ void ereaseEnemyFourUp(int, int);
 void printEnemyDown4(int, int);
 void ereaseEnemyFourDown(int, int);
 int enemy4Life = 0;
-int enemy4X = 90;
-int enemy4Y = 1;
+int enemy4X = 30;
+int enemy4Y = 8;
 
 string enemy4Direction = "left";
 void moveEnemyFour();
@@ -275,301 +292,303 @@ int main()
 {
    startingOfGame();
    system("cls");
-   bool isGameRunning = true;
+   gameMenu();
    gameStatusBar();
    bounderiesOfGame();
-   if (totalBulletCollideWithMonochki < 29)
-   {
-      monochokiStatue();
-   }
+   // levelOneModule();
+   levelTwoModule();
+   // if (totalBulletCollideWithMonochki < 29)
+   // {
+   //    monochokiStatue();
+   // }
 
-   printMonochoki(monoChokiX, monoChokiY);
-   printEnemyleft3(enemy3X, enemy3y);
-   printEnemyleft2(Enemy2RightX, Enemy2RightY);
-   if (enemyOnelife < 7)
-   {
-      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
-   }
-   if (enemyTwoLife < 7)
-   {
-      enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name); // enemy two statue
-   }
-   if (enemyThreeLife < 7)
-   {
-      enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
-   }
-   bool bringEnemy4IntoTheMaze = true;
-   while (isGameRunning)
-   {
-      printScore();
+   // printMonochoki(monoChokiX, monoChokiY);
+   // printEnemyleft3(enemy3X, enemy3y);
+   // printEnemyleft2(Enemy2RightX, Enemy2RightY);
+   // if (enemyOnelife < 7)
+   // {
+   //    enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
+   // }
+   // if (enemyTwoLife < 7)
+   // {
+   //    enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name); // enemy two statue
+   // }
+   // if (enemyThreeLife < 7)
+   // {
+   //    enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
+   // }
+   // bool bringEnemy4IntoTheMaze = true;
+   // while (isGameRunning)
+   // {
+   //    printScore();
 
-      if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-      {
-         // enemy4Life++;
-         if (enemy4Life < 7)
-         {
-            enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
-         }
-      }
+   //    if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+   //    {
+   //       // enemy4Life++;
+   //       if (enemy4Life < 7)
+   //       {
+   //          enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
+   //       }
+   //    }
 
-      printEnemy1();
+   //    printEnemy1();
 
-      if (GetAsyncKeyState(VK_RIGHT))
-      {
-         char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
-         if (nextloction != '*')
-         {
-            isMonochokiDirectionUpOrDown = false;
-            ereaseMonoChoki(monoChokiX, monoChokiY);
-            eraseLeftMonoChoki(monoChokiX, monoChokiY);
-            eraseUpMonochoki(monoChokiX, monoChokiY);
-            eraseDownMonochoki(monoChokiX, monoChokiY);
-            monoChokiX++;
-            // enemy2Direction = "up";
-            enemy2Direction = "down";
+   //    if (GetAsyncKeyState(VK_RIGHT))
+   //    {
+   //       char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
+   //       if (nextloction != '*')
+   //       {
+   //          isMonochokiDirectionUpOrDown = false;
+   //          ereaseMonoChoki(monoChokiX, monoChokiY);
+   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
+   //          eraseUpMonochoki(monoChokiX, monoChokiY);
+   //          eraseDownMonochoki(monoChokiX, monoChokiY);
+   //          monoChokiX++;
+   //          // enemy2Direction = "up";
+   //          enemy2Direction = "down";
 
-            printMonochoki(monoChokiX, monoChokiY);
-         }
-         if (nextloction == 'k')
-         {
-            totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-            gotoxy(40, 20);
-            cout << " ";
-         }
-      }
-      if (GetAsyncKeyState(VK_LEFT))
-      {
-         char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
-         if (nextloction == ' ' || nextloction == '.')
-         {
-            isMonochokiDirectionUpOrDown = false;
-            eraseLeftMonoChoki(monoChokiX, monoChokiY);
-            ereaseMonoChoki(monoChokiX, monoChokiY);
-            eraseUpMonochoki(monoChokiX, monoChokiY);
-            eraseDownMonochoki(monoChokiX, monoChokiY);
-            monoChokiX--;
-            // printMonochoki(monoChokiX, monoChokiY);
-            printMonochokiLeft(monoChokiX, monoChokiY);
-            enemy2Direction = "left";
-         }
-         if (nextloction == 'k')
-         {
-            totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-            gotoxy(40, 20);
-            cout << " ";
-         }
-      }
-      if (GetAsyncKeyState(VK_DOWN))
-      {
-         char nextloction = getCharAtxy(monoChokiX, monoChokiY + 6);
-         if (nextloction != '*')
-         {
-            isMonochokiDirectionUpOrDown = true;
-            ereaseMonoChoki(monoChokiX, monoChokiY);
-            eraseLeftMonoChoki(monoChokiX, monoChokiY);
-            eraseUpMonochoki(monoChokiX, monoChokiY);
-            eraseDownMonochoki(monoChokiX, monoChokiY);
-            monoChokiY++;
-            printDownMonochoki(monoChokiX, monoChokiY);
-            enemy2Direction = "right";
-         }
-         if (nextloction == 'k')
-         {
-            totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-            gotoxy(40, 20);
-            cout << " ";
-         }
-      }
-      if (GetAsyncKeyState(VK_UP))
-      {
-         char nextloction = getCharAtxy(monoChokiX, monoChokiY - 2);
-         if (nextloction != '*')
-         {
-            isMonochokiDirectionUpOrDown = true;
-            ereaseMonoChoki(monoChokiX, monoChokiY);
-            eraseLeftMonoChoki(monoChokiX, monoChokiY);
-            eraseUpMonochoki(monoChokiX, monoChokiY);
-            eraseDownMonochoki(monoChokiX, monoChokiY);
-            monoChokiY--;
-            //  printMonochoki(monoChokiX, monoChokiY);
-            printMonochokiUp(monoChokiX, monoChokiY);
-         }
-         if (nextloction == 'k')
-         {
-            totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-            gotoxy(40, 20);
-            cout << " ";
-         }
-      }
-      if (GetAsyncKeyState(VK_SPACE))
-      {
+   //          printMonochoki(monoChokiX, monoChokiY);
+   //       }
+   //       if (nextloction == 'k')
+   //       {
+   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+   //          gotoxy(40, 20);
+   //          cout << " ";
+   //       }
+   //    }
+   //    if (GetAsyncKeyState(VK_LEFT))
+   //    {
+   //       char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
+   //       if (nextloction == ' ' || nextloction == '.')
+   //       {
+   //          isMonochokiDirectionUpOrDown = false;
+   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
+   //          ereaseMonoChoki(monoChokiX, monoChokiY);
+   //          eraseUpMonochoki(monoChokiX, monoChokiY);
+   //          eraseDownMonochoki(monoChokiX, monoChokiY);
+   //          monoChokiX--;
+   //          // printMonochoki(monoChokiX, monoChokiY);
+   //          printMonochokiLeft(monoChokiX, monoChokiY);
+   //          enemy2Direction = "left";
+   //       }
+   //       if (nextloction == 'k')
+   //       {
+   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+   //          gotoxy(40, 20);
+   //          cout << " ";
+   //       }
+   //    }
+   //    if (GetAsyncKeyState(VK_DOWN))
+   //    {
+   //       char nextloction = getCharAtxy(monoChokiX, monoChokiY + 6);
+   //       if (nextloction != '*')
+   //       {
+   //          isMonochokiDirectionUpOrDown = true;
+   //          ereaseMonoChoki(monoChokiX, monoChokiY);
+   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
+   //          eraseUpMonochoki(monoChokiX, monoChokiY);
+   //          eraseDownMonochoki(monoChokiX, monoChokiY);
+   //          monoChokiY++;
+   //          printDownMonochoki(monoChokiX, monoChokiY);
+   //          enemy2Direction = "right";
+   //       }
+   //       if (nextloction == 'k')
+   //       {
+   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+   //          gotoxy(40, 20);
+   //          cout << " ";
+   //       }
+   //    }
+   //    if (GetAsyncKeyState(VK_UP))
+   //    {
+   //       char nextloction = getCharAtxy(monoChokiX, monoChokiY - 2);
+   //       if (nextloction != '*')
+   //       {
+   //          isMonochokiDirectionUpOrDown = true;
+   //          ereaseMonoChoki(monoChokiX, monoChokiY);
+   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
+   //          eraseUpMonochoki(monoChokiX, monoChokiY);
+   //          eraseDownMonochoki(monoChokiX, monoChokiY);
+   //          monoChokiY--;
+   //          //  printMonochoki(monoChokiX, monoChokiY);
+   //          printMonochokiUp(monoChokiX, monoChokiY);
+   //       }
+   //       if (nextloction == 'k')
+   //       {
+   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+   //          gotoxy(40, 20);
+   //          cout << " ";
+   //       }
+   //    }
+   //    if (GetAsyncKeyState(VK_SPACE))
+   //    {
 
-         if (GetAsyncKeyState(VK_LEFT))
-         {
-            generateBulletForLeft();
-         }
-         else if (GetAsyncKeyState(VK_RIGHT))
-         {
-            generateMonochokiBullet();
-         }
-         else if (GetAsyncKeyState(VK_UP))
-         {
-            generateBulletForUp();
-         }
-         else if (GetAsyncKeyState(VK_DOWN))
-         {
-            generateMonochokiDownBullet();
-         }
-      }
-      if (GetAsyncKeyState(VK_ESCAPE) )
-      {
-         // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
-         isGameRunning = false;
-      }
-      if (enemyOnetimer == 2)
-      {
-         // lastCyldeEnemy();
-         timer();
+   //       if (GetAsyncKeyState(VK_LEFT))
+   //       {
+   //          generateBulletForLeft();
+   //       }
+   //       else if (GetAsyncKeyState(VK_RIGHT))
+   //       {
+   //          generateMonochokiBullet();
+   //       }
+   //       else if (GetAsyncKeyState(VK_UP))
+   //       {
+   //          generateBulletForUp();
+   //       }
+   //       else if (GetAsyncKeyState(VK_DOWN))
+   //       {
+   //          generateMonochokiDownBullet();
+   //       }
+   //    }
+   //    if (GetAsyncKeyState(VK_ESCAPE) )
+   //    {
+   //       // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
+   //       isGameRunning = false;
+   //    }
+   //    if (enemyOnetimer == 2)
+   //    {
+   //       // lastCyldeEnemy();
+   //       timer();
 
-         if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-         {
-            if (bringEnemy4IntoTheMaze)
-            {
-               enemy4X = 40;
-               enemy4Y = 12;
-               bringEnemy4IntoTheMaze = false;
-            }
-            moveEnemyFour();
-            generateBulletForRightenemy4();
-         }
+   //       if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+   //       {
+   //          if (bringEnemy4IntoTheMaze)
+   //          {
+   //             enemy4X = 40;
+   //             enemy4Y = 12;
+   //             bringEnemy4IntoTheMaze = false;
+   //          }
+   //          moveEnemyFour();
+   //          generateBulletForRightenemy4();
+   //       }
 
-         if (enemyOnelife < 20)
-         {
-            moveEnemyOne();
-            generateBullet();
-            moveEnemyOneBullet();
-         }
-         if (enemyOnelife == 20)
-         {
-            enemyOneX = 90;
-            enemyOneY = 3;
-            if (totalCallKFor1Enemy == 1)
-            {
-               gotoxy(40, 20);
-               cout << "k";
-               totalCallKFor1Enemy++;
-            }
-         }
-         MonochokiHealthDecrease();
-         if (enemyTwoLife < 20)
-         {
-            moveEnemyTwo();
-         }
-         if (enemyTwoLife == 20)
-         {
-            Enemy2RightX = 95;
-            Enemy2RightY = 3;
+   //       if (enemyOnelife < 20)
+   //       {
+   //          moveEnemyOne();
+   //          generateBullet();
+   //          moveEnemyOneBullet();
+   //       }
+   //       if (enemyOnelife == 20)
+   //       {
+   //          enemyOneX = 90;
+   //          enemyOneY = 3;
+   //          if (totalCallKFor1Enemy == 1)
+   //          {
+   //             gotoxy(40, 20);
+   //             cout << "k";
+   //             totalCallKFor1Enemy++;
+   //          }
+   //       }
+   //       MonochokiHealthDecrease();
+   //       if (enemyTwoLife < 20)
+   //       {
+   //          moveEnemyTwo();
+   //       }
+   //       if (enemyTwoLife == 20)
+   //       {
+   //          Enemy2RightX = 95;
+   //          Enemy2RightY = 3;
 
-            if (totalCallKFor2Enemy == 1)
-            {
-               gotoxy(40, 20);
-               cout << "k";
-               totalCallKFor2Enemy++;
-            }
-         }
-         if (enemyThreeLife < totalLife)
-         {
-            moveEnemyThree();
-         }
-         if (enemyThreeLife == totalLife)
-         {
-            enemy3X = 93;
-            enemy3y = 3;
-            if (totalCallKFor3Enemy == 1)
-            {
-               gotoxy(40, 20);
-               cout << "k";
-               totalCallKFor3Enemy++;
-            }
-         }
+   //          if (totalCallKFor2Enemy == 1)
+   //          {
+   //             gotoxy(40, 20);
+   //             cout << "k";
+   //             totalCallKFor2Enemy++;
+   //          }
+   //       }
+   //       if (enemyThreeLife < totalLife)
+   //       {
+   //          moveEnemyThree();
+   //       }
+   //       if (enemyThreeLife == totalLife)
+   //       {
+   //          enemy3X = 93;
+   //          enemy3y = 3;
+   //          if (totalCallKFor3Enemy == 1)
+   //          {
+   //             gotoxy(40, 20);
+   //             cout << "k";
+   //             totalCallKFor3Enemy++;
+   //          }
+   //       }
 
-         enemyOnetimer = 0;
-      }
+   //       enemyOnetimer = 0;
+   //    }
 
-      moveBulletForDown();
-      moveMonochokiBullet();
-      enemyCollisionWithBullet(); // monnochoki bullet's
-      moveLeftBullet();
-      moveBulletForUp();
+   //    moveBulletForDown();
+   //    moveMonochokiBullet();
+   //    enemyCollisionWithBullet(); // monnochoki bullet's
+   //    moveLeftBullet();
+   //    moveBulletForUp();
 
-      moveBulletForRightEnemy2();
-      moveBulletForLeftEnemy2();
-      moveBulletForUpEnemy2();
-      moveBulletForDownEnemy2();
-      enemiesBulletCollisionToMonochoki();
-      EnemyTwoBulletCollisons();
-      enemyOnetimer++;
-      moveBulletForLeftEnemy3();
-      moveBulletForRightEnemy3();
-      moveBulletForDownEnemy3();
+   //    moveBulletForRightEnemy2();
+   //    moveBulletForLeftEnemy2();
+   //    moveBulletForUpEnemy2();
+   //    moveBulletForDownEnemy2();
+   //    enemiesBulletCollisionToMonochoki();
+   //    EnemyTwoBulletCollisons();
+   //    enemyOnetimer++;
+   //    moveBulletForLeftEnemy3();
+   //    moveBulletForRightEnemy3();
+   //    moveBulletForDownEnemy3();
 
-      moveBulletForUpEnemy3();
+   //    moveBulletForUpEnemy3();
 
-      // moveBulletForLeftEnemy4();
-      moveBulletForRightEnemy4();
-      // moveBulletForDownEnemy4();
-      // moveBulletForUpEnemy4();
+   //    // moveBulletForLeftEnemy4();
+   //    moveBulletForRightEnemy4();
+   //    // moveBulletForDownEnemy4();
+   //    // moveBulletForUpEnemy4();
 
-      if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
-      {
-         yellowmonochokiStatue();
-      }
-      else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
-      {
-         redMonochokiStatue();
-      }
-      else if (totalBulletCollideWithMonochki > 100)
-      {
-         totalBulletCollideWithMonochki = 0;
-         monochokiStatue();
-      }
-      if (enemyOnelife > 7 && enemyOnelife < 14)
-      {
-         enemyOneYellowStatue(enemy1statueX, enemy1statueY, enemy1Name);
-      }
-      if (enemyOnelife > 14 && enemyOnelife < 20)
-      {
-         enemyOneRedStatue(enemy1statueX, enemy1statueY, enemy1Name);
-      }
-      if (enemyTwoLife > 7 && enemyTwoLife < 14)
-      {
-         enemyOneYellowStatue(enemy2statueX, enemy2statueY, enemy2Name);
-      }
-      if (enemyTwoLife > 14 && enemyTwoLife < 20)
-      {
-         enemyOneRedStatue(enemy2statueX, enemy2statueY, enemy2Name);
-      }
+   //    if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
+   //    {
+   //       yellowmonochokiStatue();
+   //    }
+   //    else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
+   //    {
+   //       redMonochokiStatue();
+   //    }
+   //    else if (totalBulletCollideWithMonochki > 100)
+   //    {
+   //       totalBulletCollideWithMonochki = 0;
+   //       monochokiStatue();
+   //    }
+   //    if (enemyOnelife > 7 && enemyOnelife < 14)
+   //    {
+   //       enemyOneYellowStatue(enemy1statueX, enemy1statueY, enemy1Name);
+   //    }
+   //    if (enemyOnelife > 14 && enemyOnelife < 20)
+   //    {
+   //       enemyOneRedStatue(enemy1statueX, enemy1statueY, enemy1Name);
+   //    }
+   //    if (enemyTwoLife > 7 && enemyTwoLife < 14)
+   //    {
+   //       enemyOneYellowStatue(enemy2statueX, enemy2statueY, enemy2Name);
+   //    }
+   //    if (enemyTwoLife > 14 && enemyTwoLife < 20)
+   //    {
+   //       enemyOneRedStatue(enemy2statueX, enemy2statueY, enemy2Name);
+   //    }
 
-      if (enemyThreeLife > 7 && enemyThreeLife < 14)
-      {
-         enemyOneYellowStatue(enemy3statueX, enemy3statueY, enemy3Name);
-      }
-      if (enemyThreeLife > 14 && enemyThreeLife < 20)
-      {
-         enemyOneRedStatue(enemy3statueX, enemy3statueY, enemy3Name);
-      }
+   //    if (enemyThreeLife > 7 && enemyThreeLife < 14)
+   //    {
+   //       enemyOneYellowStatue(enemy3statueX, enemy3statueY, enemy3Name);
+   //    }
+   //    if (enemyThreeLife > 14 && enemyThreeLife < 20)
+   //    {
+   //       enemyOneRedStatue(enemy3statueX, enemy3statueY, enemy3Name);
+   //    }
 
-      if (enemy4Life > 7 && enemy4Life < 14)
-      {
-         enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
-      }
-      if (enemy4Life > 14 && enemy4Life < 20)
-      {
-         enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
-      }
+   //    if (enemy4Life > 7 && enemy4Life < 14)
+   //    {
+   //       enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
+   //    }
+   //    if (enemy4Life > 14 && enemy4Life < 20)
+   //    {
+   //       enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
+   //    }
 
-      Sleep(1);
-   }
+   //    Sleep(1);
+   // }
 }
 
 void bounderiesOfGame()
@@ -595,6 +614,7 @@ void bounderiesOfGame()
 }
 void gameStatusBar()
 {
+   system("cls");
    for (int i = 0; i <= 120; i++)
    {
       cout << "*";
@@ -1749,7 +1769,7 @@ void moveBulletForRightEnemy2() // left
       ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
       if (nextlocation == '*')
       {
-         
+
          removeIndexBulletForRightEnemy2(i);
       }
       else if (nextlocation == ' ')
@@ -2191,7 +2211,7 @@ void printEnemyUp3(int x, int y)
    if (enemyThreeLife < totalLife)
    {
       gotoxy(x, y);
-        for (int row = 0; row < 6; row++)
+      for (int row = 0; row < 6; row++)
       {
          for (int i = 0; i < 5; i++)
          {
@@ -2210,7 +2230,7 @@ void printEnemyUp3(int x, int y)
 void ereaseEnemyThreeUp(int x, int y)
 {
    gotoxy(x, y);
-      for (int row = 0; row < 6; row++)
+   for (int row = 0; row < 6; row++)
    {
       for (int i = 0; i < 5; i++)
       {
@@ -2227,7 +2247,7 @@ void printEnemyDown3(int x, int y)
    if (enemyThreeLife < totalLife)
    {
       gotoxy(x, y);
-        for (int row = 0; row < 6; row++)
+      for (int row = 0; row < 6; row++)
       {
          for (int i = 0; i < 5; i++)
          {
@@ -2246,7 +2266,7 @@ void printEnemyDown3(int x, int y)
 void ereaseEnemyThreeDown(int x, int y)
 {
    gotoxy(x, y);
-    for (int row = 0; row < 6; row++)
+   for (int row = 0; row < 6; row++)
    {
       for (int i = 0; i < 5; i++)
       {
@@ -2354,7 +2374,7 @@ void moveBulletForLeftEnemy3()
    for (int i = 0; i < totalBulletGenerateByLeftEnemy3; i++)
    {
       char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] - 1, enemyThreeBulletArrY[i]);
-         ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
+      ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
 
       if (nextlocation == '*')
       {
@@ -2380,7 +2400,7 @@ void removeIndexBulletForLeftEnemy3(int index)
 
 void generateBulletForRightenemy3()
 {
-   char nextlocation=getCharAtxy(enemy3X+3,enemy3y);
+   char nextlocation = getCharAtxy(enemy3X + 3, enemy3y);
    enemyThreeRightBullettArrX[totalBulletGenerateByrightEnemy3] = enemy3X + 9;
    enemyThreeRightBulletArrY[totalBulletGenerateByrightEnemy3] = enemy3y + 1;
    gotoxy(enemy3X + 9, enemy3y + 1);
@@ -2643,7 +2663,6 @@ void ereaseEnemyFourUp(int x, int y)
       }
       gotoxy(x, y + (row + 1));
    }
-
 }
 
 void printEnemyDown4(int x, int y)
@@ -2651,15 +2670,15 @@ void printEnemyDown4(int x, int y)
    // if (enemyThreeLife < totalLife)
    // {
    gotoxy(x, y);
-      for (int row = 0; row < 6; row++)
+   for (int row = 0; row < 6; row++)
+   {
+      for (int i = 0; i < 5; i++)
       {
-         for (int i = 0; i < 5; i++)
-         {
-            cout << downEnem5Arr[row][i];
-         }
-
-         gotoxy(x, y + (row + 1));
+         cout << downEnem5Arr[row][i];
       }
+
+      gotoxy(x, y + (row + 1));
+   }
    // }
    // if (enemyThreeLife >= totalLife)
    // {
@@ -2670,7 +2689,7 @@ void printEnemyDown4(int x, int y)
 void ereaseEnemyFourDown(int x, int y)
 {
    gotoxy(x, y);
-     for (int row = 0; row < 6; row++)
+   for (int row = 0; row < 6; row++)
    {
       for (int i = 0; i < 5; i++)
       {
@@ -2681,7 +2700,6 @@ void ereaseEnemyFourDown(int x, int y)
 
       gotoxy(x, y + (row + 1));
    }
-
 }
 void moveEnemyFour()
 {
@@ -2955,3 +2973,456 @@ void timer()
 //    }
 //    totalBulletGenerateByUpEnemy4--;
 // }
+
+int gameMenu()
+{
+   system("cls"); // Clear the console screen
+   gotoxy(45, 13);
+   cout << "**************************";
+   gotoxy(45, 14);
+   cout << "1- Choose your level (1 or 2)";
+   gotoxy(45, 15);
+   cout << "2- Instruction";
+   gotoxy(45, 16);
+   cout << "3- Exit";
+   gotoxy(45, 17);
+   cout << "Enter option ";
+   int option = enterOption(3);
+   // Do something based on the selected option
+   // ...
+   return 0;
+}
+bool isValidOption(string value)
+{
+   for (int i = 0; i < value.length(); i++)
+   {
+      if (!isdigit(value[i]))
+      {
+         return false;
+      }
+   }
+   return true;
+}
+
+int enterOption(int limit)
+{
+   string opt;
+   cin >> opt;
+   while (!isValidOption(opt) || stoi(opt) < 1 || stoi(opt) > limit)
+   {
+      gotoxy(45, 18);
+      cout << "Invalid input.";
+
+      gotoxy(45, 19);
+      cout << "Enter your option again: ";
+      cin >> opt;
+   }
+   return stoi(opt);
+}
+
+void levelOneModule()
+{
+   bool isGameRunning = true;
+   if (totalBulletCollideWithMonochki < 29)
+   {
+      monochokiStatue();
+   }
+
+   printMonochoki(monoChokiX, monoChokiY);
+   printEnemyleft3(enemy3X, enemy3y);
+   printEnemyleft2(Enemy2RightX, Enemy2RightY);
+   if (enemyOnelife < 7)
+   {
+      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
+   }
+   if (enemyTwoLife < 7)
+   {
+      enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name); // enemy two statue
+   }
+   if (enemyThreeLife < 7)
+   {
+      enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
+   }
+   bool bringEnemy4IntoTheMaze = true;
+   while (isGameRunning)
+   {
+      printScore();
+
+      // if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+      // {
+      //    // enemy4Life++;
+      //    if (enemy4Life < 7)
+      //    {
+      //       enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      //    }
+      // }
+
+      printEnemy1();
+
+      moveMonchokiUp();
+      moveMonochokiDown();
+      moveMonochokiLeft();
+      moveMonochokiRight();
+      if (GetAsyncKeyState(VK_SPACE))
+      {
+
+         if (GetAsyncKeyState(VK_LEFT))
+         {
+            generateBulletForLeft();
+         }
+         else if (GetAsyncKeyState(VK_RIGHT))
+         {
+            generateMonochokiBullet();
+         }
+         else if (GetAsyncKeyState(VK_UP))
+         {
+            generateBulletForUp();
+         }
+         else if (GetAsyncKeyState(VK_DOWN))
+         {
+            generateMonochokiDownBullet();
+         }
+      }
+      if (GetAsyncKeyState(VK_ESCAPE))
+      {
+         // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
+         isGameRunning = false;
+      }
+      if (enemyOnetimer == 2)
+      {
+         // lastCyldeEnemy();
+         timer();
+
+         // if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+         // {
+         //    if (bringEnemy4IntoTheMaze)
+         //    {
+         //       enemy4X = 40;
+         //       enemy4Y = 12;
+         //       bringEnemy4IntoTheMaze = false;
+         //    }
+         //    moveEnemyFour();
+         //    generateBulletForRightenemy4();
+         // }
+
+         if (enemyOnelife < 20)
+         {
+            moveEnemyOne();
+            generateBullet();
+            moveEnemyOneBullet();
+         }
+         if (enemyOnelife == 20)
+         {
+            enemyOneX = 90;
+            enemyOneY = 3;
+            if (totalCallKFor1Enemy == 1)
+            {
+               gotoxy(40, 20);
+               cout << "k";
+               totalCallKFor1Enemy++;
+            }
+         }
+         MonochokiHealthDecrease();
+         if (enemyTwoLife < 20)
+         {
+            moveEnemyTwo();
+         }
+         if (enemyTwoLife == 20)
+         {
+            Enemy2RightX = 95;
+            Enemy2RightY = 3;
+
+            if (totalCallKFor2Enemy == 1)
+            {
+               gotoxy(40, 20);
+               cout << "k";
+               totalCallKFor2Enemy++;
+            }
+         }
+         if (enemyThreeLife < totalLife)
+         {
+            moveEnemyThree();
+         }
+         if (enemyThreeLife == totalLife)
+         {
+            enemy3X = 93;
+            enemy3y = 3;
+            if (totalCallKFor3Enemy == 1)
+            {
+               gotoxy(40, 20);
+               cout << "k";
+               totalCallKFor3Enemy++;
+            }
+         }
+
+         enemyOnetimer = 0;
+      }
+
+      moveBulletForDown();
+      moveMonochokiBullet();
+      enemyCollisionWithBullet(); // monnochoki bullet's
+      moveLeftBullet();
+      moveBulletForUp();
+
+      moveBulletForRightEnemy2();
+      moveBulletForLeftEnemy2();
+      moveBulletForUpEnemy2();
+      moveBulletForDownEnemy2();
+      enemiesBulletCollisionToMonochoki();
+      EnemyTwoBulletCollisons();
+      enemyOnetimer++;
+      moveBulletForLeftEnemy3();
+      moveBulletForRightEnemy3();
+      moveBulletForDownEnemy3();
+
+      moveBulletForUpEnemy3();
+
+      // moveBulletForLeftEnemy4();
+      // moveBulletForRightEnemy4();
+      // moveBulletForDownEnemy4();
+      // moveBulletForUpEnemy4();
+
+      if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
+      {
+         yellowmonochokiStatue();
+      }
+      else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
+      {
+         redMonochokiStatue();
+      }
+      else if (totalBulletCollideWithMonochki > 100)
+      {
+         totalBulletCollideWithMonochki = 0;
+         monochokiStatue();
+      }
+      if (enemyOnelife > 7 && enemyOnelife < 14)
+      {
+         enemyOneYellowStatue(enemy1statueX, enemy1statueY, enemy1Name);
+      }
+      if (enemyOnelife > 14 && enemyOnelife < 20)
+      {
+         enemyOneRedStatue(enemy1statueX, enemy1statueY, enemy1Name);
+      }
+      if (enemyTwoLife > 7 && enemyTwoLife < 14)
+      {
+         enemyOneYellowStatue(enemy2statueX, enemy2statueY, enemy2Name);
+      }
+      if (enemyTwoLife > 14 && enemyTwoLife < 20)
+      {
+         enemyOneRedStatue(enemy2statueX, enemy2statueY, enemy2Name);
+      }
+
+      if (enemyThreeLife > 7 && enemyThreeLife < 14)
+      {
+         enemyOneYellowStatue(enemy3statueX, enemy3statueY, enemy3Name);
+      }
+      if (enemyThreeLife > 14 && enemyThreeLife < 20)
+      {
+         enemyOneRedStatue(enemy3statueX, enemy3statueY, enemy3Name);
+      }
+
+      // if (enemy4Life > 7 && enemy4Life < 14)
+      // {
+      //    enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      // }
+      // if (enemy4Life > 14 && enemy4Life < 20)
+      // {
+      //    enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      // }
+
+      Sleep(1);
+   }
+}
+
+void moveMonchokiUp()
+{
+   if (GetAsyncKeyState(VK_UP))
+   {
+      char nextloction = getCharAtxy(monoChokiX, monoChokiY - 2);
+      if (nextloction != '*')
+      {
+         isMonochokiDirectionUpOrDown = true;
+         ereaseMonoChoki(monoChokiX, monoChokiY);
+         eraseLeftMonoChoki(monoChokiX, monoChokiY);
+         eraseUpMonochoki(monoChokiX, monoChokiY);
+         eraseDownMonochoki(monoChokiX, monoChokiY);
+         monoChokiY--;
+         //  printMonochoki(monoChokiX, monoChokiY);
+         printMonochokiUp(monoChokiX, monoChokiY);
+      }
+      if (nextloction == 'k')
+      {
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         gotoxy(40, 20);
+         cout << " ";
+      }
+   }
+}
+void moveMonochokiDown()
+{
+   if (GetAsyncKeyState(VK_DOWN))
+   {
+      char nextloction = getCharAtxy(monoChokiX, monoChokiY + 6);
+      if (nextloction != '*')
+      {
+         isMonochokiDirectionUpOrDown = true;
+         ereaseMonoChoki(monoChokiX, monoChokiY);
+         eraseLeftMonoChoki(monoChokiX, monoChokiY);
+         eraseUpMonochoki(monoChokiX, monoChokiY);
+         eraseDownMonochoki(monoChokiX, monoChokiY);
+         monoChokiY++;
+         printDownMonochoki(monoChokiX, monoChokiY);
+         enemy2Direction = "right";
+      }
+      if (nextloction == 'k')
+      {
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         gotoxy(40, 20);
+         cout << " ";
+      }
+   }
+}
+
+void moveMonochokiRight()
+{
+   if (GetAsyncKeyState(VK_RIGHT))
+   {
+      char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
+      if (nextloction != '*')
+      {
+         isMonochokiDirectionUpOrDown = false;
+         ereaseMonoChoki(monoChokiX, monoChokiY);
+         eraseLeftMonoChoki(monoChokiX, monoChokiY);
+         eraseUpMonochoki(monoChokiX, monoChokiY);
+         eraseDownMonochoki(monoChokiX, monoChokiY);
+         monoChokiX++;
+         // enemy2Direction = "up";
+         enemy2Direction = "down";
+
+         printMonochoki(monoChokiX, monoChokiY);
+      }
+      if (nextloction == 'k')
+      {
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         gotoxy(40, 20);
+         cout << " ";
+      }
+   }
+}
+
+void moveMonochokiLeft()
+{
+   if (GetAsyncKeyState(VK_LEFT))
+   {
+      char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
+      if (nextloction == ' ' || nextloction == '.')
+      {
+         isMonochokiDirectionUpOrDown = false;
+         eraseLeftMonoChoki(monoChokiX, monoChokiY);
+         ereaseMonoChoki(monoChokiX, monoChokiY);
+         eraseUpMonochoki(monoChokiX, monoChokiY);
+         eraseDownMonochoki(monoChokiX, monoChokiY);
+         monoChokiX--;
+         // printMonochoki(monoChokiX, monoChokiY);
+         printMonochokiLeft(monoChokiX, monoChokiY);
+         enemy2Direction = "left";
+      }
+      if (nextloction == 'k')
+      {
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         gotoxy(40, 20);
+         cout << " ";
+      }
+   }
+}
+
+void levelTwoModule()
+{
+   bool isGameRunning = true;
+   if (totalBulletCollideWithMonochki < 29)
+   {
+      monochokiStatue();
+   }
+
+   printMonochoki(monoChokiX, monoChokiY);
+   enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name); // enemy four
+
+   // bool bringEnemy4IntoTheMaze = true;
+   while (isGameRunning)
+   {
+      printScore();
+      enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      moveMonochokiDown();
+      moveMonchokiUp();
+      moveMonochokiLeft();
+      moveMonochokiRight();
+      if (GetAsyncKeyState(VK_SPACE))
+      {
+
+         if (GetAsyncKeyState(VK_LEFT))
+         {
+            generateBulletForLeft();
+         }
+         else if (GetAsyncKeyState(VK_RIGHT))
+         {
+            generateMonochokiBullet();
+         }
+         else if (GetAsyncKeyState(VK_UP))
+         {
+            generateBulletForUp();
+         }
+         else if (GetAsyncKeyState(VK_DOWN))
+         {
+            generateMonochokiDownBullet();
+         }
+      }
+      if (GetAsyncKeyState(VK_ESCAPE))
+      {
+         // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
+         isGameRunning = false;
+      }
+      if (enemyOnetimer == 2)
+      {
+         // lastCyldeEnemy();
+         timer();
+         moveEnemyFour();
+         generateBulletForRightenemy4();
+         MonochokiHealthDecrease();
+
+         enemyOnetimer = 0;
+      }
+
+      moveBulletForDown();
+      moveMonochokiBullet();
+      enemyCollisionWithBullet(); // monnochoki bullet's
+      moveLeftBullet();
+      moveBulletForUp();
+
+      enemiesBulletCollisionToMonochoki();
+      EnemyTwoBulletCollisons();
+      enemyOnetimer++;
+      if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
+      {
+         yellowmonochokiStatue();
+      }
+      else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
+      {
+         redMonochokiStatue();
+      }
+      else if (totalBulletCollideWithMonochki > 100)
+      {
+         totalBulletCollideWithMonochki = 0;
+         monochokiStatue();
+      }
+      if (enemy4Life > 7 && enemy4Life < 14)
+      {
+         enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      }
+      if (enemy4Life > 14 && enemy4Life < 20)
+      {
+         enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      }
+
+      Sleep(1);
+   }
+}
