@@ -6,11 +6,14 @@
 using namespace std;
 
 // game level start
+int option;
 int gameMenu();
 void levelOneModule();
 void levelTwoModule();
 bool isValidOption(string value);
 int enterOption(int limit);
+void gameTimeUp();
+void monochokiCrashed();
 // game level end
 
 // monochoki-Movement-start
@@ -18,6 +21,7 @@ void moveMonchokiUp();
 void moveMonochokiDown();
 void moveMonochokiLeft();
 void moveMonochokiRight();
+void successfullyWonLevelOne();
 // monochoki-Movement-end
 
 // timer-start
@@ -42,7 +46,7 @@ string enemy2Name = "Tokoyo";
 int enemy3statueX = 68;
 int enemy3statueY = 1;
 string enemy3Name = "Berlin";
-int enemy4statueX = 80;
+int enemy4statueX = 38;
 int enemy4statueY = 1;
 string enemy4Name = "Cylde";
 
@@ -295,8 +299,15 @@ int main()
    gameMenu();
    gameStatusBar();
    bounderiesOfGame();
-   // levelOneModule();
-   levelTwoModule();
+   if (option == 1)
+   {
+      levelOneModule();
+   }
+   else if (option == 2)
+   {
+      levelTwoModule();
+   }
+
    // if (totalBulletCollideWithMonochki < 29)
    // {
    //    monochokiStatue();
@@ -1181,7 +1192,7 @@ void printEnemy1()
       {
          for (int i = 0; i < 9; i++)
          {
-            cout << enemy1[row][i];
+            cout << "\033[34m" << enemy1[row][i];
          }
          gotoxy(enemyOneX, enemyOneY + (row + 1));
       }
@@ -1490,7 +1501,7 @@ void printEnemyleft2(int x, int y)
       {
          for (int i = 0; i < 9; i++)
          {
-            cout << enemy1[row][i];
+            cout << "\033[33m" << enemy1[row][i];
          }
          gotoxy(x, y + (row + 1));
       }
@@ -1525,7 +1536,7 @@ void printEnemyright2(int x, int y)
       {
          for (int i = 0; i < 9; i++)
          {
-            cout << leftBox1[row][i];
+            cout << "\033[33m" << leftBox1[row][i];
          }
          gotoxy(x, y + (row + 1));
       }
@@ -1560,7 +1571,7 @@ void printEnemyUp2(int x, int y)
       {
          for (int i = 0; i < 5; i++)
          {
-            cout << upEnem0Arr[row][i];
+            cout << "\033[33m" << upEnem0Arr[row][i];
          }
 
          gotoxy(x, y + (row + 1));
@@ -1596,7 +1607,7 @@ void printEnemyDown2(int x, int y)
       {
          for (int i = 0; i < 5; i++)
          {
-            cout << downEnem5Arr[row][i];
+            cout << "\033[33m" << downEnem5Arr[row][i];
          }
 
          gotoxy(x, y + (row + 1));
@@ -2143,7 +2154,7 @@ void printEnemyleft3(int x, int y)
       {
          for (int i = 0; i < 9; i++)
          {
-            cout << enemy1[row][i];
+            cout << "\033[31m" << enemy1[row][i];
          }
          gotoxy(x, y + (row + 1));
       }
@@ -2179,7 +2190,7 @@ void printEnemyright3(int x, int y)
       {
          for (int i = 0; i < 9; i++)
          {
-            cout << leftBox1[row][i];
+            cout << "\033[31m" << leftBox1[row][i];
          }
          gotoxy(x, y + (row + 1));
       }
@@ -2215,7 +2226,7 @@ void printEnemyUp3(int x, int y)
       {
          for (int i = 0; i < 5; i++)
          {
-            cout << upEnem0Arr[row][i];
+            cout << "\033[31m" << upEnem0Arr[row][i];
          }
 
          gotoxy(x, y + (row + 1));
@@ -2251,7 +2262,7 @@ void printEnemyDown3(int x, int y)
       {
          for (int i = 0; i < 5; i++)
          {
-            cout << downEnem5Arr[row][i];
+            cout << "\033[31m" << downEnem5Arr[row][i];
          }
 
          gotoxy(x, y + (row + 1));
@@ -2558,15 +2569,14 @@ void printEnemyleft4(int x, int y)
    // if (enemyThreeLife < totalLife)
    // {
    gotoxy(x, y);
-
-   gotoxy(enemyOneX, enemyOneY);
+   // gotoxy(enemyOneX, enemyOneY);
    for (int row = 0; row < 3; row++)
    {
       for (int i = 0; i < 9; i++)
       {
          cout << enemy1[row][i];
       }
-      gotoxy(enemyOneX, enemyOneY + (row + 1));
+      gotoxy(x, y + (row + 1));
    }
 
    // }
@@ -2982,14 +2992,12 @@ int gameMenu()
    gotoxy(45, 14);
    cout << "1- Choose your level (1 or 2)";
    gotoxy(45, 15);
-   cout << "2- Instruction";
+   cout << "3- Instruction";
    gotoxy(45, 16);
-   cout << "3- Exit";
+   cout << "4- Exit";
    gotoxy(45, 17);
    cout << "Enter option ";
-   int option = enterOption(3);
-   // Do something based on the selected option
-   // ...
+   option = enterOption(4);
    return 0;
 }
 bool isValidOption(string value)
@@ -3047,7 +3055,7 @@ void levelOneModule()
    while (isGameRunning)
    {
       printScore();
-
+      successfullyWonLevelOne();
       // if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
       // {
       //    // enemy4Life++;
@@ -3083,9 +3091,16 @@ void levelOneModule()
             generateMonochokiDownBullet();
          }
       }
-      if (GetAsyncKeyState(VK_ESCAPE))
+      if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5)
       {
-         // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
+         if (minute >= 5)
+         {
+            gameTimeUp();
+         }
+         else if(totalBulletCollideWithMonochki >= 21)
+         {
+            monochokiCrashed();
+         }
          isGameRunning = false;
       }
       if (enemyOnetimer == 2)
@@ -3351,7 +3366,7 @@ void levelTwoModule()
    while (isGameRunning)
    {
       printScore();
-      enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
+      // enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
       moveMonochokiDown();
       moveMonchokiUp();
       moveMonochokiLeft();
@@ -3376,9 +3391,16 @@ void levelTwoModule()
             generateMonochokiDownBullet();
          }
       }
-      if (GetAsyncKeyState(VK_ESCAPE))
+      if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5)
       {
-         // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
+          if (minute >= 5)
+         {
+            gameTimeUp();
+         }
+         else if(totalBulletCollideWithMonochki >= 21)
+         {
+            monochokiCrashed();
+         }
          isGameRunning = false;
       }
       if (enemyOnetimer == 2)
@@ -3397,9 +3419,9 @@ void levelTwoModule()
       enemyCollisionWithBullet(); // monnochoki bullet's
       moveLeftBullet();
       moveBulletForUp();
-
       enemiesBulletCollisionToMonochoki();
       EnemyTwoBulletCollisons();
+      moveBulletForRightEnemy4();
       enemyOnetimer++;
       if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
       {
@@ -3425,4 +3447,111 @@ void levelTwoModule()
 
       Sleep(1);
    }
+}
+
+void successfullyWonLevelOne()
+{
+   if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+   {
+      // system("cls"); // Clear the console screen
+      gotoxy(45, 13);
+      cout << "**************************";
+      gotoxy(45, 14);
+      cout << "* Level One Completed    *";
+      gotoxy(45, 15);
+      cout << "**************************";
+      char DoYouWantToPlay;
+      gotoxy(45, 16);
+      cout << "Do you want to level next level(y/n)";
+      cin >> DoYouWantToPlay;
+      if (DoYouWantToPlay == 'y')
+      {
+         second = 0;
+         score = 0;
+         minute = 0;
+         totalBulletCollideWithMonochki = 0;
+         gameStatusBar();
+         bounderiesOfGame();
+         levelTwoModule();
+      }
+      if (DoYouWantToPlay == 'n')
+      {
+         score = 0;
+         second = 0;
+         minute = 0;
+         totalBulletCollideWithMonochki = 0;
+         system("cls");
+         gameMenu();
+         gameStatusBar();
+         bounderiesOfGame();
+         if(option==1)
+         {
+         levelOneModule();
+         }
+         else if(option==2)
+         {
+         levelTwoModule();
+         }
+      }
+   }
+}
+
+void gameTimeUp()
+{
+
+   gotoxy(45, 13);
+   cout << "**************************";
+   gotoxy(45, 14);
+   cout << "*     Time is Up         *";
+   gotoxy(45, 15);
+   cout << "**************************";
+   char DoYouWantToPlay;
+
+   gotoxy(45, 16);
+   cout << "Do you want to play again(y/n)";
+   cin >> DoYouWantToPlay;
+   if (DoYouWantToPlay == 'y')
+   {
+      second = 0;
+      score = 0;
+      minute = 0;
+      totalBulletCollideWithMonochki = 0;
+      gameStatusBar();
+      bounderiesOfGame();
+      levelOneModule();
+   }
+}
+
+void monochokiCrashed()
+{
+   gotoxy(45, 13);
+   cout << "**************************";
+   gotoxy(45, 14);
+   cout << "*   Monochoki Crashed    *";
+   gotoxy(45, 15);
+   cout << "**************************";
+   char DoYouWantToPlay;
+   gotoxy(45, 16);
+   cout << "Do you want to play again(y/n)";
+   cin >> DoYouWantToPlay;
+   if (DoYouWantToPlay == 'y')
+   {
+       score = 0;
+      second = 0;
+      minute = 0;
+      totalBulletCollideWithMonochki = 0;
+      system("cls");
+      gameMenu();
+      gameStatusBar();
+      bounderiesOfGame();
+      if(option==1)
+      {
+      levelOneModule();
+      }
+      else if(option==2)
+      {
+      levelTwoModule();
+      }
+   }
+  
 }
