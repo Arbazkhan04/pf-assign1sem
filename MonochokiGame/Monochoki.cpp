@@ -87,31 +87,20 @@ int monochokiDownArrY[1000];
 int monoChokiX = 4;
 int monoChokiY = 10;
 
-char hel2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '}; // moving toward right
-char hel1[9] = {'}', '-', '|', '_', '_', '_', '|', '-', '>'};
+char hel2[2][9] = {{' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '},
+                   {'}', '-', '|', '_', '_', '_', '|', '-', '>'}}; // moving toward right
 
-char leftHel1[9] = {'{', '-', '|', '_', '_', '_', '|', '-', '<'}; // moving toward left
-char leftHeli2[9] = {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '};
+char leftHel1[2][9] = {{'{', '-', '|', '_', '_', '_', '|', '-', '<'},
+                       {' ', ' ', ' ', '_', '_', '_', ' ', ' ', ' '}}; // moving toward left
 
-char upHel6[5] = {' ', ' ', '^', ' ', ' '};
-char upHel5[5] = {' ', ' ', '|', ' ', ' '};
-char upHel1[5] = {' ', '_', '_', '_', ' '};
-char upHel2[5] = {'|', ' ', ' ', ' ', '|'};
-char upHel3[5] = {'|', ' ', ' ', ' ', '|'};
-char upHel4[5] = {' ', '-', '-', '-', ' '};
+char upHel6[6][5] = {{' ', ' ', '^', ' ', ' '}, {' ', ' ', '|', ' ', ' '}, {' ', '_', '_', '_', ' '}, {'|', ' ', ' ', ' ', '|'}, {'|', ' ', ' ', ' ', '|'}, {' ', '-', '-', '-', ' '}};
 
-char downHel6[5] = {' ', ' ', 'v', ' ', ' '};
-char downHel5[5] = {' ', ' ', '|', ' ', ' '};
-char downHel1[5] = {' ', '_', '_', '_', ' '};
-char downHel2[5] = {'|', ' ', ' ', ' ', '|'};
-char downHel3[5] = {'|', ' ', ' ', ' ', '|'};
-char downHel4[5] = {' ', '-', '-', '-', ' '};
+char downHel6[6][5] = {{' ', '_', '_', '_', ' '}, {'|', ' ', ' ', ' ', '|'}, {'|', ' ', ' ', ' ', '|'}, {' ', '-', '-', '-', ' '}, {' ', ' ', '|', ' ', ' '}, {' ', ' ', 'v', ' ', ' '}};
 
 // enemy-1
 char box = 219;
-char arr1[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box};
-char arr2[7] = {'<', '-', box, box, box, box, box};
-char arr3[9] = {' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box};
+char enemy1[3][9] = {{' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box}, {'<', '-', box, box, box, box, box, ' ', ' '}, {' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box}};
+
 int enemyOneX = 80;
 int enemyOneY = 10;
 int enemyOnelife = 15;
@@ -144,23 +133,11 @@ void ereaseEnemyTwoDown(int, int);
 // void ereaseEnemyright2();
 int enemyTwoLife = 15;
 void moveEnemyTwo();
-char leftBox1[9] = {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '};
-char leftbox2[9] = {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '};
-char enmeyTwoRightArr[8] = {' ', box, box, box, box, box, '-', '>'};
+char leftBox1[3][9] = {{box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '}, {' ', ' ', box, box, box, box, box, '-', '>'}, {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
 
-char upEnem0Arr[5] = {' ', ' ', '^', ' ', ' '};
-char upEnem1Arr[5] = {' ', ' ', '|', ' ', ' '};
-char upEnem2Arr[5] = {' ', box, box, box, ' '};
-char upEnem3Arr[5] = {' ', box, box, box, ' '};
-char upEnem4Arr[5] = {' ', box, box, box, ' '};
-char upEnem5Arr[5] = {box, box, ' ', box, box};
+char upEnem0Arr[6][5] = {{' ', ' ', '^', ' ', ' '}, {' ', ' ', '|', ' ', ' '}, {' ', box, box, box, ' '}, {' ', box, box, box, ' '}, {' ', box, box, box, ' '}, {box, box, ' ', box, box}};
 
-char downEnem0Arr[5] = {' ', ' ', 'v', ' ', ' '};
-char downEnem1Arr[5] = {' ', ' ', '|', ' ', ' '};
-char downEnem2Arr[5] = {' ', box, box, box, ' '};
-char downEnem3Arr[5] = {' ', box, box, box, ' '};
-char downEnem4Arr[5] = {' ', box, box, box, ' '};
-char downEnem5Arr[5] = {box, box, ' ', box, box};
+char downEnem5Arr[6][5] = {{box, box, ' ', box, box}, {' ', box, box, box, ' '}, {' ', box, box, box, ' '}, {' ', box, box, box, ' '}, {' ', ' ', '|', ' ', ' '}, {' ', ' ', 'v', ' ', ' '}};
 
 // void printEnemyRight
 
@@ -444,8 +421,9 @@ int main()
             generateMonochokiDownBullet();
          }
       }
-      if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5)
+      if (GetAsyncKeyState(VK_ESCAPE) )
       {
+         // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
          isGameRunning = false;
       }
       if (enemyOnetimer == 2)
@@ -776,235 +754,216 @@ char getCharAtxy(short int x, short int y)
 void printMonochoki(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
+   for (int i = 0; i < 2; i++)
    {
-      cout << hel2[i];
-   }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 9; i++)
-   {
-      cout << hel1[i];
+      for (int j = 0; j < 9; j++)
+      {
+         cout << hel2[i][j];
+      }
+      gotoxy(x, y + 1);
    }
 }
 void ereaseMonoChoki(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
+   for (int j = 0; j < 2; j++)
    {
-      char empty = hel2[i];
-      empty = ' ';
-      cout << empty;
-   }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 9; i++)
-   {
-      char empty = hel1[i];
-      empty = ' ';
-      cout << empty;
+      for (int i = 0; i < 9; i++)
+      {
+         char empty = hel2[j][i];
+         empty = ' ';
+         cout << empty;
+      }
+      gotoxy(x, y + 1);
    }
 }
 
 void printMonochokiLeft(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 8; i >= 0; i--)
+   for (int j = 0; j < 2; j++)
    {
-      cout << leftHel1[i];
-   }
-   gotoxy(x, y - 1);
-   for (int i = 8; i >= 0; i--)
-   {
-      cout << leftHeli2[i];
+      for (int i = 8; i >= 0; i--)
+      {
+         cout << leftHel1[j][i];
+      }
+      gotoxy(x, y - 1);
    }
 }
 
 void eraseLeftMonoChoki(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 8; i >= 0; i--)
+   for (int row = 0; row < 2; row++)
    {
-      char empty = leftHel1[i];
-      empty = ' ';
-      cout << empty;
-   }
-   gotoxy(x, y - 1);
-   for (int i = 8; i >= 0; i--)
-   {
-      char empty1 = leftHeli2[i];
-      empty1 = ' ';
-      cout << empty1;
+      for (int i = 8; i >= 0; i--)
+      {
+         char empty = leftHel1[row][i];
+         empty = ' ';
+         cout << empty;
+      }
+      gotoxy(x, y - 1);
    }
 }
 
 void eraseUpMonochoki(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
-      char empy = upHel6[i];
-      empy = ' ';
-      cout << empy;
+      for (int i = 0; i < 5; i++)
+      {
+         char empy = upHel6[row][i];
+         empy = ' ';
+         cout << empy;
+      }
+      gotoxy(x, y + (row + 1));
    }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = upHel5[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 2);
 
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = upHel1[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 3);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = upHel5[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 2);
 
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = upHel2[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = upHel3[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = upHel4[i];
-      empy = ' ';
-      cout << empy;
-   }
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = upHel1[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 3);
+
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = upHel2[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 4);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = upHel3[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 5);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = upHel4[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
 }
 
 void printMonochokiUp(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
+      for (int i = 0; i < 5; i++)
+      {
 
-      cout << upHel6[i];
+         cout << upHel6[row][i];
+      }
+      gotoxy(x, y + (row + 1));
    }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upHel5[i];
-   }
-   gotoxy(x, y + 2);
 
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upHel1[i];
-   }
-   gotoxy(x, y + 3);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    cout << upHel5[i];
+   // }
+   // gotoxy(x, y + 2);
 
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upHel2[i];
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upHel3[i];
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upHel4[i];
-   }
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    cout << upHel1[i];
+   // }
+   // gotoxy(x, y + 3);
+
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    cout << upHel2[i];
+   // }
+   // gotoxy(x, y + 4);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    cout << upHel3[i];
+   // }
+   // gotoxy(x, y + 5);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    cout << upHel4[i];
+   // }
 }
 
 void printDownMonochoki(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
+      for (int i = 0; i < 5; i++)
+      {
 
-      cout << downHel4[i];
-   }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downHel3[i];
-   }
-   gotoxy(x, y + 2);
-
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downHel2[i];
-   }
-   gotoxy(x, y + 3);
-
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downHel1[i];
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downHel5[i];
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downHel6[i];
+         cout << downHel6[row][i];
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 
 void eraseDownMonochoki(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
+      for (int i = 0; i < 5; i++)
+      {
 
-      char empy = downHel4[i];
-      empy = ' ';
-      cout << empy;
+         char empy = downHel6[row][i];
+         empy = ' ';
+         cout << empy;
+      }
+      gotoxy(x, y + (row + 1));
    }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = downHel3[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 2);
 
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = downHel2[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 3);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = downHel3[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 2);
 
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = downHel1[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = downHel5[i];
-      empy = ' ';
-      cout << empy;
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char empy = downHel6[i];
-      empy = ' ';
-      cout << empy;
-   }
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = downHel2[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 3);
+
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = downHel1[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 4);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = downHel5[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
+   // gotoxy(x, y + 5);
+   // for (int i = 0; i < 5; i++)
+   // {
+   //    char empy = downHel6[i];
+   //    empy = ' ';
+   //    cout << empy;
+   // }
 }
 
 void removeBulletFromArray(int index)
@@ -1198,19 +1157,13 @@ void printEnemy1()
    if (enemyOnelife < 20)
    {
       gotoxy(enemyOneX, enemyOneY);
-      for (int i = 0; i < 9; i++)
+      for (int row = 0; row < 3; row++)
       {
-         cout << arr1[i];
-      }
-      gotoxy(enemyOneX, enemyOneY + 1);
-      for (int i = 0; i < 7; i++)
-      {
-         cout << arr2[i];
-      }
-      gotoxy(enemyOneX, enemyOneY + 2);
-      for (int i = 0; i < 9; i++)
-      {
-         cout << arr3[i];
+         for (int i = 0; i < 9; i++)
+         {
+            cout << enemy1[row][i];
+         }
+         gotoxy(enemyOneX, enemyOneY + (row + 1));
       }
    }
    if (enemyOnelife >= 20)
@@ -1221,29 +1174,16 @@ void printEnemy1()
 void ereaseEnemy1()
 {
    gotoxy(enemyOneX, enemyOneY);
-   for (int i = 0; i < 9; i++)
+   for (int row = 0; row < 3; row++)
    {
-      char emp;
-      emp = arr1[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(enemyOneX, enemyOneY + 1);
-   for (int i = 0; i < 7; i++)
-   {
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(enemyOneX, enemyOneY + 2);
-   for (int i = 0; i < 9; i++)
-   {
-
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
+      for (int i = 0; i < 9; i++)
+      {
+         char emp;
+         emp = enemy1[row][i];
+         emp = ' ';
+         cout << emp;
+      }
+      gotoxy(enemyOneX, enemyOneY + (row + 1));
    }
 }
 
@@ -1526,19 +1466,13 @@ void printEnemyleft2(int x, int y)
    if (enemyTwoLife < 20)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 9; i++)
+      for (int row = 0; row < 3; row++)
       {
-         cout << arr1[i];
-      }
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 7; i++)
-      {
-         cout << arr2[i];
-      }
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 9; i++)
-      {
-         cout << arr3[i];
+         for (int i = 0; i < 9; i++)
+         {
+            cout << enemy1[row][i];
+         }
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyTwoLife >= 20)
@@ -1549,29 +1483,17 @@ void printEnemyleft2(int x, int y)
 void ereaseEnemyleft2(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
-   {
-      char emp;
-      emp = arr1[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 7; i++)
-   {
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
 
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
+   for (int row = 0; row < 3; row++)
+   {
+      for (int i = 0; i < 9; i++)
+      {
+         char emp;
+         emp = enemy1[row][i];
+         emp = ' ';
+         cout << emp;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 void printEnemyright2(int x, int y)
@@ -1579,21 +1501,13 @@ void printEnemyright2(int x, int y)
    if (enemyTwoLife < 20)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 9; i++)
+      for (int row = 0; row < 3; row++)
       {
-         cout << leftBox1[i];
-      }
-
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 8; i++)
-      {
-         cout << enmeyTwoRightArr[i];
-      }
-
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 9; i++)
-      {
-         cout << leftbox2[i];
+         for (int i = 0; i < 9; i++)
+         {
+            cout << leftBox1[row][i];
+         }
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyTwoLife >= 20)
@@ -1605,65 +1519,31 @@ void printEnemyright2(int x, int y)
 void ereaseEnemyright2(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
+   for (int row = 0; row < 3; row++)
    {
-      char tem = leftBox1[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 8; i++)
-   {
-      char tem = enmeyTwoRightArr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
-      char tem = leftbox2[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 9; i++)
+      {
+         char tem = leftBox1[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 
 void printEnemyUp2(int x, int y)
 {
+   gotoxy(x, y);
    if (enemyTwoLife < 20)
    {
-      gotoxy(x, y);
-      for (int i = 0; i < 5; i++)
+      for (int row = 0; row < 6; row++)
       {
-         cout << upEnem0Arr[i];
-      }
+         for (int i = 0; i < 5; i++)
+         {
+            cout << upEnem0Arr[row][i];
+         }
 
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem1Arr[i];
-      }
-
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem2Arr[i];
-      }
-      gotoxy(x, y + 3);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem3Arr[i];
-      }
-      gotoxy(x, y + 4);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem4Arr[i];
-      }
-      gotoxy(x, y + 5);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem5Arr[i];
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyTwoLife >= 20)
@@ -1675,50 +1555,15 @@ void printEnemyUp2(int x, int y)
 void ereaseEnemyTwoUp(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
-      char tem = upEnem0Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem1Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem2Arr[i];
-      tem = ' ';
-      cout << tem;
-
-      //   cout << upEnem2Arr[i];
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem3Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem4Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem5Arr[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 5; i++)
+      {
+         char tem = upEnem0Arr[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 
@@ -1727,38 +1572,14 @@ void printEnemyDown2(int x, int y)
    if (enemyTwoLife < 20)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 5; i++)
+      for (int row = 0; row < 6; row++)
       {
-         cout << downEnem5Arr[i];
-      }
+         for (int i = 0; i < 5; i++)
+         {
+            cout << downEnem5Arr[row][i];
+         }
 
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem4Arr[i];
-      }
-
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem3Arr[i];
-      }
-      gotoxy(x, y + 3);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem2Arr[i];
-      }
-
-      gotoxy(x, y + 4);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem1Arr[i];
-      }
-
-      gotoxy(x, y + 5);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem0Arr[i];
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyTwoLife >= 20)
@@ -1770,50 +1591,16 @@ void printEnemyDown2(int x, int y)
 void ereaseEnemyTwoDown(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
-      char tem = downEnem5Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
+      for (int i = 0; i < 5; i++)
+      {
+         char tem = downEnem5Arr[row][i];
+         tem = ' ';
+         cout << tem;
+      }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem4Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem3Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem2Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem1Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem0Arr[i];
-      tem = ' ';
-      cout << tem;
+      gotoxy(x, y + (row + 1));
    }
 }
 
@@ -1840,7 +1627,7 @@ void moveEnemyTwo()
 
    if (enemy2Direction == "down") // toward negative x-axis
    {
-      char nextlocation = getCharAtxy(Enemy2RightX - 3, Enemy2RightY);
+      char nextlocation = getCharAtxy(Enemy2RightX - 7, Enemy2RightY);
       if (nextlocation == ' ')
       {
 
@@ -1862,7 +1649,7 @@ void moveEnemyTwo()
    }
    if (enemy2Direction == "left") // right
    {
-      char nextlocation = getCharAtxy(Enemy2RightX + 10, Enemy2RightY);
+      char nextlocation = getCharAtxy(Enemy2RightX + 13, Enemy2RightY);
       if (nextlocation == ' ')
       {
          ereaseEnemyleft2(Enemy2RightX, Enemy2RightY);
@@ -1901,9 +1688,9 @@ void moveEnemyTwo()
 
 void generateBulletForLeftenemy2()
 {
-   enemyTwoBullettArrX[totalBulletGenerateByEnemy2] = Enemy2RightX - 1;
+   enemyTwoBullettArrX[totalBulletGenerateByEnemy2] = Enemy2RightX - 2;
    enemyTwoBulletArrY[totalBulletGenerateByEnemy2] = Enemy2RightY + 1;
-   gotoxy(Enemy2RightX - 1, Enemy2RightY + 1);
+   gotoxy(Enemy2RightX - 2, Enemy2RightY + 1);
    cout << ".";
    totalBulletGenerateByEnemy2++;
 }
@@ -1947,9 +1734,9 @@ void printBulletForLeftEnemy2(int x, int y)
 
 void generateBulletForRightenemy2()
 {
-   enemyTwoRightBullettArrX[totalBulletGenerateByrightEnemy2] = Enemy2RightX + 8;
+   enemyTwoRightBullettArrX[totalBulletGenerateByrightEnemy2] = Enemy2RightX + 9;
    enemyTwoRightBulletArrY[totalBulletGenerateByrightEnemy2] = Enemy2RightY + 1;
-   gotoxy(Enemy2RightX + 8, Enemy2RightY + 1);
+   gotoxy(Enemy2RightX + 9, Enemy2RightY + 1);
    cout << ".";
    totalBulletGenerateByrightEnemy2++;
 }
@@ -2332,19 +2119,13 @@ void printEnemyleft3(int x, int y)
    if (enemyThreeLife < totalLife)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 9; i++)
+      for (int row = 0; row < 3; row++)
       {
-         cout << arr1[i];
-      }
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 7; i++)
-      {
-         cout << arr2[i];
-      }
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 9; i++)
-      {
-         cout << arr3[i];
+         for (int i = 0; i < 9; i++)
+         {
+            cout << enemy1[row][i];
+         }
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyThreeLife >= totalLife)
@@ -2355,51 +2136,32 @@ void printEnemyleft3(int x, int y)
 void ereaseEnemyleft3(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
-   {
-      char emp;
-      emp = arr1[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 7; i++)
-   {
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
 
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
+   for (int row = 0; row < 3; row++)
+   {
+      for (int i = 0; i < 9; i++)
+      {
+         char emp;
+         emp = enemy1[row][i];
+         emp = ' ';
+         cout << emp;
+      }
+      gotoxy(enemyOneX, enemyOneY + (row + 1));
    }
 }
+
 void printEnemyright3(int x, int y)
 {
    if (enemyThreeLife < totalLife)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 9; i++)
+      for (int row = 0; row < 3; row++)
       {
-         cout << leftBox1[i];
-      }
-
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 8; i++)
-      {
-         cout << enmeyTwoRightArr[i];
-      }
-
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 9; i++)
-      {
-         cout << leftbox2[i];
+         for (int i = 0; i < 9; i++)
+         {
+            cout << leftBox1[row][i];
+         }
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyThreeLife >= totalLife)
@@ -2411,27 +2173,16 @@ void printEnemyright3(int x, int y)
 void ereaseEnemyright3(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
-   {
-      char tem = leftBox1[i];
-      tem = ' ';
-      cout << tem;
-   }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 8; i++)
+   for (int row = 0; row < 3; row++)
    {
-      char tem = enmeyTwoRightArr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
-      char tem = leftbox2[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 9; i++)
+      {
+         char tem = leftBox1[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 
@@ -2440,36 +2191,14 @@ void printEnemyUp3(int x, int y)
    if (enemyThreeLife < totalLife)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 5; i++)
+        for (int row = 0; row < 6; row++)
       {
-         cout << upEnem0Arr[i];
-      }
+         for (int i = 0; i < 5; i++)
+         {
+            cout << upEnem0Arr[row][i];
+         }
 
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem1Arr[i];
-      }
-
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem2Arr[i];
-      }
-      gotoxy(x, y + 3);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem3Arr[i];
-      }
-      gotoxy(x, y + 4);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem4Arr[i];
-      }
-      gotoxy(x, y + 5);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << upEnem5Arr[i];
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyThreeLife >= totalLife)
@@ -2481,50 +2210,15 @@ void printEnemyUp3(int x, int y)
 void ereaseEnemyThreeUp(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+      for (int row = 0; row < 6; row++)
    {
-      char tem = upEnem0Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem1Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem2Arr[i];
-      tem = ' ';
-      cout << tem;
-
-      //   cout << upEnem2Arr[i];
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem3Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem4Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem5Arr[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 5; i++)
+      {
+         char tem = upEnem0Arr[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 
@@ -2533,38 +2227,14 @@ void printEnemyDown3(int x, int y)
    if (enemyThreeLife < totalLife)
    {
       gotoxy(x, y);
-      for (int i = 0; i < 5; i++)
+        for (int row = 0; row < 6; row++)
       {
-         cout << downEnem5Arr[i];
-      }
+         for (int i = 0; i < 5; i++)
+         {
+            cout << downEnem5Arr[row][i];
+         }
 
-      gotoxy(x, y + 1);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem4Arr[i];
-      }
-
-      gotoxy(x, y + 2);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem3Arr[i];
-      }
-      gotoxy(x, y + 3);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem2Arr[i];
-      }
-
-      gotoxy(x, y + 4);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem1Arr[i];
-      }
-
-      gotoxy(x, y + 5);
-      for (int i = 0; i < 5; i++)
-      {
-         cout << downEnem0Arr[i];
+         gotoxy(x, y + (row + 1));
       }
    }
    if (enemyThreeLife >= totalLife)
@@ -2576,50 +2246,16 @@ void printEnemyDown3(int x, int y)
 void ereaseEnemyThreeDown(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+    for (int row = 0; row < 6; row++)
    {
-      char tem = downEnem5Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
+      for (int i = 0; i < 5; i++)
+      {
+         char tem = downEnem5Arr[row][i];
+         tem = ' ';
+         cout << tem;
+      }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem4Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem3Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem2Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem1Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem0Arr[i];
-      tem = ' ';
-      cout << tem;
+      gotoxy(x, y + (row + 1));
    }
 }
 
@@ -2647,7 +2283,7 @@ void moveEnemyThree()
 
    if (enemy3Direction == "left") // toward negative x-axis
    {
-      char nextlocation = getCharAtxy(enemy3X - 3, enemy3y);
+      char nextlocation = getCharAtxy(enemy3X - 5, enemy3y);
       if (nextlocation == ' ')
       {
 
@@ -2667,7 +2303,7 @@ void moveEnemyThree()
    }
    if (enemy3Direction == "right") // right
    {
-      char nextlocation = getCharAtxy(enemy3X + 10, enemy3y);
+      char nextlocation = getCharAtxy(enemy3X + 12, enemy3y);
       if (nextlocation == ' ')
       {
          ereaseEnemyleft3(enemy3X, enemy3y);
@@ -2744,9 +2380,10 @@ void removeIndexBulletForLeftEnemy3(int index)
 
 void generateBulletForRightenemy3()
 {
-   enemyThreeRightBullettArrX[totalBulletGenerateByrightEnemy3] = enemy3X + 8;
+   char nextlocation=getCharAtxy(enemy3X+3,enemy3y);
+   enemyThreeRightBullettArrX[totalBulletGenerateByrightEnemy3] = enemy3X + 9;
    enemyThreeRightBulletArrY[totalBulletGenerateByrightEnemy3] = enemy3y + 1;
-   gotoxy(enemy3X + 8, enemy3y + 1);
+   gotoxy(enemy3X + 9, enemy3y + 1);
    cout << ".";
    totalBulletGenerateByrightEnemy3++;
 }
@@ -2901,74 +2538,53 @@ void printEnemyleft4(int x, int y)
    // if (enemyThreeLife < totalLife)
    // {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
+
+   gotoxy(enemyOneX, enemyOneY);
+   for (int row = 0; row < 3; row++)
    {
-      cout << arr1[i];
+      for (int i = 0; i < 9; i++)
+      {
+         cout << enemy1[row][i];
+      }
+      gotoxy(enemyOneX, enemyOneY + (row + 1));
    }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 7; i++)
-   {
-      cout << arr2[i];
-   }
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
-      cout << arr3[i];
-   }
+
    // }
    // if (enemyThreeLife >= totalLife)
    // {
    //    ereaseEnemyleft3(x, y);
    // }
 }
+
 void ereaseEnemyleft4(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
+   for (int row = 0; row < 3; row++)
    {
-      char emp;
-      emp = arr1[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 7; i++)
-   {
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
-   }
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
-
-      char emp;
-      emp = arr2[i];
-      emp = ' ';
-      cout << emp;
+      for (int i = 0; i < 9; i++)
+      {
+         char emp;
+         emp = enemy1[row][i];
+         emp = ' ';
+         cout << emp;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
+
 void printEnemyright4(int x, int y)
 {
    // if (enemyThreeLife < totalLife)
    // {
+
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
+   for (int row = 0; row < 3; row++)
    {
-      cout << leftBox1[i];
-   }
-
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 8; i++)
-   {
-      cout << enmeyTwoRightArr[i];
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
-      cout << leftbox2[i];
+      for (int i = 0; i < 9; i++)
+      {
+         cout << leftBox1[row][i];
+      }
+      gotoxy(x, y + (row + 1));
    }
    // }
    // if (enemyThreeLife >= totalLife)
@@ -2980,27 +2596,16 @@ void printEnemyright4(int x, int y)
 void ereaseEnemyright4(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 9; i++)
-   {
-      char tem = leftBox1[i];
-      tem = ' ';
-      cout << tem;
-   }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 8; i++)
+   for (int row = 0; row < 3; row++)
    {
-      char tem = enmeyTwoRightArr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 9; i++)
-   {
-      char tem = leftbox2[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 9; i++)
+      {
+         char tem = leftBox1[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+      gotoxy(x, y + (row + 1));
    }
 }
 
@@ -3009,36 +2614,14 @@ void printEnemyUp4(int x, int y)
    // if (enemyThreeLife < totalLife)
    // {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
-      cout << upEnem0Arr[i];
-   }
+      for (int i = 0; i < 5; i++)
+      {
+         cout << upEnem0Arr[row][i];
+      }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upEnem1Arr[i];
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upEnem2Arr[i];
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upEnem3Arr[i];
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upEnem4Arr[i];
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << upEnem5Arr[i];
+      gotoxy(x, y + (row + 1));
    }
    // }
    // if (enemyThreeLife >= totalLife)
@@ -3050,51 +2633,17 @@ void printEnemyUp4(int x, int y)
 void ereaseEnemyFourUp(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+   for (int row = 0; row < 6; row++)
    {
-      char tem = upEnem0Arr[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 5; i++)
+      {
+         char tem = upEnem0Arr[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+      gotoxy(x, y + (row + 1));
    }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem1Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem2Arr[i];
-      tem = ' ';
-      cout << tem;
-
-      //   cout << upEnem2Arr[i];
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem3Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem4Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = upEnem5Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
 }
 
 void printEnemyDown4(int x, int y)
@@ -3102,39 +2651,15 @@ void printEnemyDown4(int x, int y)
    // if (enemyThreeLife < totalLife)
    // {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downEnem5Arr[i];
-   }
+      for (int row = 0; row < 6; row++)
+      {
+         for (int i = 0; i < 5; i++)
+         {
+            cout << downEnem5Arr[row][i];
+         }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downEnem4Arr[i];
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downEnem3Arr[i];
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downEnem2Arr[i];
-   }
-
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downEnem1Arr[i];
-   }
-
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      cout << downEnem0Arr[i];
-   }
+         gotoxy(x, y + (row + 1));
+      }
    // }
    // if (enemyThreeLife >= totalLife)
    // {
@@ -3145,51 +2670,18 @@ void printEnemyDown4(int x, int y)
 void ereaseEnemyFourDown(int x, int y)
 {
    gotoxy(x, y);
-   for (int i = 0; i < 5; i++)
+     for (int row = 0; row < 6; row++)
    {
-      char tem = downEnem5Arr[i];
-      tem = ' ';
-      cout << tem;
+      for (int i = 0; i < 5; i++)
+      {
+         char tem = downEnem5Arr[row][i];
+         tem = ' ';
+         cout << tem;
+      }
+
+      gotoxy(x, y + (row + 1));
    }
 
-   gotoxy(x, y + 1);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem4Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 2);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem3Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-   gotoxy(x, y + 3);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem2Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 4);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem1Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
-
-   gotoxy(x, y + 5);
-   for (int i = 0; i < 5; i++)
-   {
-      char tem = downEnem0Arr[i];
-      tem = ' ';
-      cout << tem;
-   }
 }
 void moveEnemyFour()
 {
@@ -3324,9 +2816,9 @@ void generateBulletForRightenemy4()
 {
    if (enemy4Direction == "right")
    {
-      enemyFourRightBullettArrX[totalBulletGenerateByrightEnemy4] = enemy4X + 8;
+      enemyFourRightBullettArrX[totalBulletGenerateByrightEnemy4] = enemy4X + 9;
       enemyFourRightBulletArrY[totalBulletGenerateByrightEnemy4] = enemy4Y + 1;
-      gotoxy(enemy4X + 8, enemy4Y + 1);
+      gotoxy(enemy4X + 9, enemy4Y + 1);
       cout << ".";
       totalBulletGenerateByrightEnemy4++;
    }
