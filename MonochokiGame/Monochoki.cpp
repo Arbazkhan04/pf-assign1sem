@@ -1749,7 +1749,7 @@ void moveBulletForRightEnemy2() // left
       ereaseBulletForLeftEnemy2(enemyTwoRightBullettArrX[i], enemyTwoRightBulletArrY[i]);
       if (nextlocation == '*')
       {
-
+         
          removeIndexBulletForRightEnemy2(i);
       }
       else if (nextlocation == ' ')
@@ -2354,14 +2354,14 @@ void moveBulletForLeftEnemy3()
    for (int i = 0; i < totalBulletGenerateByLeftEnemy3; i++)
    {
       char nextlocation = getCharAtxy(enemyThreeBullettArrX[i] - 1, enemyThreeBulletArrY[i]);
+         ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
+
       if (nextlocation == '*')
       {
-         ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
          removeIndexBulletForLeftEnemy3(i);
       }
       else if (nextlocation == ' ')
       {
-         ereaseBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
          enemyThreeBullettArrX[i] = enemyThreeBullettArrX[i] - 1;
          printBulletForLeftEnemy2(enemyThreeBullettArrX[i], enemyThreeBulletArrY[i]);
       }
