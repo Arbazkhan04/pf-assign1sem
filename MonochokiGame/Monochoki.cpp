@@ -14,6 +14,7 @@ bool isValidOption(string value);
 int enterOption(int limit);
 void gameTimeUp();
 void monochokiCrashed();
+void gameReset();
 // game level end
 
 // monochoki-Movement-start
@@ -3097,7 +3098,7 @@ void levelOneModule()
          {
             gameTimeUp();
          }
-         else if(totalBulletCollideWithMonochki >= 21)
+         else if (totalBulletCollideWithMonochki >= 21)
          {
             monochokiCrashed();
          }
@@ -3393,11 +3394,11 @@ void levelTwoModule()
       }
       if (GetAsyncKeyState(VK_ESCAPE) || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5)
       {
-          if (minute >= 5)
+         if (minute >= 5)
          {
             gameTimeUp();
          }
-         else if(totalBulletCollideWithMonochki >= 21)
+         else if (totalBulletCollideWithMonochki >= 21)
          {
             monochokiCrashed();
          }
@@ -3466,9 +3467,7 @@ void successfullyWonLevelOne()
       cin >> DoYouWantToPlay;
       if (DoYouWantToPlay == 'y')
       {
-         second = 0;
-         score = 0;
-         minute = 0;
+         gameReset();
          totalBulletCollideWithMonochki = 0;
          gameStatusBar();
          bounderiesOfGame();
@@ -3476,21 +3475,19 @@ void successfullyWonLevelOne()
       }
       if (DoYouWantToPlay == 'n')
       {
-         score = 0;
-         second = 0;
-         minute = 0;
+        gameReset();
          totalBulletCollideWithMonochki = 0;
          system("cls");
          gameMenu();
          gameStatusBar();
          bounderiesOfGame();
-         if(option==1)
+         if (option == 1)
          {
-         levelOneModule();
+            levelOneModule();
          }
-         else if(option==2)
+         else if (option == 2)
          {
-         levelTwoModule();
+            levelTwoModule();
          }
       }
    }
@@ -3512,9 +3509,7 @@ void gameTimeUp()
    cin >> DoYouWantToPlay;
    if (DoYouWantToPlay == 'y')
    {
-      second = 0;
-      score = 0;
-      minute = 0;
+      gameReset();
       totalBulletCollideWithMonochki = 0;
       gameStatusBar();
       bounderiesOfGame();
@@ -3536,22 +3531,55 @@ void monochokiCrashed()
    cin >> DoYouWantToPlay;
    if (DoYouWantToPlay == 'y')
    {
-       score = 0;
-      second = 0;
-      minute = 0;
+      gameReset();
       totalBulletCollideWithMonochki = 0;
       system("cls");
       gameMenu();
       gameStatusBar();
       bounderiesOfGame();
-      if(option==1)
+      if (option == 1)
       {
-      levelOneModule();
+         levelOneModule();
       }
-      else if(option==2)
+      else if (option == 2)
       {
-      levelTwoModule();
+         levelTwoModule();
       }
    }
-  
+}
+
+void gameReset()
+{
+    // state refresh
+   score = 0;
+   second = 0;
+   minute = 0;
+   enemyOnelife = 0;
+   enemyTwoLife = 0;
+   enemyThreeLife = 0;
+   enemy4Life = 0;
+   totalCallKFor1Enemy = 1; // flag
+   totalCallKFor2Enemy = 1;
+   totalCallKFor3Enemy = 1;
+   totalBulletCollideWithMonochki = 0;
+   monoChokiX = 4;
+   monoChokiY = 10;
+
+   Enemy2RightX = 40;
+   Enemy2RightY = 12;
+   enemyTwoLife = 15;
+
+   enemyThreeLife = 15;
+   totalLife = 20;
+   enemy3X = 10;
+   enemy3y = 10;
+
+   enemyOneX = 80;
+   enemyOneY = 10;
+   enemyOnelife = 15;
+
+   enemy4Life = 0;
+   enemy4X = 30;
+   enemy4Y = 8;
+    // state refresh
 }
