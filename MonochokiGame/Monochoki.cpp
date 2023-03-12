@@ -14,6 +14,9 @@ bool isValidOption(string value);
 int enterOption(int limit);
 void gameTimeUp();
 void monochokiCrashed();
+string instructionMenu();
+void instructionForLevelOne();
+void instructionForLevelTwo();
 void gameReset();
 // game level end
 
@@ -298,10 +301,24 @@ int main()
    startingOfGame();
    system("cls");
    gameMenu();
-   gameStatusBar();
-   bounderiesOfGame();
+   if (instructionMenu() == "1")
+   {
+      instructionForLevelOne();
+      gameMenu();
+   }
+   if (instructionMenu() == "1")
+   {
+      instructionForLevelTwo();
+      gameMenu();
+   }
+   if (option != 4)
+   {
+      gameStatusBar();
+      bounderiesOfGame();
+   }
    if (option == 1)
    {
+      // instructionForLevelOne();
       levelOneModule();
    }
    else if (option == 2)
@@ -3031,6 +3048,7 @@ int enterOption(int limit)
 
 void levelOneModule()
 {
+   score = 0;
    bool isGameRunning = true;
    if (totalBulletCollideWithMonochki < 29)
    {
@@ -3354,6 +3372,7 @@ void moveMonochokiLeft()
 
 void levelTwoModule()
 {
+   score = 0;
    bool isGameRunning = true;
    if (totalBulletCollideWithMonochki < 29)
    {
@@ -3475,7 +3494,7 @@ void successfullyWonLevelOne()
       }
       if (DoYouWantToPlay == 'n')
       {
-        gameReset();
+         gameReset();
          totalBulletCollideWithMonochki = 0;
          system("cls");
          gameMenu();
@@ -3550,7 +3569,7 @@ void monochokiCrashed()
 
 void gameReset()
 {
-    // state refresh
+   // state refresh
    score = 0;
    second = 0;
    minute = 0;
@@ -3581,5 +3600,81 @@ void gameReset()
    enemy4Life = 0;
    enemy4X = 30;
    enemy4Y = 8;
-    // state refresh
+   // state refresh
+}
+
+void instructionForLevelOne()
+{
+   system("cls");
+   cout << " _______________________________" << endl;
+   cout << "|                               |" << endl;
+   cout << "|      INDTRUCTIONS             |" << endl;
+   cout << "|                               |" << endl;
+   cout << "---------------------------------" << endl
+        << endl;
+   cout << "Movement of Player " << endl;
+   cout << " --> Press right key for right movement  " << endl;
+   cout << " --> press left key for left movement " << endl;
+   cout << " --> press down key for dowm movement " << endl;
+   cout << " --> press up key for up movement " << endl;
+
+   cout << "Firing Bullet " << endl;
+   cout << " --> Press right key+Space for right bullet  movement  " << endl;
+   cout << " --> press left key+Space for left bullet movement " << endl;
+   cout << " --> press down key+Space for dowm bullet movement " << endl;
+   cout << " --> press up key+Space for up  bullet movement " << endl;
+
+   cout << "Player Health is 20 " << endl;
+   cout << "Time for level one is 5 minutes " << endl;
+   cout << "Press any key to continue ";
+   getch();
+}
+void instructionForLevelTwo()
+{
+   system("cls");
+
+   cout << " _______________________________" << endl;
+   cout << "|                               |" << endl;
+   cout << "|      INDTRUCTIONS             |" << endl;
+   cout << "|                               |" << endl;
+   cout << "---------------------------------" << endl
+        << endl;
+   cout << "Movement of Player " << endl;
+   cout << " --> Press right key for right movement  " << endl;
+   cout << " --> press left key for left movement " << endl;
+   cout << " --> press down key for dowm movement " << endl;
+   cout << " --> press up key for up movement " << endl;
+
+   cout << "Firing Bullet " << endl;
+   cout << " --> Press right key+Space for right bullet  movement  " << endl;
+   cout << " --> press left key+Space for left bullet movement " << endl;
+   cout << " --> press down key+Space for dowm bullet movement " << endl;
+   cout << " --> press up key+Space for up  bullet movement " << endl;
+
+   cout << "Player Health is 20 " << endl;
+   cout << "Time for level two is 5 minutes " << endl;
+   cout << "You have to hit bullets to enmemy by his front faces " << endl;
+   cout << "Press any key to continue ";
+   getch();
+}
+
+string instructionMenu()
+{
+   system("cls");
+   cout << "First Read the instuctions " << endl;
+   string opt;
+   cout << "1-Level One " << endl;
+   cout << "2-Level Two " << endl;
+   cout << "Enter Your Option " << endl;
+   cin >> opt;
+   if (opt == "1" || opt == "2")
+   {
+      return opt;
+   }
+   while (opt != "1")
+   {
+      cout << "Enter option again ";
+      cin >> opt;
+   }
+   return opt;
 }
