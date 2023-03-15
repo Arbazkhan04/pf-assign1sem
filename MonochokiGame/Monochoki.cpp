@@ -301,30 +301,36 @@ int main()
    startingOfGame();
    system("cls");
    gameMenu();
-   if (instructionMenu() == "1")
-   {
-      instructionForLevelOne();
-      gameMenu();
-   }
-   if (instructionMenu() == "1")
-   {
-      instructionForLevelTwo();
-      gameMenu();
-   }
-   if (option != 4)
-   {
-      gameStatusBar();
-      bounderiesOfGame();
-   }
+   // string selectLevel = instructionMenu();
+   // if (selectLevel == "1")
+   // {
+   //    instructionForLevelOne();
+   //    gameMenu();
+   // }
+   // if (selectLevel== "2")
+   // {
+   //    instructionForLevelTwo();
+   //    gameMenu();
+   // }
    if (option == 1)
    {
-      // instructionForLevelOne();
+      instructionForLevelOne();
+      system("cls");
+      gameStatusBar();
+      bounderiesOfGame();
       levelOneModule();
    }
    else if (option == 2)
    {
+      instructionForLevelTwo();
+      system("cls");
+      gameStatusBar();
+      bounderiesOfGame();
       levelTwoModule();
    }
+   // if (option != 4)
+   // {
+   // }
 
    // if (totalBulletCollideWithMonochki < 29)
    // {
@@ -3008,14 +3014,14 @@ int gameMenu()
    gotoxy(45, 13);
    cout << "**************************";
    gotoxy(45, 14);
-   cout << "1- Choose your level (1 or 2)";
+   cout << "1- Level-One";
    gotoxy(45, 15);
-   cout << "3- Instruction";
+   cout << "2- Level-Two";
    gotoxy(45, 16);
-   cout << "4- Exit";
+   cout << "3- Exit";
    gotoxy(45, 17);
    cout << "Enter option ";
-   option = enterOption(4);
+   option = enterOption(3);
    return 0;
 }
 bool isValidOption(string value)
@@ -3034,14 +3040,16 @@ int enterOption(int limit)
 {
    string opt;
    cin >> opt;
+   int i = 18;
    while (!isValidOption(opt) || stoi(opt) < 1 || stoi(opt) > limit)
    {
-      gotoxy(45, 18);
+      gotoxy(45, i);
       cout << "Invalid input.";
 
-      gotoxy(45, 19);
+      gotoxy(45, i + 1);
       cout << "Enter your option again: ";
       cin >> opt;
+      i += 2;
    }
    return stoi(opt);
 }
@@ -3309,6 +3317,7 @@ void moveMonochokiDown()
          enemy2Direction = "right";
       }
       if (nextloction == 'k')
+      
       {
          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
          gotoxy(40, 20);
@@ -3322,6 +3331,7 @@ void moveMonochokiRight()
    if (GetAsyncKeyState(VK_RIGHT))
    {
       char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
+      char nextloc2=getCharAtxy(monoChokiX+9,monoChokiY+1);
       if (nextloction != '*')
       {
          isMonochokiDirectionUpOrDown = false;
@@ -3335,7 +3345,7 @@ void moveMonochokiRight()
 
          printMonochoki(monoChokiX, monoChokiY);
       }
-      if (nextloction == 'k')
+      if (nextloction == 'k'||nextloc2=='k')
       {
          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
          gotoxy(40, 20);
@@ -3349,6 +3359,7 @@ void moveMonochokiLeft()
    if (GetAsyncKeyState(VK_LEFT))
    {
       char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
+      char nextloc2=getCharAtxy(monoChokiX-1,monoChokiY+1);
       if (nextloction == ' ' || nextloction == '.')
       {
          isMonochokiDirectionUpOrDown = false;
@@ -3361,7 +3372,8 @@ void moveMonochokiLeft()
          printMonochokiLeft(monoChokiX, monoChokiY);
          enemy2Direction = "left";
       }
-      if (nextloction == 'k')
+      if (nextloction == 'k'||nextloc2=='k')
+      
       {
          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
          gotoxy(40, 20);
@@ -3373,6 +3385,13 @@ void moveMonochokiLeft()
 void levelTwoModule()
 {
    score = 0;
+   enemyOneX = 90; // throw enemes outside the maze
+   enemyOneY = 3;
+   Enemy2RightX = 90;
+   Enemy2RightY = 3;
+   enemy3X = 90;
+   enemy3y = 3;
+
    bool isGameRunning = true;
    if (totalBulletCollideWithMonochki < 29)
    {
@@ -3487,6 +3506,7 @@ void successfullyWonLevelOne()
       if (DoYouWantToPlay == 'y')
       {
          gameReset();
+         option=2;//change the state of the game to the next level 
          totalBulletCollideWithMonochki = 0;
          gameStatusBar();
          bounderiesOfGame();
@@ -3530,9 +3550,17 @@ void gameTimeUp()
    {
       gameReset();
       totalBulletCollideWithMonochki = 0;
+      system("cls");
       gameStatusBar();
       bounderiesOfGame();
-      levelOneModule();
+      if (option == 1)
+      {
+         levelOneModule();
+      }
+      else if (option == 2)
+      {
+         levelTwoModule();
+      }
    }
 }
 
@@ -3553,7 +3581,7 @@ void monochokiCrashed()
       gameReset();
       totalBulletCollideWithMonochki = 0;
       system("cls");
-      gameMenu();
+      // gameMenu();
       gameStatusBar();
       bounderiesOfGame();
       if (option == 1)
