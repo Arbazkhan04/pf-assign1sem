@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <conio.h>
 #include <windows.h>
 #include <cstring>
@@ -19,6 +20,13 @@ void instructionForLevelOne();
 void instructionForLevelTwo();
 void gameReset();
 // game level end
+
+// file handling start
+void storeDataIntoTheFile();
+void loadDateFromFile();
+string commaSeprateFormData(int index, string line);
+int previousGameLevel;
+// file handling end
 
 // monochoki-Movement-start
 void moveMonchokiUp();
@@ -128,7 +136,7 @@ char enemy1[3][9] = {{' ', ' ', ' ', ' ', ' ', ' ', ' ', box, box}, {'<', '-', b
 
 int enemyOneX = 80;
 int enemyOneY = 10;
-int enemyOnelife = 15;
+int enemyOnelife = 0;
 void printEnemy1();
 void ereaseEnemy1();
 void moveEnemyOneBullet();
@@ -156,7 +164,7 @@ void ereaseEnemyTwoUp(int, int);
 void printEnemyDown2(int, int);
 void ereaseEnemyTwoDown(int, int);
 // void ereaseEnemyright2();
-int enemyTwoLife = 15;
+int enemyTwoLife = 0;
 void moveEnemyTwo();
 char leftBox1[3][9] = {{box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '}, {' ', ' ', box, box, box, box, box, '-', '>'}, {box, box, ' ', ' ', ' ', ' ', ' ', ' ', ' '}};
 
@@ -214,7 +222,7 @@ void ereaseEnemyThreeUp(int, int);
 void printEnemyDown3(int, int);
 void ereaseEnemyThreeDown(int, int);
 
-int enemyThreeLife = 15;
+int enemyThreeLife = 0;
 int totalLife = 20;
 int enemy3X = 10;
 int enemy3y = 10;
@@ -266,13 +274,6 @@ string enemy4Direction = "left";
 void moveEnemyFour();
 // void lastCyldeEnemy();
 
-// int enemyFourBullettArrX[1000];
-// int enemyFourBulletArrY[1000];
-// int totalBulletGenerateByLeftEnemy4 = 0;
-// void generateBulletForLeftenemy4();
-// void moveBulletForLeftEnemy4();
-// void removeIndexBulletForLeftEnemy4(int index);
-
 int enemyFourRightBullettArrX[1000]; // right
 int enemyFourRightBulletArrY[1000];
 int totalBulletGenerateByrightEnemy4 = 0;
@@ -280,38 +281,42 @@ void generateBulletForRightenemy4();
 void moveBulletForRightEnemy4();
 void removeIndexBulletForRightEnemy4(int index);
 
-// int enemyFourDownBullettArrX[1000];
-// int enemyFourDownBulletArrY[1000];
-// int totalBulletGenerateByDownEnemy4 = 0;
-// void generateBulletForDownenemy4();
-// void moveBulletForDownEnemy4();
-// void removeIndexBulletForDownEnemy4(int index);
-
-// int enemyFourUpBullettArrX[1000];
-// int enemyFourUpBulletArrY[1000];
-// int totalBulletGenerateByUpEnemy4 = 0;
-// void generateBulletForUpenemy4();
-// void moveBulletForUpEnemy4();
-// void removeIndexBulletForUpEnemy4(int index);
-
-// Cylde
-
 int main()
 {
+   loadDateFromFile(); // load data from file
    startingOfGame();
    system("cls");
+   previousGameLevel = option;
+
    gameMenu();
-   // string selectLevel = instructionMenu();
-   // if (selectLevel == "1")
-   // {
-   //    instructionForLevelOne();
-   //    gameMenu();
-   // }
-   // if (selectLevel== "2")
-   // {
-   //    instructionForLevelTwo();
-   //    gameMenu();
-   // }
+
+   if (option == 3)
+   {
+      if (previousGameLevel > 0)
+      {
+         if (previousGameLevel == 1)
+         {
+            option = previousGameLevel;
+            storeDataIntoTheFile();
+            instructionForLevelOne();
+            system("cls");
+            gameStatusBar();
+            bounderiesOfGame();
+            levelOneModule();
+         }
+         else if (previousGameLevel == 2)
+         {
+            option = previousGameLevel;
+            storeDataIntoTheFile();
+            instructionForLevelTwo();
+            system("cls");
+            gameStatusBar();
+            bounderiesOfGame();
+            levelTwoModule();
+         }
+      }
+   }
+
    if (option == 1)
    {
       instructionForLevelOne();
@@ -3010,18 +3015,27 @@ void timer()
 
 int gameMenu()
 {
+   int i=1;
    system("cls"); // Clear the console screen
    gotoxy(45, 13);
    cout << "**************************";
    gotoxy(45, 14);
-   cout << "1- Level-One";
+   cout << i<<"- Level-One";
+   i++;
    gotoxy(45, 15);
-   cout << "2- Level-Two";
+   cout <<i<< "- Level-Two";
    gotoxy(45, 16);
-   cout << "3- Exit";
-   gotoxy(45, 17);
+   if (previousGameLevel > 0)
+   {
+      i++;
+      cout<<i<< "- Continue Previous Game";
+      gotoxy(45, 17);
+   }
+   i++;
+   cout<<i << "- Exit";
+   gotoxy(45, 18);
    cout << "Enter option ";
-   option = enterOption(3);
+   option = enterOption(4);
    return 0;
 }
 bool isValidOption(string value)
@@ -3043,9 +3057,9 @@ int enterOption(int limit)
    int i = 18;
    while (!isValidOption(opt) || stoi(opt) < 1 || stoi(opt) > limit)
    {
-      gotoxy(45, i);
+      
+      gotoxy(45, i );
       cout << "Invalid input.";
-
       gotoxy(45, i + 1);
       cout << "Enter your option again: ";
       cin >> opt;
@@ -3056,6 +3070,12 @@ int enterOption(int limit)
 
 void levelOneModule()
 {
+    enemyOneX = 80; // bring  enemes inside the maze which i have throw outside the maze during last enemy calde
+   enemyOneY = 10;
+   Enemy2RightX = 10;
+   Enemy2RightY = 10;
+   enemy3X = 15;
+   enemy3y = 12;
    score = 0;
    bool isGameRunning = true;
    if (totalBulletCollideWithMonochki < 29)
@@ -3066,15 +3086,15 @@ void levelOneModule()
    printMonochoki(monoChokiX, monoChokiY);
    printEnemyleft3(enemy3X, enemy3y);
    printEnemyleft2(Enemy2RightX, Enemy2RightY);
-   if (enemyOnelife < 7)
+   if (enemyOnelife < 5)
    {
-      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
+      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);// enemy one statue
    }
-   if (enemyTwoLife < 7)
+   if (enemyTwoLife < 5)
    {
       enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name); // enemy two statue
    }
-   if (enemyThreeLife < 7)
+   if (enemyThreeLife < 5)
    {
       enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
    }
@@ -3083,17 +3103,7 @@ void levelOneModule()
    {
       printScore();
       successfullyWonLevelOne();
-      // if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-      // {
-      //    // enemy4Life++;
-      //    if (enemy4Life < 7)
-      //    {
-      //       enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
-      //    }
-      // }
-
       printEnemy1();
-
       moveMonchokiUp();
       moveMonochokiDown();
       moveMonochokiLeft();
@@ -3122,10 +3132,19 @@ void levelOneModule()
       {
          if (minute >= 5)
          {
+
+            gameReset();
+            option=0;
+            storeDataIntoTheFile();
+            option=1;
             gameTimeUp();
          }
          else if (totalBulletCollideWithMonochki >= 21)
          {
+            gameReset();
+            option=0;
+            storeDataIntoTheFile();
+            option=1;
             monochokiCrashed();
          }
          isGameRunning = false;
@@ -3147,13 +3166,13 @@ void levelOneModule()
          //    generateBulletForRightenemy4();
          // }
 
-         if (enemyOnelife < 20)
+         if (enemyOnelife < 15)
          {
             moveEnemyOne();
             generateBullet();
             moveEnemyOneBullet();
          }
-         if (enemyOnelife == 20)
+         if (enemyOnelife == 15)
          {
             enemyOneX = 90;
             enemyOneY = 3;
@@ -3165,11 +3184,11 @@ void levelOneModule()
             }
          }
          MonochokiHealthDecrease();
-         if (enemyTwoLife < 20)
+         if (enemyTwoLife < 15)
          {
             moveEnemyTwo();
          }
-         if (enemyTwoLife == 20)
+         if (enemyTwoLife == 15)
          {
             Enemy2RightX = 95;
             Enemy2RightY = 3;
@@ -3196,6 +3215,12 @@ void levelOneModule()
                totalCallKFor3Enemy++;
             }
          }
+         // check ctrl is pressed
+         bool ctrlPressed = GetAsyncKeyState(VK_CONTROL);
+         if (ctrlPressed)
+         {
+            storeDataIntoTheFile();
+         }
 
          enemyOnetimer = 0;
       }
@@ -3219,11 +3244,6 @@ void levelOneModule()
 
       moveBulletForUpEnemy3();
 
-      // moveBulletForLeftEnemy4();
-      // moveBulletForRightEnemy4();
-      // moveBulletForDownEnemy4();
-      // moveBulletForUpEnemy4();
-
       if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
       {
          yellowmonochokiStatue();
@@ -3237,40 +3257,31 @@ void levelOneModule()
          totalBulletCollideWithMonochki = 0;
          monochokiStatue();
       }
-      if (enemyOnelife > 7 && enemyOnelife < 14)
+      if (enemyOnelife > 5 && enemyOnelife < 10)
       {
          enemyOneYellowStatue(enemy1statueX, enemy1statueY, enemy1Name);
       }
-      if (enemyOnelife > 14 && enemyOnelife < 20)
+      if (enemyOnelife > 10 && enemyOnelife < 15)
       {
          enemyOneRedStatue(enemy1statueX, enemy1statueY, enemy1Name);
       }
-      if (enemyTwoLife > 7 && enemyTwoLife < 14)
+      if (enemyTwoLife > 5 && enemyTwoLife < 10)
       {
          enemyOneYellowStatue(enemy2statueX, enemy2statueY, enemy2Name);
       }
-      if (enemyTwoLife > 14 && enemyTwoLife < 20)
+      if (enemyTwoLife > 10 && enemyTwoLife < 15)
       {
          enemyOneRedStatue(enemy2statueX, enemy2statueY, enemy2Name);
       }
 
-      if (enemyThreeLife > 7 && enemyThreeLife < 14)
+      if (enemyThreeLife > 5 && enemyThreeLife < 10)
       {
          enemyOneYellowStatue(enemy3statueX, enemy3statueY, enemy3Name);
       }
-      if (enemyThreeLife > 14 && enemyThreeLife < 20)
+      if (enemyThreeLife > 10 && enemyThreeLife < 15)
       {
          enemyOneRedStatue(enemy3statueX, enemy3statueY, enemy3Name);
       }
-
-      // if (enemy4Life > 7 && enemy4Life < 14)
-      // {
-      //    enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
-      // }
-      // if (enemy4Life > 14 && enemy4Life < 20)
-      // {
-      //    enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
-      // }
 
       Sleep(1);
    }
@@ -3294,7 +3305,7 @@ void moveMonchokiUp()
       }
       if (nextloction == 'k')
       {
-         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 5;
          gotoxy(40, 20);
          cout << " ";
       }
@@ -3317,9 +3328,9 @@ void moveMonochokiDown()
          enemy2Direction = "right";
       }
       if (nextloction == 'k')
-      
+
       {
-         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 5;
          gotoxy(40, 20);
          cout << " ";
       }
@@ -3331,7 +3342,7 @@ void moveMonochokiRight()
    if (GetAsyncKeyState(VK_RIGHT))
    {
       char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
-      char nextloc2=getCharAtxy(monoChokiX+9,monoChokiY+1);
+      char nextloc2 = getCharAtxy(monoChokiX + 9, monoChokiY + 1);
       if (nextloction != '*')
       {
          isMonochokiDirectionUpOrDown = false;
@@ -3345,9 +3356,9 @@ void moveMonochokiRight()
 
          printMonochoki(monoChokiX, monoChokiY);
       }
-      if (nextloction == 'k'||nextloc2=='k')
+      if (nextloction == 'k' || nextloc2 == 'k')
       {
-         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 5;
          gotoxy(40, 20);
          cout << " ";
       }
@@ -3359,7 +3370,7 @@ void moveMonochokiLeft()
    if (GetAsyncKeyState(VK_LEFT))
    {
       char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
-      char nextloc2=getCharAtxy(monoChokiX-1,monoChokiY+1);
+      char nextloc2 = getCharAtxy(monoChokiX - 1, monoChokiY + 1);
       if (nextloction == ' ' || nextloction == '.')
       {
          isMonochokiDirectionUpOrDown = false;
@@ -3372,10 +3383,10 @@ void moveMonochokiLeft()
          printMonochokiLeft(monoChokiX, monoChokiY);
          enemy2Direction = "left";
       }
-      if (nextloction == 'k'||nextloc2=='k')
-      
+      if (nextloction == 'k' || nextloc2 == 'k')
+
       {
-         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
+         totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 5;
          gotoxy(40, 20);
          cout << " ";
       }
@@ -3397,6 +3408,7 @@ void levelTwoModule()
    {
       monochokiStatue();
    }
+    printEnemyleft4(enemy4X, enemy4Y);
 
    printMonochoki(monoChokiX, monoChokiY);
    enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name); // enemy four
@@ -3452,6 +3464,12 @@ void levelTwoModule()
 
          enemyOnetimer = 0;
       }
+      // check ctrl is pressed
+      bool ctrlPressed = GetAsyncKeyState(VK_CONTROL);
+      if (ctrlPressed)
+      {
+         storeDataIntoTheFile();
+      }
 
       moveBulletForDown();
       moveMonochokiBullet();
@@ -3462,11 +3480,11 @@ void levelTwoModule()
       EnemyTwoBulletCollisons();
       moveBulletForRightEnemy4();
       enemyOnetimer++;
-      if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
+      if (totalBulletCollideWithMonochki > 7 && totalBulletCollideWithMonochki < 12)
       {
          yellowmonochokiStatue();
       }
-      else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
+      else if (totalBulletCollideWithMonochki > 12 && totalBulletCollideWithMonochki < 20)
       {
          redMonochokiStatue();
       }
@@ -3475,11 +3493,11 @@ void levelTwoModule()
          totalBulletCollideWithMonochki = 0;
          monochokiStatue();
       }
-      if (enemy4Life > 7 && enemy4Life < 14)
+      if (enemy4Life > 5 && enemy4Life < 10)
       {
          enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
       }
-      if (enemy4Life > 14 && enemy4Life < 20)
+      if (enemy4Life > 10 && enemy4Life < 15)
       {
          enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
       }
@@ -3490,7 +3508,8 @@ void levelTwoModule()
 
 void successfullyWonLevelOne()
 {
-   if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
+  
+   if (enemyOnelife >= 15 && enemyTwoLife >= 15 && enemyThreeLife >= 15)
    {
       // system("cls"); // Clear the console screen
       gotoxy(45, 13);
@@ -3498,6 +3517,7 @@ void successfullyWonLevelOne()
       gotoxy(45, 14);
       cout << "* Level One Completed    *";
       gotoxy(45, 15);
+
       cout << "**************************";
       char DoYouWantToPlay;
       gotoxy(45, 16);
@@ -3505,9 +3525,12 @@ void successfullyWonLevelOne()
       cin >> DoYouWantToPlay;
       if (DoYouWantToPlay == 'y')
       {
-         gameReset();
-         option=2;//change the state of the game to the next level 
+
+         option = 2; // change the state of the game to the next level
          totalBulletCollideWithMonochki = 0;
+         storeDataIntoTheFile();
+         gameReset();
+         option = 2; // again because after the gamereset function option is become 1
          gameStatusBar();
          bounderiesOfGame();
          levelTwoModule();
@@ -3520,6 +3543,7 @@ void successfullyWonLevelOne()
          gameMenu();
          gameStatusBar();
          bounderiesOfGame();
+         storeDataIntoTheFile();
          if (option == 1)
          {
             levelOneModule();
@@ -3549,6 +3573,7 @@ void gameTimeUp()
    if (DoYouWantToPlay == 'y')
    {
       gameReset();
+      storeDataIntoTheFile();
       totalBulletCollideWithMonochki = 0;
       system("cls");
       gameStatusBar();
@@ -3562,6 +3587,11 @@ void gameTimeUp()
          levelTwoModule();
       }
    }
+   // else if (DoYouWantToPlay == 'n')
+   // {
+   //    gameReset();
+   //    storeDataIntoTheFile();
+   // }
 }
 
 void monochokiCrashed()
@@ -3579,6 +3609,7 @@ void monochokiCrashed()
    if (DoYouWantToPlay == 'y')
    {
       gameReset();
+      storeDataIntoTheFile();
       totalBulletCollideWithMonochki = 0;
       system("cls");
       // gameMenu();
@@ -3614,16 +3645,16 @@ void gameReset()
 
    Enemy2RightX = 40;
    Enemy2RightY = 12;
-   enemyTwoLife = 15;
+   enemyTwoLife = 0;
 
-   enemyThreeLife = 15;
+   enemyThreeLife = 0;
    totalLife = 20;
    enemy3X = 10;
    enemy3y = 10;
 
    enemyOneX = 80;
    enemyOneY = 10;
-   enemyOnelife = 15;
+   enemyOnelife = 0;
 
    enemy4Life = 0;
    enemy4X = 30;
@@ -3705,4 +3736,148 @@ string instructionMenu()
       cin >> opt;
    }
    return opt;
+}
+
+void storeDataIntoTheFile()
+{
+   fstream file;
+   char comma = ',';
+   file.open("storeData.txt", ios::out);
+   file << score << comma;
+   file << totalBulletCollideWithMonochki << comma; // health
+   file << minute << comma;
+   file << second << comma;
+   // flags -start
+   file << totalCallKFor1Enemy << comma;
+   file << totalCallKFor2Enemy << comma;
+   file << totalCallKFor3Enemy << comma;
+   // flags -end
+
+   // player data start
+   file << totalNumberOfBullet << comma;
+   file << totalNumberOfLeftBullet << comma;
+   file << totalNumberUpBullet << comma;
+   file << totalNumberDownBullet << comma;
+   file << monoChokiX << comma;
+   file << monoChokiY << comma;
+   // player data end
+
+   // enemy one-start
+   file << enemyOneX << comma;
+   file << enemyOneY << comma;
+   file << enemyOnelife << comma;
+   file << enemyOneDirection << comma;
+   file << enemyOnetimer << comma;
+   file << totalBulletByEnemyOne << comma;
+   // enemy one-end
+
+   // enemy two-start
+   file << enemyTwoLife << comma;
+   file << Enemy2RightX << comma;
+   file << Enemy2RightY << comma;
+   file << enemy2Direction << comma;
+   file << totalBulletGenerateByEnemy2 << comma;
+   file << totalBulletGenerateByrightEnemy2 << comma;
+   file << totalBulletGenerateByUpEnemy2 << comma;
+   file << totalBulletGenerateByDownEnemy2 << comma;
+   // enemy two-end
+
+   // enemy three-start
+   file << enemyThreeLife << comma;
+   file << totalLife << comma;
+   file << enemy3X << comma;
+   file << enemy3y << comma;
+   file << enemy3Direction << comma;
+   file << totalBulletGenerateByLeftEnemy3 << comma;
+   file << totalBulletGenerateByrightEnemy3 << comma;
+   file << totalBulletGenerateByDownEnemy3 << comma;
+   file << totalBulletGenerateByUpEnemy3 << comma;
+   // enemy three-end
+
+   // enemy four-start
+   file << enemy4Life << comma;
+   file << enemy4X << comma;
+   file << enemy4Y << comma;
+   file << enemy4Direction << comma;
+   file << totalBulletGenerateByrightEnemy4 << comma;
+   file << option << endl;
+   // enemy four-end
+
+   file.close();
+}
+void loadDateFromFile()
+{
+   fstream file;
+   string line;
+   file.open("storeData.txt", ios::in);
+   while (getline(file, line))
+   {
+      score = stoi(commaSeprateFormData(1, line));
+      totalBulletCollideWithMonochki = stoi(commaSeprateFormData(2, line));
+      minute = stoi(commaSeprateFormData(3, line));
+      second = stoi(commaSeprateFormData(4, line));
+
+      totalCallKFor1Enemy = stoi(commaSeprateFormData(5, line));
+      totalCallKFor2Enemy = stoi(commaSeprateFormData(6, line));
+      totalCallKFor3Enemy = stoi(commaSeprateFormData(7, line));
+
+      // totalNumberOfBullet = stoi(commaSeprateFormData(8, line));
+      // totalNumberOfLeftBullet = stoi(commaSeprateFormData(9, line));
+      // totalNumberUpBullet = stoi(commaSeprateFormData(10, line));
+      // totalNumberDownBullet = stoi(commaSeprateFormData(11, line));
+      monoChokiX = stoi(commaSeprateFormData(12, line));
+      monoChokiY = stoi(commaSeprateFormData(13, line));
+
+      enemyOneX = stoi(commaSeprateFormData(14, line));
+      enemyOneY = stoi(commaSeprateFormData(15, line));
+      enemyOnelife = stoi(commaSeprateFormData(16, line));
+      enemyOneDirection = commaSeprateFormData(17, line);
+      enemyOnetimer = stoi(commaSeprateFormData(18, line));
+      // totalBulletByEnemyOne = stoi(commaSeprateFormData(19, line));
+
+      enemyTwoLife = stoi(commaSeprateFormData(20, line));
+      Enemy2RightX = stoi(commaSeprateFormData(21, line));
+      Enemy2RightY = stoi(commaSeprateFormData(22, line));
+      enemy2Direction = commaSeprateFormData(23, line);
+      // totalBulletGenerateByEnemy2 = stoi(commaSeprateFormData(24, line));
+      // totalBulletGenerateByrightEnemy2 = stoi(commaSeprateFormData(25, line));
+      // totalBulletGenerateByUpEnemy2 = stoi(commaSeprateFormData(26, line));
+      // totalBulletGenerateByDownEnemy2 = stoi(commaSeprateFormData(27, line));
+
+      enemyThreeLife = stoi(commaSeprateFormData(28, line));
+      totalLife = stoi(commaSeprateFormData(29, line));
+      enemy3X = stoi(commaSeprateFormData(30, line));
+      enemy3y = stoi(commaSeprateFormData(31, line));
+      enemy3Direction = commaSeprateFormData(32, line);
+      //    totalBulletGenerateByLeftEnemy3 = stoi(commaSeprateFormData(33, line));
+      //   totalBulletGenerateByrightEnemy3 = stoi(commaSeprateFormData(34, line));
+
+      //    totalBulletGenerateByDownEnemy3 = stoi(commaSeprateFormData(35, line));
+      //    totalBulletGenerateByUpEnemy3 = stoi(commaSeprateFormData(36, line));
+
+      enemy4Life = stoi(commaSeprateFormData(37, line));
+      enemy4X = stoi(commaSeprateFormData(38, line));
+      enemy4Y = stoi(commaSeprateFormData(39, line));
+      enemy4Direction = commaSeprateFormData(40, line);
+      // totalBulletGenerateByrightEnemy4 = stoi(commaSeprateFormData(41, line));
+      option = stoi(commaSeprateFormData(42, line));
+   }
+   file.close();
+}
+string commaSeprateFormData(int index, string line)
+{
+   int initalComma = 1;
+   string value;
+   for (int i = 0; i < line.length(); i++)
+   {
+      if (line[i] == ',')
+      {
+         initalComma++;
+      }
+      else if (initalComma == index)
+      {
+         value = value + line[i];
+      }
+   }
+   return value;
 }

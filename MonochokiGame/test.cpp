@@ -14,42 +14,60 @@ void gotoxy(int x, int y)
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinate);
 }
 int main()
+
 {
-
-    while (true)
+    // Check if the Ctrl key is currently being pressed
+    bool a=true;
+    while(a)
     {
-        // Increment the second counter
+        bool ctrlPressed = GetAsyncKeyState(VK_CONTROL) & 0x8000;
 
-        second++;
-
-        // Update minute and hour as needed
-        if (second == 60)
-        {
-            second = 0;
-
-            minute++;
-        }
-        if (minute == 60)
-        {
-            minute = 0;
-
-            hour++;
-        }
-        if (hour == 24)
-        {
-            hour = 0;
-        }
-
-        // Print the time
-        gotoxy(5, 5);
-
-        printTime(hour, minute, second);
-        // Wait for 1 second
-        Sleep(1000);
+    if (ctrlPressed&&c)
+    {
+        std::cout << "Ctrl key is currently being pressed.\n";
+    }
+    else
+    {
+        std::cout << "Ctrl key is not currently being pressed.\n";
+    }
     }
 
     return 0;
 }
+
+
+    // while (true)
+    // {
+    //     // Increment the second counter
+
+    //     second++;
+
+    //     // Update minute and hour as needed
+    //     if (second == 60)
+    //     {
+    //         second = 0;
+
+    //         minute++;
+    //     }
+    //     if (minute == 60)
+    //     {
+    //         minute = 0;
+
+    //         hour++;
+    //     }
+    //     if (hour == 24)
+    //     {
+    //         hour = 0;
+    //     }
+
+    //     // Print the time
+    //     gotoxy(5, 5);
+
+    //     printTime(hour, minute, second);
+    //     // Wait for 1 second
+    //     Sleep(1000);
+    // }
+
 void printTime(int h, int m, int s)
 {
     std::cout << h << ":" << m << ":" << s;
