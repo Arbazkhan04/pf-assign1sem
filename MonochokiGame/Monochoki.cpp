@@ -224,7 +224,7 @@ void ereaseEnemyThreeDown(int, int);
 
 int enemyThreeLife = 0;
 int totalLife = 20;
-int enemy3X = 10;
+int enemy3X = 30;
 int enemy3y = 10;
 string enemy3Direction = "down";
 void moveEnemyThree();
@@ -287,7 +287,7 @@ int main()
    startingOfGame();
    system("cls");
    previousGameLevel = option;
-
+   
    gameMenu();
 
    if (option == 3)
@@ -319,6 +319,7 @@ int main()
 
    if (option == 1)
    {
+       gameReset();
       instructionForLevelOne();
       system("cls");
       gameStatusBar();
@@ -333,302 +334,6 @@ int main()
       bounderiesOfGame();
       levelTwoModule();
    }
-   // if (option != 4)
-   // {
-   // }
-
-   // if (totalBulletCollideWithMonochki < 29)
-   // {
-   //    monochokiStatue();
-   // }
-
-   // printMonochoki(monoChokiX, monoChokiY);
-   // printEnemyleft3(enemy3X, enemy3y);
-   // printEnemyleft2(Enemy2RightX, Enemy2RightY);
-   // if (enemyOnelife < 7)
-   // {
-   //    enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);
-   // }
-   // if (enemyTwoLife < 7)
-   // {
-   //    enemyOneStatue(enemy2statueX, enemy2statueY, enemy2Name); // enemy two statue
-   // }
-   // if (enemyThreeLife < 7)
-   // {
-   //    enemyOneStatue(enemy3statueX, enemy3statueY, enemy3Name);
-   // }
-   // bool bringEnemy4IntoTheMaze = true;
-   // while (isGameRunning)
-   // {
-   //    printScore();
-
-   //    if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-   //    {
-   //       // enemy4Life++;
-   //       if (enemy4Life < 7)
-   //       {
-   //          enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name);
-   //       }
-   //    }
-
-   //    printEnemy1();
-
-   //    if (GetAsyncKeyState(VK_RIGHT))
-   //    {
-   //       char nextloction = getCharAtxy(monoChokiX + 9, monoChokiY);
-   //       if (nextloction != '*')
-   //       {
-   //          isMonochokiDirectionUpOrDown = false;
-   //          ereaseMonoChoki(monoChokiX, monoChokiY);
-   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
-   //          eraseUpMonochoki(monoChokiX, monoChokiY);
-   //          eraseDownMonochoki(monoChokiX, monoChokiY);
-   //          monoChokiX++;
-   //          // enemy2Direction = "up";
-   //          enemy2Direction = "down";
-
-   //          printMonochoki(monoChokiX, monoChokiY);
-   //       }
-   //       if (nextloction == 'k')
-   //       {
-   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-   //          gotoxy(40, 20);
-   //          cout << " ";
-   //       }
-   //    }
-   //    if (GetAsyncKeyState(VK_LEFT))
-   //    {
-   //       char nextloction = getCharAtxy(monoChokiX - 1, monoChokiY);
-   //       if (nextloction == ' ' || nextloction == '.')
-   //       {
-   //          isMonochokiDirectionUpOrDown = false;
-   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
-   //          ereaseMonoChoki(monoChokiX, monoChokiY);
-   //          eraseUpMonochoki(monoChokiX, monoChokiY);
-   //          eraseDownMonochoki(monoChokiX, monoChokiY);
-   //          monoChokiX--;
-   //          // printMonochoki(monoChokiX, monoChokiY);
-   //          printMonochokiLeft(monoChokiX, monoChokiY);
-   //          enemy2Direction = "left";
-   //       }
-   //       if (nextloction == 'k')
-   //       {
-   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-   //          gotoxy(40, 20);
-   //          cout << " ";
-   //       }
-   //    }
-   //    if (GetAsyncKeyState(VK_DOWN))
-   //    {
-   //       char nextloction = getCharAtxy(monoChokiX, monoChokiY + 6);
-   //       if (nextloction != '*')
-   //       {
-   //          isMonochokiDirectionUpOrDown = true;
-   //          ereaseMonoChoki(monoChokiX, monoChokiY);
-   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
-   //          eraseUpMonochoki(monoChokiX, monoChokiY);
-   //          eraseDownMonochoki(monoChokiX, monoChokiY);
-   //          monoChokiY++;
-   //          printDownMonochoki(monoChokiX, monoChokiY);
-   //          enemy2Direction = "right";
-   //       }
-   //       if (nextloction == 'k')
-   //       {
-   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-   //          gotoxy(40, 20);
-   //          cout << " ";
-   //       }
-   //    }
-   //    if (GetAsyncKeyState(VK_UP))
-   //    {
-   //       char nextloction = getCharAtxy(monoChokiX, monoChokiY - 2);
-   //       if (nextloction != '*')
-   //       {
-   //          isMonochokiDirectionUpOrDown = true;
-   //          ereaseMonoChoki(monoChokiX, monoChokiY);
-   //          eraseLeftMonoChoki(monoChokiX, monoChokiY);
-   //          eraseUpMonochoki(monoChokiX, monoChokiY);
-   //          eraseDownMonochoki(monoChokiX, monoChokiY);
-   //          monoChokiY--;
-   //          //  printMonochoki(monoChokiX, monoChokiY);
-   //          printMonochokiUp(monoChokiX, monoChokiY);
-   //       }
-   //       if (nextloction == 'k')
-   //       {
-   //          totalBulletCollideWithMonochki = totalBulletCollideWithMonochki - 20;
-   //          gotoxy(40, 20);
-   //          cout << " ";
-   //       }
-   //    }
-   //    if (GetAsyncKeyState(VK_SPACE))
-   //    {
-
-   //       if (GetAsyncKeyState(VK_LEFT))
-   //       {
-   //          generateBulletForLeft();
-   //       }
-   //       else if (GetAsyncKeyState(VK_RIGHT))
-   //       {
-   //          generateMonochokiBullet();
-   //       }
-   //       else if (GetAsyncKeyState(VK_UP))
-   //       {
-   //          generateBulletForUp();
-   //       }
-   //       else if (GetAsyncKeyState(VK_DOWN))
-   //       {
-   //          generateMonochokiDownBullet();
-   //       }
-   //    }
-   //    if (GetAsyncKeyState(VK_ESCAPE) )
-   //    {
-   //       // || totalBulletCollideWithMonochki >= 21 || enemy4Life >= 20 || minute >= 5
-   //       isGameRunning = false;
-   //    }
-   //    if (enemyOnetimer == 2)
-   //    {
-   //       // lastCyldeEnemy();
-   //       timer();
-
-   //       if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-   //       {
-   //          if (bringEnemy4IntoTheMaze)
-   //          {
-   //             enemy4X = 40;
-   //             enemy4Y = 12;
-   //             bringEnemy4IntoTheMaze = false;
-   //          }
-   //          moveEnemyFour();
-   //          generateBulletForRightenemy4();
-   //       }
-
-   //       if (enemyOnelife < 20)
-   //       {
-   //          moveEnemyOne();
-   //          generateBullet();
-   //          moveEnemyOneBullet();
-   //       }
-   //       if (enemyOnelife == 20)
-   //       {
-   //          enemyOneX = 90;
-   //          enemyOneY = 3;
-   //          if (totalCallKFor1Enemy == 1)
-   //          {
-   //             gotoxy(40, 20);
-   //             cout << "k";
-   //             totalCallKFor1Enemy++;
-   //          }
-   //       }
-   //       MonochokiHealthDecrease();
-   //       if (enemyTwoLife < 20)
-   //       {
-   //          moveEnemyTwo();
-   //       }
-   //       if (enemyTwoLife == 20)
-   //       {
-   //          Enemy2RightX = 95;
-   //          Enemy2RightY = 3;
-
-   //          if (totalCallKFor2Enemy == 1)
-   //          {
-   //             gotoxy(40, 20);
-   //             cout << "k";
-   //             totalCallKFor2Enemy++;
-   //          }
-   //       }
-   //       if (enemyThreeLife < totalLife)
-   //       {
-   //          moveEnemyThree();
-   //       }
-   //       if (enemyThreeLife == totalLife)
-   //       {
-   //          enemy3X = 93;
-   //          enemy3y = 3;
-   //          if (totalCallKFor3Enemy == 1)
-   //          {
-   //             gotoxy(40, 20);
-   //             cout << "k";
-   //             totalCallKFor3Enemy++;
-   //          }
-   //       }
-
-   //       enemyOnetimer = 0;
-   //    }
-
-   //    moveBulletForDown();
-   //    moveMonochokiBullet();
-   //    enemyCollisionWithBullet(); // monnochoki bullet's
-   //    moveLeftBullet();
-   //    moveBulletForUp();
-
-   //    moveBulletForRightEnemy2();
-   //    moveBulletForLeftEnemy2();
-   //    moveBulletForUpEnemy2();
-   //    moveBulletForDownEnemy2();
-   //    enemiesBulletCollisionToMonochoki();
-   //    EnemyTwoBulletCollisons();
-   //    enemyOnetimer++;
-   //    moveBulletForLeftEnemy3();
-   //    moveBulletForRightEnemy3();
-   //    moveBulletForDownEnemy3();
-
-   //    moveBulletForUpEnemy3();
-
-   //    // moveBulletForLeftEnemy4();
-   //    moveBulletForRightEnemy4();
-   //    // moveBulletForDownEnemy4();
-   //    // moveBulletForUpEnemy4();
-
-   //    if (totalBulletCollideWithMonochki > 10 && totalBulletCollideWithMonochki < 20)
-   //    {
-   //       yellowmonochokiStatue();
-   //    }
-   //    else if (totalBulletCollideWithMonochki > 20 && totalBulletCollideWithMonochki < 25)
-   //    {
-   //       redMonochokiStatue();
-   //    }
-   //    else if (totalBulletCollideWithMonochki > 100)
-   //    {
-   //       totalBulletCollideWithMonochki = 0;
-   //       monochokiStatue();
-   //    }
-   //    if (enemyOnelife > 7 && enemyOnelife < 14)
-   //    {
-   //       enemyOneYellowStatue(enemy1statueX, enemy1statueY, enemy1Name);
-   //    }
-   //    if (enemyOnelife > 14 && enemyOnelife < 20)
-   //    {
-   //       enemyOneRedStatue(enemy1statueX, enemy1statueY, enemy1Name);
-   //    }
-   //    if (enemyTwoLife > 7 && enemyTwoLife < 14)
-   //    {
-   //       enemyOneYellowStatue(enemy2statueX, enemy2statueY, enemy2Name);
-   //    }
-   //    if (enemyTwoLife > 14 && enemyTwoLife < 20)
-   //    {
-   //       enemyOneRedStatue(enemy2statueX, enemy2statueY, enemy2Name);
-   //    }
-
-   //    if (enemyThreeLife > 7 && enemyThreeLife < 14)
-   //    {
-   //       enemyOneYellowStatue(enemy3statueX, enemy3statueY, enemy3Name);
-   //    }
-   //    if (enemyThreeLife > 14 && enemyThreeLife < 20)
-   //    {
-   //       enemyOneRedStatue(enemy3statueX, enemy3statueY, enemy3Name);
-   //    }
-
-   //    if (enemy4Life > 7 && enemy4Life < 14)
-   //    {
-   //       enemyOneYellowStatue(enemy4statueX, enemy4statueY, enemy4Name);
-   //    }
-   //    if (enemy4Life > 14 && enemy4Life < 20)
-   //    {
-   //       enemyOneRedStatue(enemy4statueX, enemy4statueY, enemy4Name);
-   //    }
-
-   //    Sleep(1);
-   // }
 }
 
 void bounderiesOfGame()
@@ -879,43 +584,6 @@ void eraseUpMonochoki(int x, int y)
       }
       gotoxy(x, y + (row + 1));
    }
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = upHel5[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 2);
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = upHel1[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 3);
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = upHel2[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 4);
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = upHel3[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 5);
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = upHel4[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
 }
 
 void printMonochokiUp(int x, int y)
@@ -930,33 +598,6 @@ void printMonochokiUp(int x, int y)
       }
       gotoxy(x, y + (row + 1));
    }
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    cout << upHel5[i];
-   // }
-   // gotoxy(x, y + 2);
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    cout << upHel1[i];
-   // }
-   // gotoxy(x, y + 3);
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    cout << upHel2[i];
-   // }
-   // gotoxy(x, y + 4);
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    cout << upHel3[i];
-   // }
-   // gotoxy(x, y + 5);
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    cout << upHel4[i];
-   // }
 }
 
 void printDownMonochoki(int x, int y)
@@ -987,43 +628,6 @@ void eraseDownMonochoki(int x, int y)
       }
       gotoxy(x, y + (row + 1));
    }
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = downHel3[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 2);
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = downHel2[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 3);
-
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = downHel1[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 4);
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = downHel5[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
-   // gotoxy(x, y + 5);
-   // for (int i = 0; i < 5; i++)
-   // {
-   //    char empy = downHel6[i];
-   //    empy = ' ';
-   //    cout << empy;
-   // }
 }
 
 void removeBulletFromArray(int index)
@@ -1681,7 +1285,7 @@ void moveEnemyTwo()
       }
       if (nextlocation == '*')
       {
-         enemy2Direction = "down";
+         enemy2Direction = "right";
       }
    }
 
@@ -1741,7 +1345,7 @@ void moveEnemyTwo()
       }
       if (nextlocation == '*')
       {
-         enemy2Direction = "up";
+         enemy2Direction = "down";
       }
    }
 }
@@ -2584,15 +2188,6 @@ void startingOfGame()
    getch();
 }
 
-// void lastCyldeEnemy() // new module for cylde
-// {
-//    if (enemyOnelife >= 20 && enemyTwoLife >= 20 && enemyThreeLife >= 20)
-//    {
-//       // printEnemyleft4(enemy4X, enemy4Y);
-//       moveEnemyFour();
-//    }
-// }
-
 void printEnemyleft4(int x, int y)
 {
    // if (enemyThreeLife < totalLife)
@@ -2824,51 +2419,6 @@ void moveEnemyFour()
    }
 }
 
-// void generateBulletForLeftenemy4()
-// {
-//    if (enemy4Direction == "left")
-//    {
-//       // enemyFourRightBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4X + 8;
-//       // enemyFourRightBulletArrY[totalBulletGenerateByLeftEnemy4] = enemy4Y + 1;
-//       // gotoxy(enemy4X + 8, enemy4Y + 1);
-//       // cout << ".";
-//       // totalBulletGenerateByLeftEnemy4++;
-//       enemyFourBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4X - 2;
-//       enemyFourBullettArrX[totalBulletGenerateByLeftEnemy4] = enemy4Y + 1;
-//       gotoxy(enemy4X - 2, enemy4Y + 1);
-//       cout << ".";
-//       totalBulletGenerateByLeftEnemy4++;
-//    }
-// }
-
-// void moveBulletForLeftEnemy4()
-// {
-//    for (int i = 0; i < totalBulletGenerateByLeftEnemy4; i++)
-//    {
-//       char nextlocation = getCharAtxy(enemyFourBullettArrX[i] - 2, enemyFourBulletArrY[i]);
-//       if (nextlocation == '*')
-//       {
-//          ereaseBulletForLeftEnemy2(enemyFourBullettArrX[i], enemyFourBulletArrY[i]);
-//          removeIndexBulletForLeftEnemy4(i);
-//       }
-//       else if (nextlocation == ' ')
-//       {
-//          ereaseBulletForLeftEnemy2(enemyFourBullettArrX[i], enemyFourBulletArrY[i]);
-//          enemyFourBullettArrX[i] = enemyFourBullettArrX[i] - 1;
-//          printBulletForLeftEnemy2(enemyFourBullettArrX[i], enemyFourBulletArrY[i]);
-//       }
-//    }
-// }
-// void removeIndexBulletForLeftEnemy4(int index)
-// {
-//    for (int i = index; i < totalBulletGenerateByLeftEnemy4 - 1; i++)
-//    {
-//       enemyFourBullettArrX[i] = enemyFourBullettArrX[i + 1];
-//       enemyFourBulletArrY[i] = enemyFourBulletArrY[i + 1];
-//    }
-//    totalBulletGenerateByLeftEnemy4--;
-// }
-
 void generateBulletForRightenemy4()
 {
    if (enemy4Direction == "right")
@@ -2932,107 +2482,26 @@ void timer()
         << " " << hour << ":" << minute << ":" << second;
 }
 
-// void generateBulletForDownenemy4()
-// {
-//    if (enemy4Direction == "down")
-//    {
-//       enemyFourDownBullettArrX[totalBulletGenerateByDownEnemy4] = enemy4X + 1;
-//       enemyFourDownBulletArrY[totalBulletGenerateByDownEnemy4] = enemy4Y + 5;
-//       gotoxy(enemy3X + 1, enemy4Y + 5);
-//       cout << ".";
-//       totalBulletGenerateByDownEnemy4++;
-//    }
-// }
-// void moveBulletForDownEnemy4()
-// {
-//    for (int i = 0; i < totalBulletGenerateByDownEnemy4; i++)
-//    {
-//       char nextlocation = getCharAtxy(enemyFourDownBullettArrX[i], enemyFourDownBulletArrY[i] + 2);
-//       if (nextlocation == '*')
-//       {
-//          ereaseBulletForLeftEnemy2(enemyFourDownBullettArrX[i], enemyFourDownBulletArrY[i]);
-//          removeIndexBulletForDownEnemy4(i);
-//       }
-//       else if (nextlocation == ' ')
-//       {
-//          ereaseBulletForLeftEnemy2(enemyFourDownBullettArrX[i], enemyFourDownBulletArrY[i]);
-//          enemyFourDownBulletArrY[i] = enemyFourDownBulletArrY[i] + 1;
-//          printBulletForLeftEnemy2(enemyFourDownBullettArrX[i], enemyFourDownBulletArrY[i]);
-//       }
-//    }
-// }
-
-// void removeIndexBulletForDownEnemy4(int index)
-// {
-//    for (int i = index; i < totalBulletGenerateByDownEnemy4 - 1; i++)
-//    {
-//       enemyFourDownBullettArrX[i] = enemyFourDownBullettArrX[i + 1];
-//       enemyFourDownBulletArrY[i] = enemyFourDownBulletArrY[i + 1];
-//    }
-//    totalBulletGenerateByDownEnemy4--;
-// }
-
-// void generateBulletForUpenemy4()
-// {
-//    if (enemy4Direction == "up")
-//    {
-//       enemyFourUpBullettArrX[totalBulletGenerateByUpEnemy4] = enemy3X + 1;
-//       enemyFourUpBulletArrY[totalBulletGenerateByUpEnemy4] = enemy3y;
-//       gotoxy(enemy3X + 1, enemy3y);
-//       cout << ".";
-//       totalBulletGenerateByUpEnemy4++;
-//    }
-// }
-
-// void moveBulletForUpEnemy4()
-// {
-//    for (int i = 0; i < totalBulletGenerateByUpEnemy4; i++)
-//    {
-//       char nextlocation = getCharAtxy(enemyFourUpBullettArrX[i], enemyFourUpBulletArrY[i] - 4);
-//       if (nextlocation == '*')
-//       {
-//          ereaseBulletForLeftEnemy2(enemyFourUpBullettArrX[i], enemyFourUpBulletArrY[i]);
-//          removeIndexBulletForUpEnemy4(i);
-//       }
-//       else if (nextlocation == ' ')
-//       {
-//          ereaseBulletForLeftEnemy2(enemyFourUpBullettArrX[i], enemyFourUpBulletArrY[i]);
-//          enemyFourUpBulletArrY[i] = enemyFourUpBulletArrY[i] - 1;
-//          printBulletForLeftEnemy2(enemyFourUpBullettArrX[i], enemyFourUpBulletArrY[i]);
-//       }
-//    }
-// }
-
-// void removeIndexBulletForUpEnemy4(int index)
-// {
-//    for (int i = index; i < totalBulletGenerateByUpEnemy4 - 1; i++)
-//    {
-//       enemyFourUpBullettArrX[i] = enemyFourUpBullettArrX[i + 1];
-//       enemyFourUpBulletArrY[i] = enemyFourUpBulletArrY[i + 1];
-//    }
-//    totalBulletGenerateByUpEnemy4--;
-// }
-
 int gameMenu()
 {
-   int i=1;
+   int i = 1;
    system("cls"); // Clear the console screen
    gotoxy(45, 13);
    cout << "**************************";
    gotoxy(45, 14);
-   cout << i<<"- Level-One";
+   cout << i << "- Level-One";
    i++;
    gotoxy(45, 15);
-   cout <<i<< "- Level-Two";
+   cout << i << "- Level-Two";
    gotoxy(45, 16);
    if (previousGameLevel > 0)
    {
       i++;
-      cout<<i<< "- Continue Previous Game";
+      cout << i << "- Continue Previous Game";
       gotoxy(45, 17);
    }
    i++;
-   cout<<i << "- Exit";
+   cout << i << "- Exit";
    gotoxy(45, 18);
    cout << "Enter option ";
    option = enterOption(4);
@@ -3057,8 +2526,8 @@ int enterOption(int limit)
    int i = 18;
    while (!isValidOption(opt) || stoi(opt) < 1 || stoi(opt) > limit)
    {
-      
-      gotoxy(45, i );
+
+      gotoxy(45, i);
       cout << "Invalid input.";
       gotoxy(45, i + 1);
       cout << "Enter your option again: ";
@@ -3070,7 +2539,7 @@ int enterOption(int limit)
 
 void levelOneModule()
 {
-    enemyOneX = 80; // bring  enemes inside the maze which i have throw outside the maze during last enemy calde
+   enemyOneX = 80; // bring  enemes inside the maze which i have throw outside the maze during last enemy calde
    enemyOneY = 10;
    Enemy2RightX = 10;
    Enemy2RightY = 10;
@@ -3088,7 +2557,7 @@ void levelOneModule()
    printEnemyleft2(Enemy2RightX, Enemy2RightY);
    if (enemyOnelife < 5)
    {
-      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name);// enemy one statue
+      enemyOneStatue(enemy1statueX, enemy1statueY, enemy1Name); // enemy one statue
    }
    if (enemyTwoLife < 5)
    {
@@ -3134,17 +2603,17 @@ void levelOneModule()
          {
 
             gameReset();
-            option=0;
+            option = 0;
             storeDataIntoTheFile();
-            option=1;
+            option = 1;
             gameTimeUp();
          }
          else if (totalBulletCollideWithMonochki >= 21)
          {
             gameReset();
-            option=0;
+            option = 0;
             storeDataIntoTheFile();
-            option=1;
+            option = 1;
             monochokiCrashed();
          }
          isGameRunning = false;
@@ -3408,7 +2877,7 @@ void levelTwoModule()
    {
       monochokiStatue();
    }
-    printEnemyleft4(enemy4X, enemy4Y);
+   printEnemyleft4(enemy4X, enemy4Y);
 
    printMonochoki(monoChokiX, monoChokiY);
    enemyOneStatue(enemy4statueX, enemy4statueY, enemy4Name); // enemy four
@@ -3508,7 +2977,7 @@ void levelTwoModule()
 
 void successfullyWonLevelOne()
 {
-  
+
    if (enemyOnelife >= 15 && enemyTwoLife >= 15 && enemyThreeLife >= 15)
    {
       // system("cls"); // Clear the console screen
