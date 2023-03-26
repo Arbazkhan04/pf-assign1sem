@@ -7,9 +7,16 @@ bool checkIsEmpty();
 bool checkIsFulll();
 void push(int);
 int pop();
+int peek();
 
 int main()
 {
+  push(7);
+  push(3);
+  cout<<"top element "<<peek()<<endl;
+  pop();
+  cout<<"top element"<<peek();
+  push(5);
 
 }
 void push(int x)
@@ -34,16 +41,24 @@ bool checkIsEmpty()
 {
     if(top==-1)
     {
-        return false;
+        return true;
     }
-    return true;
+    return false;
 
 }
 bool checkIsFulll()
 {
     if(top==maxSize-1)//check stack is full
     {
-       return  false;
+       return  true;
     }
- return true;
+ return false;
+}
+int peek()
+{
+    if(checkIsEmpty())
+    {
+        return -1;
+    }
+    return arr[top];
 }
