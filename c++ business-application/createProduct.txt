@@ -1,3 +1,4 @@
-Shirt,32,28
-pant,32,8
-bool,32,9
+Shirt,32,12
+boolena,21,12
+bool,32,3
+Shirt,12,21
